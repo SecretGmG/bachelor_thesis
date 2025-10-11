@@ -1,0 +1,81 @@
+A simplified version of the integral is:
+\begin{equation}
+I(q,p,m_\psi)=\int\frac{d^4k}{(2\pi)^4}
+\frac{i}{\left(k^2-m_\psi^2+i\epsilon\right)\left((k-q)^2-m_\psi^2+i\epsilon\right)\left((k+p)^2-m_\psi^2+i\epsilon\right)}
+\end{equation}
+
+The pole conditions become
+\begin{align}
+    k^2 &= m_\psi^2-i\epsilon \quad &\implies\quad E_1=k^0 &= \phantom{-q^0} \pm\left(\sqrt{\vec{k}^2+m_\psi^2}-i\epsilon\right)          \\
+(k-q)^2 &= m_\psi^2-i\epsilon \quad &\implies\quad E_2=k^0 &= \phantom{-}q^0 \pm\left(\sqrt{(\vec{k}-\vec{q})^2+m_\psi^2}-i\epsilon\right)\\
+(k+p)^2 &= m_\psi^2-i\epsilon \quad &\implies\quad E_3=k^0 &=           -p^0 \pm\left(\sqrt{(\vec{k}+\vec{p})^2+m_\psi^2}-i\epsilon\right)
+\end{align}
+Choosing to close the contour below we can then apply the residua theorem.
+The integration over the semicircle vanishes in the limit $r\to\infty$ because the integrand falls of like $\propto r^{-6}$
+Then the integration over the semicircle.
+\begin{equation}
+    \int_{\text{semi circle}} dk^0 r^{-6} \propto \int_{\pi} d\theta r^{-5} \propto r^{-5} \overset{r\to\infty}{\longrightarrow} 0
+\end{equation}
+lets call the denominators in the integrand $D_1$, $D_2$ and $D_3$
+The residues can be computed with l'Hospitals rule
+\begin{align*}
+\Op{Res}_{k^0 = +E_1} &= \left. \frac{1}{2 E_1} \frac{1}{D_2 D_3} \right|_{k^0 = +E_1}
+    &=& \int_{k^0} d k \, \theta(k^0) \, \delta\left(k^2 - m_\psi^2\right) \frac{D_1}{D_1D_2D_3} \\
+\Op{Res}_{k^0 = +E_2} &= \left. \frac{1}{2 E_2} \frac{1}{D_1D_3} \right|_{k^0 = q^0 + E_2}
+    &=& \int_{k^0} d k \, \theta(k^0 - q^0) \, \delta\left((k-q)^2 - m_\psi^2\right) \frac{D_2}{D_1D_2D_3} \\
+\Op{Res}_{k^0 = +E_3} &= \left. \frac{1}{2 E_3} \frac{1}{D_1D_2} \right|_{k^0 = -p^0 + E_3}
+    &=& \int_{k^0} d k \, \theta(k^0 + p^0) \, \delta\left((k+p)^2 - m_\psi^2\right) \frac{D_3}{D_1D_2D_3}
+\end{align*}
+Notice that the application of the delta exactly reproduces the derivatives, and the heaviside function ensures that the correct pole is selected.
+If we now define the shorthand notation:
+\begin{equation}
+    \delta^{+}\left( k^2 - m_\psi^2 \right) = \theta(k^0) \, \delta\left(k^2 - m_\psi^2\right) \left(k^2 - m_\psi^2 + i\epsilon\right)
+\end{equation}
+We can then use the residue theorem to find
+\begin{align*}
+   I(q,p,m_\psi) &= \int\frac{d^3k}{(2\pi)^4} \int dk^0 \frac{i}{D_1D_2D_3} = \int\frac{d^3k}{(2\pi)^4} (2\pi i) \, i \left( - \sum_i \Op{Res}_{k^0 = +E_i} \right)\\
+    &= \int\frac{d^4k}{(2\pi)^3}
+\frac{\delta^{+}\left( k^2 - m_\psi^2 \right)+\delta^{+}\left( (k-q)^2 - m_\psi^2 \right)+\delta^{+}\left( (k+p)^2 - m_\psi^2 \right)}{\left(k^2-m_\psi^2+i\epsilon\right)\left((k-q)^2-m_\psi^2+i\epsilon\right)\left((k+p)^2-m_\psi^2+i\epsilon\right)}
+\end{align*}
+The execution of the $k^0$ integral is now a matter of inserting the correct values, we can introduce the notation $\bar{\eta}^{\pm_1\pm_2}_{i,j} =\pm_1E_i \pm_2E_j$ to keep the result shorter. This is procedure is especially easy (but tedious) when using the intermediary results from the previous step.
+\begin{align*}
+    I(q,p,m_\psi)
+    &= \int\frac{d^3k}{(2\pi)^3}
+    \Bigg[\\
+    &\quad \phantom{+} \frac{1}{2E_1}
+    \frac{1}{(\bar{\eta}^{++}_{12} - q^0)(\bar{\eta}^{+-}_{12} - q^0)}
+    \frac{1}{(\bar{\eta}^{++}_{13} + p^0)(\bar{\eta}^{+-}_{13} + p^0)} \\
+    &\quad +
+    \frac{1}{(\bar{\eta}^{++}_{21} + q^0)(\bar{\eta}^{+-}_{21} + q^0)}
+    \frac{1}{2E_2}
+    \frac{1}{(\bar{\eta}^{++}_{23} + p^0 + q^0)(\bar{\eta}^{+-}_{23} + p^0 + q^0)} \\
+    &\quad +
+    \frac{1}{(\bar{\eta}^{++}_{31} - p^0)(\bar{\eta}^{+-}_{31} - p^0)}
+    \frac{1}{(\bar{\eta}^{++}_{32} - p^0 - q^0)(\bar{\eta}^{+-}_{32} - p^0 - q^0)}
+    \frac{1}{2E_3}
+    \Bigg].
+\end{align*}
+We can also absorb the Energy shifts into the $\eta$ coefficients by introducing the notation $\eta^{\pm_1\pm_2}_{i,j} =\pm_1E_i \pm_2E_j \pm_1 (q^0_i-q^0_j)$ and $q_i = (0,-q, p)$.
+\begin{align*}
+    I(q,p,m_\psi)
+    = \int\frac{d^3k}{(2\pi)^3}
+    \Bigg[
+    \frac{1}{2E_1}
+    \frac{1}{\eta^{++}_{12}\,\eta^{+-}_{12}}
+    \frac{1}{\eta^{++}_{13}\,\eta^{+-}_{13}}
+     +
+    \frac{1}{2E_2}
+    \frac{1}{\eta^{++}_{21}\,\eta^{+-}_{21}}
+    \frac{1}{\eta^{++}_{23}\,\eta^{+-}_{23}}
+     +
+    \frac{1}{2E_3}
+    \frac{1}{\eta^{++}_{31}\,\eta^{+-}_{31}}
+    \frac{1}{\eta^{++}_{32}\,\eta^{+-}_{32}}
+    \Bigg].
+\end{align*}
+We will now take a closer look at the singularities of this integral. We have a singularity exactly when one of the $\eta$ coefficients is $0$. It makes sense to split into 2 cases:
+\begin{align}
+    \eta^{++}_{ij} = E_i + E_j + (q^0_i - q^0_j)\\
+    \eta^{+-}_{ij} = E_i - E_j - (q^0_i - q^0_j)\\
+\end{align}
+Example

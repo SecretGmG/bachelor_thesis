@@ -237,4 +237,23 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# symbolica key
 secrets/
+
+
+# LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.bcf
+*.fdb_latexmk
+*.fls
+*.out
+*.run.xml
+*.synctex.gz
+*.bbl
+*.bbl-SAVE-ERROR
+*.blg
+*.bcf-SAVE-ERROR
+*.pdf
