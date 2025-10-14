@@ -1,3 +1,5 @@
+\section{Theoretical Exercise}
+
 A simplified version of the integral is:
 \begin{align}
 I(q,p,m_\psi)&=\int\frac{d^4k}{(2\pi)^4}
@@ -9,7 +11,7 @@ with $q_i = (0,-q,p)_i$.
 
 The pole conditions for each term in the product becomes
 \begin{equation}
-(k+q_i)^2 = m_\psi^2-i\epsilon \quad\implies\quad k^0+q_i^0 = \pm\sqrt{(\vec{k}+\vec{q}_i)^2+m_\psi^2} = E_i
+(k+q_i)^2 = m_\psi^2-i\epsilon \quad\implies\quad k^0+q_i^0 = \pm\sqrt{(\vec{k}+\vec{q}_i)^2+m_\psi^2} = \pm E_i
 \end{equation}
 Choosing to close the contour below we can then apply the residue theorem.
 The integration over the semicircle vanishes in the limit $r\to\infty$ because the integrand is $\propto r^{-6}$.
@@ -53,7 +55,7 @@ The execution of the $k^0$ integral is now a matter of inserting the correct val
     \Bigg].
 \end{align*}
 We can also absorb the Energy shifts into the $\eta$ coefficients by introducing the notation $\eta^{\pm_1\pm_2}_{i,j} =\pm_1E_i \pm_2E_j \mp_1 (q^0_i-q^0_j)$ and $q_i = (0,-q, p)$.
-\begin{align*}
+\begin{equation}
     I(q,p,m_\psi)
     = \int\frac{d^3k}{(2\pi)^3}
     \Bigg[
@@ -68,26 +70,61 @@ We can also absorb the Energy shifts into the $\eta$ coefficients by introducing
     \frac{1}{2E_3}
     \frac{1}{\eta^{++}_{31}\,\eta^{+-}_{31}}
     \frac{1}{\eta^{++}_{32}\,\eta^{+-}_{32}}
-    \Bigg].
-\end{align*}
+    \Bigg]. \label{eq:ltd}
+\end{equation}
 We will now take a closer look at the singularities of this integral. We have a singularity exactly when one of the $\eta$ coefficients is $0$. It makes sense to split into 2 cases:
 \begin{align}
     \eta^{++}_{ij} = E_i + E_j - (q^0_i - q^0_j)\\
     \eta^{+-}_{ij} = E_i - E_j + (q^0_i - q^0_j)\\
 \end{align}
+You can find an example here \url{https://www.desmos.com/3d/7gzgrreciz}
 First try finding an existence condition that any zero exists for $\eta^{++}$
 \begin{align}
-    0 &= E_i + E_j + (q^0_i - q^0_j)\\
-    &= \sqrt{(\vec{k}+\vec{q}_i)^2+m_\psi^2} + \sqrt{(\vec{k}+\vec{q}_j)^2+m_\psi^2} + (q^0_i - q^0_j)\\
+    0 &= E_i + E_j - (q^0_i - q^0_j)\\
+    &= \sqrt{(\vec{k}+\vec{q}_i)^2+m_\psi^2} + \sqrt{(\vec{k}+\vec{q}_j)^2+m_\psi^2} - (q^0_i - q^0_j)\\
 \end{align}
 We can now simplify this expression by introducing $\vec{l} = \vec{k}+\vec{q}_i$
 \begin{align}
-    &= \sqrt{\vec{l}^2+m_\psi^2} + \sqrt{(\vec{l}+\vec{q}_j-\vec{q}_i)^2+m_\psi^2} + (q^0_i - q^0_j)
+    &= \sqrt{\vec{l}^2+m_\psi^2} + \sqrt{(\vec{l}+\vec{q}_j-\vec{q}_i)^2+m_\psi^2} - (q^0_i - q^0_j)
 \end{align}
 For sufficiently large values of $\vec{l}$ this is always positive. It is also easy to show, e.g. by taking the derivative, that the minimum of this expression is at $\vec{l} = \frac{1}{2} (\vec{q}_j-\vec{q}_i)$. Since the equation is continuous there exists a zero iff the minimum is $\leq 0$.
 \begin{align}
-    \sqrt{(\frac{1}{2} (\vec{q}_j-\vec{q}_i))^2+m_\psi^2} + \sqrt{(\frac{1}{2}(\vec{q}_j-\vec{q}_i))^2+m_\psi^2} + (q^0_i - q^0_j) &\leq 0\\
+    \sqrt{(\frac{1}{2} (\vec{q}_j-\vec{q}_i))^2+m_\psi^2} + \sqrt{(\frac{1}{2}(\vec{q}_j-\vec{q}_i))^2+m_\psi^2} - (q^0_i - q^0_j) &\leq 0\\
     \implies\quad (\vec{q}_j-\vec{q}_i)^2 + 4 m_\psi^2 &\leq (q^0_i - q^0_j)^2\\
     \implies\quad (q^0_i - q^0_j)^2 - (\vec{q}_j-\vec{q}_i)^2 -  &\geq 4 m_\psi^2\\
     m_S \geq 2 m_\psi
 \end{align}
+Luckily the remaining $\eta^{+-}$ singularities all cancel pairwise, we will show this by repeatedly applying the partial fractioning identity to \eqref{eq:ltd}
+\begin{equation}
+    \frac{1}{xy} = \frac{1}{x-y}\left(\frac{1}{y}-\frac{1}{x}\right)
+\end{equation}
+First notice however, that
+\begin{align}
+    \eta^{++}_{ij}-\eta^{+-}_{ij} &= 2E_j\\
+    \implies \quad \frac{1}{\eta^{++}_{ij}\eta^{+-}_{ij}} &= \frac{1}{2E_j}\left(\frac{1}{\eta^{+-}_{ij}} - \frac{1}{\eta^{++}_{ij}}\right)\\
+    \implies \quad \frac{1}{\eta^{+-}_{ij}} &= \frac{E_j}{\eta^{++}_{ij}\eta^{+-}_{ij}} + \frac{1}{\eta^{++}_{ij}}
+\end{align}
+This result can now be applied to each term in \eqref{eq:ltd}
+\begin{align*}
+    I(q,p,m_\psi) =& \int d^3 \vec{k} \frac{1}{(2\pi)^3} \frac{1}{(2E_1)(2E_2)(2E_3)}\Bigg[\\
+      &  \left(\frac{1}{\eta_{12}^{+-}}-\frac{1}{\eta_{12}^{++}}\right)\left(\frac{1}{\eta_{13}^{+-}}-\frac{1}{\eta_{13}^{++}}\right)\\
+      &+ \left(\frac{1}{\eta_{21}^{+-}}-\frac{1}{\eta_{21}^{++}}\right)\left(\frac{1}{\eta_{23}^{+-}}-\frac{1}{\eta_{23}^{++}}\right)\\
+      &+ \left(\frac{1}{\eta_{31}^{+-}}-\frac{1}{\eta_{31}^{++}}\right)\left(\frac{1}{\eta_{32}^{+-}}-\frac{1}{\eta_{32}^{++}}\right)
+    \Bigg]
+\end{align*}
+We now have to factor out all the brackets.
+\begin{align*}
+I(q,p,m_\psi) =& \int d^3 \vec{k} \frac{1}{(2\pi)^3} \frac{1}{(2E_1)(2E_2)(2E_3)}\Bigg[\\
+    &\frac{1}{\eta_{12}^{+-}\eta_{13}^{+-}} - \frac{1}{\eta_{12}^{+-}\eta_{13}^{++}} - \frac{1}{\eta_{12}^{++}\eta_{13}^{+-}} + \frac{1}{\eta_{12}^{++}\eta_{13}^{++}}\\
+    &+ \frac{1}{\eta_{21}^{+-}\eta_{23}^{+-}} - \frac{1}{\eta_{21}^{+-}\eta_{23}^{++}} - \frac{1}{\eta_{21}^{++}\eta_{23}^{+-}} + \frac{1}{\eta_{21}^{++}\eta_{23}^{++}}\\
+    &+ \frac{1}{\eta_{31}^{+-}\eta_{32}^{+-}} - \frac{1}{\eta_{31}^{+-}\eta_{32}^{++}} - \frac{1}{\eta_{31}^{++}\eta_{32}^{+-}} + \frac{1}{\eta_{31}^{++}\eta_{32}^{++}}
+\Bigg]
+\end{align*}
+\begin{align*}
+I(q,p,m_\psi) =& \int d^3 \vec{k} \frac{1}{(2\pi)^3} \frac{1}{(2E_1)(2E_2)(2E_3)}\Bigg[\\
+      &\frac{1}{\eta_{21}^{++}\eta_{31}^{++}} + \frac{1}{\eta_{12}^{++}\eta_{13}^{++}}
+    + \frac{1}{\eta_{12}^{++}\eta_{32}^{++}} + \frac{1}{\eta_{21}^{++}\eta_{23}^{++}}
+    + \frac{1}{\eta_{13}^{++}\eta_{23}^{++}} + \frac{1}{\eta_{31}^{++}\eta_{32}^{++}}
+\Bigg]
+\end{align*}
+
