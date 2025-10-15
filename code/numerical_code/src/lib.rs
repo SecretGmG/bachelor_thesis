@@ -26,12 +26,3 @@ fn ltd_triangle(m_psi: f64, k: Vec<f64>, q: Vec<f64>, p: Vec<f64>) -> PyResult<f
     let mut res: f64 = 0.;
     Ok(res)
 }
-
-/// A Python module implemented in Rust. The name of this function must match
-/// the `lib.name` setting in the `Cargo.toml`, else Python will not be able to
-/// import the module.
-#[pymodule]
-fn numerical_code(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(ltd_triangle, m)?)?;
-    Ok(())
-}

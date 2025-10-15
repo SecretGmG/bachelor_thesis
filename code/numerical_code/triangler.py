@@ -18,6 +18,9 @@ except:
     pass
 
 try:
+    from symbolica import set_license_key
+    with open('../../secrets/symbolica.key', 'r') as f:
+        set_license_key(f.read())
     from symbolica import Sample, NumericalIntegrator
 except:
     pass
@@ -165,23 +168,25 @@ class Triangle(object):
         if origin is None:
             origin = Vector(0,0,0)
         return origin + Vector(*(poly_map(x) for x in xs)), math.prod(poly_map_jac(x) for x in xs)
-        raise NotImplementedError("Implement cartesian parameterization in function 'cartesian_parameterize'. Ex. 2.5")
 
     def spherical_parameterize(self, xs: list[float], origin: Vector | None = None) -> tuple[Vector, float]:
         r = xs[0]/(1-xs[0])
+        r_jac = 1/(1-xs[0])**2
+        th = xs[1] * 2 * math.pi
+        th_jac = 2*math.pi
         phi = xs[2] * math.pi
-        cos_th = 1-xs[1]*2
-        sin_th = math.sqrt(1-cos_th**2)
+        phi_jac = math.pi
+        cos_phi = math.cos(phi)
+        sin_phi = math.sin(phi)
 
         v = Vector(
-            r * sin_th * math.cos(phi),
-            r * sin_th * math.sin(phi),
-            r * cos_th
+            r * sin_phi * math.cos(th),
+            r * sin_phi * math.sin(th),
+            r * cos_phi
         )
         if origin is None:
             origin = Vector(0,0,0)
-        return origin + v, 2 * (2 * math.pi) * (r**2 / (1-xs[0])**2)
-        raise NotImplementedError("Implement cartesian parameterization in function 'spherical_parameterize'. Ex. 2.5")
+        return origin + v, (r_jac*th_jac*phi_jac) * sin_phi * r**2
 
     def integrand_xspace(self, xs: list[float], parameterization: str, integrand_implementation: str, improved_ltd: bool = False, multi_channeling: bool | int = True) -> float:
         try:
@@ -223,14 +228,15 @@ class Triangle(object):
         q = [LorentzVector(0,0,0,0), LorentzVector(0,0,0,0)-self.q, self.p]
 
         E = [math.sqrt((loop_momentum + qi.spatial()).squared() + self.m_psi**2) for qi in q]
-        def term(i, j, k):
-            return 1/(2*E[i]*
+
+        if not improved_ltd:
+            def term(i, j, k):
+                return 1/(2*E[i]*
                       (E[i]+E[j]+(q[i].t-q[j].t))*
                       (E[i]-E[j]+(q[i].t-q[j].t))*
                       (E[i]+E[k]+(q[i].t-q[k].t))*
                       (E[i]-E[k]+(q[i].t-q[k].t))
                       )
-        if not improved_ltd:
             return (2 * math.pi)**-3*(term(0,1,2)+term(1,0,2)+term(2,0,1))
             raise NotImplementedError("Implement basic LTD expression in function 'python_integrand'. Ex. 2.2")
 
@@ -312,7 +318,6 @@ class Triangle(object):
 
     @staticmethod
     def vegas_functor(triangle: Triangle, res: IntegrationResult, n_cores: int, call_args: list[Any]) -> Callable[[list[list[float]]],list[float]]:
-        
         @vegas.batchintegrand
         def f(all_xs):
             all_weights = []
