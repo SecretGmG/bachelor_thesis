@@ -1,0 +1,13 @@
+[package]
+name = "better_numerical_code"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "better_numerical_code"
+crate-type = ["cdylib"]
+
+[dependencies]
+num-complex = "0.4.6"
+pyo3 = "0.26.0"
