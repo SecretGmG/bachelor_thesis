@@ -14,3 +14,6 @@ inspect:
 
 vegas:
 	python3 code/triangler/triangler_cli.py -param spherical integrate
+
+vegas_multi:
+	python3 code/triangler/triangler_cli.py -param spherical integrate

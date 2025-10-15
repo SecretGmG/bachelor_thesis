@@ -1,15 +1,18 @@
 use crate::{
-    cartesian_match, integrands::{ImprovedLTD, Integrand, NaiveIntegrand}, integrators::{Integrator, MonteCarlo, Vegas}, parametrization::{Cartesian, Parametrization, Spherical}, vectors::{LVec, Vec3}, IntegrationResult, Logger, Triangle, TriangleTrait
+    cartesian_match, integrands::{ImprovedLTD, Integrand, NaiveIntegrand}, integrators::{Integrator, MonteCarlo, Vegas, VegasMulti}, parametrization::{Cartesian, Parametrization, Spherical}, vectors::{LVec, Vec3}, IntegrationResult, Logger, Triangle, TriangleTrait
 };
 use ::num_complex::Complex64;
-use pyo3::*;
+use pyo3::{exceptions::PyValueError, *};
 
 struct NaiveTriangle<F, I, P> where F: Integrand, I: Integrator, P : Parametrization{
     integrand: F,
     integrator: I,
     parametrization: P,
+    #[allow(unused)]
     p: LVec,
+    #[allow(unused)]
     q: LVec,
+    #[allow(unused)]
     m_psi: f64,
     logger : Logger
 }
@@ -41,57 +44,61 @@ pub fn new_naive(
         integrand: &str,
         parametrization: &str,
         logger: Py<PyAny>
-    ) -> Triangle {
+    ) -> PyResult<Triangle> {
         let p = p.clone();
         let q = q.clone();
+        let logger = Logger::new(logger);
         macro_rules! create_naive_triangle (
             ($integrand_:tt, $integrator_:tt, $parametrization_:tt,) => {{
             let inner = NaiveTriangle {
-                integrand: $integrand_,
-                integrator: $integrator_,
-                parametrization: $parametrization_,
+                integrand: $integrand_?,
+                integrator: $integrator_?,
+                parametrization: $parametrization_?,
                 p,
                 q,
                 m_psi,
-                logger: Logger::new(logger),
+                logger,
             };
-            Triangle {
+            PyResult::Ok(Triangle {
                 inner: Box::new(inner)
-            }
+            })
         }});
         cartesian_match!(
             create_naive_triangle,
             match (integrand) {
                 "naive" => {
-                    NaiveIntegrand::new(p, q, m_psi)
+                    PyResult::Ok(NaiveIntegrand::new(p, q, m_psi))
                 },
                 "improved" =>{
-                    ImprovedLTD::new(p, q, m_psi)
+                    PyResult::Ok(ImprovedLTD::new(p, q, m_psi))
                 },
-                _ => {
-                    NaiveIntegrand::new(LVec::zero(), LVec::zero(), 0.0)
+                invalid => {
+                    PyResult::<NaiveIntegrand>::Err(PyValueError::new_err(format!("{invalid} is an invalid argument for integrand")))
                 },
             },
             match (integrator) {
                 "monte_carlo" => {
-                    MonteCarlo {}
+                    PyResult::Ok(MonteCarlo {})
                 },
                 "vegas" => {
-                    Vegas::new(5, 100_000)
+                    PyResult::Ok(Vegas::new(20, 100_000))
                 },
-                _ => {
-                    MonteCarlo {}
+                "vegas_multi" => {
+                    PyResult::Ok(VegasMulti::new(20, 100_000, 10))
+                },
+                invalid => {
+                    PyResult::<MonteCarlo>::Err(PyValueError::new_err(format!("{invalid} is an invalid argument for integrator")))
                 },
             },
             match (parametrization) {
                 "cartesian" => {
-                    Cartesian {}
+                    PyResult::Ok(Cartesian {})
                 },
                 "spherical" => {
-                    Spherical {}
+                    PyResult::Ok(Spherical {})
                 },
-                _ => {
-                    Cartesian {}
+                invalid => {
+                    PyResult::<Cartesian>::Err(PyValueError::new_err(format!("{invalid} is an invalid argument for parametrization")))
                 },
             },
         )

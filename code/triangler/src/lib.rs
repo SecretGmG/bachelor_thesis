@@ -23,6 +23,7 @@ impl IntegrationResult {
 struct Logger {
     logger: Py<PyAny>,
 }
+/// Thin wrapper around a python logger
 impl Logger {
     pub fn new(logger: Py<PyAny>) -> Self {
         Self { logger }
