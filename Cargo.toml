@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "code/numerical_code_solution",
     "code/numerical_code",
     "code/triangler",
 ]

@@ -1,48 +1,39 @@
 use crate::{
-    integrands::Integrand, parametrization::Parametrization, vectors::Vec3, IntegrationResult,
-    Logger,
+    basic::integrands::Integrand, parametrization::Parametrization, vectors::Vec3, IntegrationResult, Logger
 };
+use pyo3::{exceptions::PyValueError, PyResult};
 use rand::rng;
 use rayon::prelude::*;
 use symbolica::numerical_integration::{ContinuousGrid, Sample};
 
-pub(crate) trait Integrator: Sync + Send {
-    fn integrate<F: Integrand, P: Parametrization>(
-        &self,
-        integrand: &F,
-        param: &P,
-        logger: &Logger,
-    ) -> IntegrationResult;
+pub enum Integrator{
+    Vegas(VegasIntegrator),
+    VegasMulti(VegasMultiIntegrator)
 }
-
-pub(crate) struct MonteCarlo {}
-impl Integrator for MonteCarlo {
-    fn integrate<F: Integrand, P: Parametrization>(
-        &self,
-        integrand: &F,
-        param: &P,
-        logger: &Logger,
-    ) -> IntegrationResult {
-        todo!()
+impl Integrator{
+    pub fn from_args(integrator: &str, epochs: usize, iters_per_epoch: usize, batches: usize) -> PyResult<Self>{
+        match integrator {
+            "vegas" => Ok(Self::Vegas(VegasIntegrator { epochs: epochs, iters_per_epoch: iters_per_epoch })),
+            "vegas_multi" => Ok(Self::VegasMulti(VegasMultiIntegrator { epochs, iters_per_epoch, batches: batches })),
+            other => Err(PyValueError::new_err(format!("{other} is an invalid argument for parametrization")))
+        }
     }
-}
-pub(crate) struct Vegas {
-    epochs: usize,
-    iters_per_epoch: usize,
-}
-impl Vegas {
-    pub fn new(epochs: usize, iters_per_epoch: usize) -> Self {
-        Self {
-            epochs,
-            iters_per_epoch,
+    pub fn integrate(&self, integrand: &Integrand, parametrization: &Parametrization, logger : &Logger) -> IntegrationResult{
+        match self {
+            Integrator::Vegas(vegas_integrator) => vegas_integrator.integrate(integrand, parametrization, logger),
+            Integrator::VegasMulti(vegas_multi_integrator) => vegas_multi_integrator.integrate(integrand, parametrization, logger),
         }
     }
 }
-impl Integrator for Vegas {
-    fn integrate<T: Integrand, P: Parametrization>(
+pub struct VegasIntegrator {
+    epochs: usize,
+    iters_per_epoch: usize,
+}
+impl VegasIntegrator {
+    fn integrate(
         &self,
-        integrand: &T,
-        param: &P,
+        integrand: &Integrand,
+        param: &Parametrization,
         logger: &Logger,
     ) -> IntegrationResult {
         let mut grid = ContinuousGrid::new(3, 50, 1000, None, false);
@@ -71,25 +62,16 @@ impl Integrator for Vegas {
         IntegrationResult { mean, err }
     }
 }
-pub(crate) struct VegasMulti {
+pub struct VegasMultiIntegrator {
     epochs: usize,
     iters_per_epoch: usize,
     batches: usize,
 }
-impl VegasMulti {
-    pub fn new(epochs: usize, iters_per_epoch: usize, batches: usize) -> Self {
-        Self {
-            epochs,
-            iters_per_epoch,
-            batches,
-        }
-    }
-}
-impl Integrator for VegasMulti {
-    fn integrate<T: Integrand, P: Parametrization>(
+impl VegasMultiIntegrator {
+    fn integrate(
         &self,
-        integrand: &T,
-        param: &P,
+        integrand: &Integrand,
+        param: &Parametrization,
         logger: &Logger,
     ) -> IntegrationResult {
         let mut grid = ContinuousGrid::new(3, 50, 1000, None, false);

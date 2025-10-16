@@ -18,12 +18,13 @@ if __name__ == '__main__':
     parser.add_argument('--m_psi', type=float,
                         default=0.02,
                         help='Mass of the internal fermion. Default = %(default)s GeV')
-    parser.add_argument('-p', type=float, nargs=4,
-                        default=[0.005, 0.0, 0.0, 0.005],
-                        help='Four-momentum of the first photon. Default = %(default)s GeV')
     parser.add_argument('-q', type=float, nargs=4,
                         default=[0.005, 0.0, 0.0, -0.005],
                         help='Four-momentum of the second photon. Default = %(default)s GeV')
+    parser.add_argument('-p', type=float, nargs=4,
+                        default=[0.005, 0.0, 0.0,  0.005],
+                        help='Four-momentum of the first photon. Default = %(default)s GeV')
+
     subparsers = parser.add_subparsers(title="commands", dest="command",help='Various commands available')
 
     #INSPECT
@@ -38,16 +39,16 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    q_vec =   triangler.LVec(args.q[0], args.q[1], args.q[2], args.q[3])
-    p_vec =  -triangler.LVec(args.p[0], args.p[1], args.p[2], args.p[3])
+    q_vec =  triangler.LVec(args.q[0], args.q[1], args.q[2], args.q[3])
+    p_vec =  triangler.LVec(args.p[0], args.p[1], args.p[2], args.p[3])
 
     m_psi = args.m_psi
 
     logger = logging.getLogger('Triangler')
     logger.info('test')
 
-
-    triangle = triangler.new_naive(q_vec, p_vec, m_psi, "vegas_multi", "improved", args.parameterization, logger)
+    #there is a sign flip bug somewhere
+    triangle = triangler.Triangle(p_vec, -q_vec, m_psi, "vegas", "improved", args.parameterization, logger)
 
     match args.command:
 

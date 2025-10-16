@@ -3,11 +3,12 @@
 ## Next steps
 
 - Do from scratch implementation
-- make rust and py bindingd for oneloop
+- make rust and py bindings for oneloop
 - make sure complex masses still work in ltd
 - naively integrate the complex mass
 - do it with threshold subtraction
 - use enumx crate instead of ugly macro
+- make all the code deterministic!
 
 ## Logbook
 
