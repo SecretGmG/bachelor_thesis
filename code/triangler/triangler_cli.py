@@ -47,7 +47,7 @@ if __name__ == '__main__':
     logger.info('test')
 
 
-    triangle = triangler.new_naive(q_vec, p_vec, m_psi, "vegas", "improved", args.parameterization, logger)
+    triangle = triangler.new_naive(q_vec, p_vec, m_psi, "vegas_multi", "improved", args.parameterization, logger)
 
     match args.command:
 
