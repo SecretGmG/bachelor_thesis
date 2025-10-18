@@ -1,5 +1,0 @@
-[workspace]
-members = [
-    "code/numerical_code",
-    "code/triangler",
-]
