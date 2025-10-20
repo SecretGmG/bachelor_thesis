@@ -1,0 +1,9 @@
+[package]
+name = "code"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+num-complex = "0.4.6"
+olo_rust = { git = "https://github.com/SecretGmG/olo_rust.git", version = "0.1.0" }
+triangler = { git = "https://github.com/SecretGmG/triangler.git", version = "0.1.2" }
