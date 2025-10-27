@@ -18,5 +18,8 @@
       "tools": ["latexmk"]
     }
   ],
-  "makefile.configureOnOpen": false
+  "makefile.configureOnOpen": false,
+  "cSpell.words": [
+    "newtheorem"
+  ]
 }

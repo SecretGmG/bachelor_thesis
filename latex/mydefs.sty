@@ -1,10 +1,7 @@
 \ProvidesPackage{mydefs}
 
-\usepackage{amsthm}
-\usepackage{pifont}
-
-
 %-- Theorem styles
+\usepackage{amsthm}
 \newtheoremstyle{break}
   {\topsep}{\topsep}%
   {\itshape}{}%
@@ -20,14 +17,6 @@
 \newtheorem*{remark}{Remark}
 \newtheorem*{example}{Example}
 
-
-%-- Shorthand commands
-\newcommand{\br}[1]{\left(#1\right)}
-\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
-\newcommand{\Abs}[1]{\left\lVert #1 \right\rVert}
-\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
-\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
-
 \DeclareMathAlphabet{\mymathbb}{U}{bbold}{m}{n}
 \newcommand{\0}[0]{\mymathbb{0}}
 \newcommand{\1}[0]{\mymathbb{1}}
@@ -35,25 +24,12 @@
 \newcommand\figref{Figure~\ref}
 \newcommand\tabref{Table~\ref}
 
+\usepackage{pifont}
 \newcommand{\xmark}{\text{\ding{55}}}
 \newcommand{\Nabla}[0]{\vec{\nabla}}
 
-\let\oldto\to\let\oldgets\gets
-\renewcommand{\to}[0]{\ensuremath{\oldto}}
-\renewcommand{\gets}[0]{\ensuremath{\oldgets}}
-\newcommand{\To}[0]{\ensuremath{\Rightarrow}}
-\newcommand{\Gets}[0]{\ensuremath{\Leftarrow}}
-\newcommand{\getsto}[0]{\ensuremath{\leftrightarrow}}
-\newcommand{\Getsto}[0]{\ensuremath{\Leftrightarrow}}
 \newcommand{\tp}[0]{\mathsf{T}}
-\newcommand*{\pvec}[1]{\vec{#1}\mkern2mu\vphantom{#1}}
-\newcommand{\op}[1]{\operatorname{#1}}
-\newcommand{\Op}[1]{\operatornamewithlimits{#1}}
-
-\newcommand{\Input}[0]{\Statex \textbf{Input: }}
-\newcommand{\Output}[0]{\Statex \textbf{Output: }}
+\newcommand{\on}[1]{\operatorname{#1}}
+\newcommand{\On}[1]{\operatornamewithlimits{#1}}
 
 \newcommand{\dotag}[0]{\stepcounter{equation}\tag{\theequation}}
-
-\newcommand{\Rnum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
-\newcommand{\rnum}[1]{\expandafter{\romannumeral #1\relax}}
