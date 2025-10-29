@@ -151,26 +151,3 @@ I(q,p,m_\psi)
 + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
 \Bigg]
 \end{align*}
-\subsection{Elliptical singularities}
-We will now take a closer look at the singularities of this integral. We have a singularity exactly when one of the $\ELIPT{i}{j}$ coefficients is $0$.
-You can find an example here \url{https://www.desmos.com/3d/7gzgrreciz}
-\subsubsection{Real mass existance condition}
-First try finding an existence condition that any zero exists for $\eta^{++}$ if the mass $m_\psi$ is real.
-\begin{align}
-    0 &= E_i + E_j - (q^0_i - q^0_j)\\
-    &= \sqrt{{(\va{k}-\va{q}_i)}^2+m_\psi^2} + \sqrt{{(\va{k}-\va{q}_j)}^2+m_\psi^2} + q^0_i - q^0_j\\
-\end{align}
-We can now simplify this expression by introducing the shift $k \to \va{k} - \va{q}_i$
-\begin{align}
-    &= \sqrt{\va{k}^2+m_\psi^2} + \sqrt{{(\va{k}+\va{q}_j-\va{q}_i)}^2+m_\psi^2} + q^0_i - q^0_j
-\end{align}
-For sufficiently large values of $\va{k}$ this is always positive. It is also easy to show, e.g.\ by taking the derivative, that the minimum of this expression is at $\va{k} = \frac{1}{2} (\va{q}_j-\va{q}_i)$. Since the equation is continuous there exists a zero iff the minimum is $\leq 0$.
-\begin{align}
-    \sqrt{{(\frac{1}{2} (\va{q}_j-\va{q}_i))}^2+m_\psi^2} + \sqrt{{(\frac{1}{2}(\va{q}_j-\va{q}_i))}^2+m_\psi^2} + q^0_i - q^0_j &\leq 0\\
-    \implies\quad {(\va{q}_i-\va{q}_j)}^2 + 4 m_\psi^2 &\leq {(q^0_i - q^0_j)}^2\\
-    \implies\quad {(q^0_i - q^0_j)}^2 - {(\va{q}_j-\va{q}_i)}^2 -  &\geq 4 m_\psi^2\\
-    m_S \geq 2 m_\psi
-\end{align}
-Notice that this equation is lorentz invariant, since the left hand side is just ${(q_j - q_i)}^2 = m_S^2$ the squared invariant mass of the momentum flowing through the two propagators.
-
-Now how can we understand this if the mass has a non-zero imaginary part?

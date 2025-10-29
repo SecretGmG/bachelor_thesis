@@ -1,0 +1,63 @@
+\subsection{Elliptical singularities}
+We can now taka a acloser look at the zeros of $\ELIPT{i}{j}$.
+For this it makes sense to use an offset $\vb{l}$ such that $\va{q}_i = -\va{q}_j = \va{q}$.
+With this we get.
+\begin{equation}
+    \ELIPT{i}{j} =  \sqrt{{(\va{k}-\va{q})}^2+m_\psi^2} + \sqrt{{(\va{k}+\va{q})}^2+m_\psi^2} + 2q^0 \overset{!}{=} 0
+\end{equation}
+Let's get rid of the the square roots, by considering the following argument.
+\begin{align}
+    \sqrt{A}+\sqrt{B} &= C\\
+    2\sqrt{AB} &= C^2-A-B\\
+    4AB &= (C^2-A-B)^2
+\end{align}
+When we now insert and simplify the resulting equation we get.
+\begin{equation}
+    (\va{k}\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
+\end{equation}
+Due to our choice of offset we can now easily parameterize this spherically, with $\va{k} = k\va{\sigma}$ where $\norm*{\va{\sigma}} = 1$ and $k = \norm*{\va{k}}$.
+\begin{align}
+    k^2 \qty(\va{\sigma}\va{q}-{q^0}^2) = (\va{q}^2-{q^0}^2+m^2){q^0}^2
+\end{align}
+Cleaning up a bit further we can find
+\begin{align}
+    k^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\va{q}}{q^0})^2})}^{-1}
+\end{align}
+We can now easily see that there only existst positive solutions for $k$ if $\vb{q}>m^2$
+TODO, THIS I TRUE BUT THE RIGHT TERM ON RHS NEEDS MORE EXPLANATION.
+
+\begin{equation}
+    r = \sqrt{(\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\va{q}}{q^0})^2})}^{-1}}
+\end{equation}
+
+\subsection{Threshold subtraction}
+EXPLAIN BASIC IDEA
+\begin{align}
+    \ELIPT{i}{j} & = 0 + (k-r) \eval{\pdv{k} \ELIPT{i}{j}}_{k=r} + \order{k^2} \\
+    &= (k-r) \qty(r^2 \qty(\frac{1}{E_i}+\frac{1}{E_j})  - r \va{q}\va{\sigma}\qty(\frac{1}{E_i}-\frac{1}{E_j}))\\
+    &= (k-r) \eta_{ij}'(r)
+\end{align}
+
+TODO
+
+We can then define the counter term, that will cancel out the singularity in the improved ltd expression.
+\begin{equation}
+    CT = \Theta(\lambda-\abs{k-\Re{r}}) \frac{1}{(k-r)\eta_{ij}'(r)}\eval[\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}|_{k = r}
+\end{equation}
+
+To perform the radial integration of the counter term we can notice that it is always of the following form.
+\begin{equation}
+    I_{CT} = \int_{-\lambda}^{\lambda} \dd{r} \frac{1}{r+i\Delta} = \ln(\frac{i\Delta+\lambda}{i\Delta-\lambda})
+\end{equation}
+We can notice that the real part of this integration is always zero because $\abs{i\Delta+\lambda} = \abs{i\Delta-\lambda}$.
+We therefore only consider the complex part.
+\begin{equation}
+    I_{CT} = i\qty(\arg(i\Delta + \lambda) - \arg(i\Delta - \lambda))
+\end{equation}
+
+Let's consider this geometrically
+TODO ADD PICTURE
+
+\begin{equation}
+    I_{CT} = i\qty(2\atan(\frac{\Delta}{\lambda})-\pi)
+\end{equation}
