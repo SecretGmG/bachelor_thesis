@@ -1,64 +1,96 @@
 \subsection{Elliptical singularities}
-We can now taka a acloser look at the zeros of $\ELIPT{i}{j}$.
-For this it makes sense to use an offset $\vb{l}$ such that $\va{q}_i = -\va{q}_j = \va{q}$.
-With this we get.
+We can now take a closer look at the zeros of $\ELIPT{i}{j}$.
+For this it makes sense to use an offset such that $\vb{q}_i^\mu = -\vb{q}_j^\mu = \vb{q}^\mu$.
+With this, we get.
 \begin{equation}
-    \ELIPT{i}{j} =  \sqrt{{(\va{k}-\va{q})}^2+m_\psi^2} + \sqrt{{(\va{k}+\va{q})}^2+m_\psi^2} + 2q^0 \overset{!}{=} 0
+    \ELIPT{i}{j} =  \sqrt{{(\va{k}-\va{q})}^2+m^2} + \sqrt{{(\va{k}+\va{q})}^2+m^2} + 2q^0 \overset{!}{=} 0
 \end{equation}
-Let's get rid of the the square roots, by considering the following argument.
+Let's get rid of the square roots, by considering the following argument.
 \begin{align}
     \sqrt{A}+\sqrt{B} &= C\\
     2\sqrt{AB} &= C^2-A-B\\
     4AB &= (C^2-A-B)^2
 \end{align}
-When we now insert and simplify the resulting equation we get.
+When we now insert and simplify, we get the following.
 \begin{equation}
-    (\va{k}\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
+    (\va{k}\cdot\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
 \end{equation}
 Due to our choice of offset we can now easily parameterize this spherically, with $\va{k} = k\va{\sigma}$ where $\norm*{\va{\sigma}} = 1$ and $k = \norm*{\va{k}}$.
 \begin{align}
-    k^2 \qty(\va{\sigma}\va{q}-{q^0}^2) = (\va{q}^2-{q^0}^2+m^2){q^0}^2
+    k^2 \qty(\qty({\va{\sigma}\cdot\va{q}})^2-{q^0}^2) = (\va{q}^2-{q^0}^2+m^2){q^0}^2
 \end{align}
 Cleaning up a bit further we can find
 \begin{align}
-    k^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\va{q}}{q^0})^2})}^{-1}
+    k^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\cdot\va{q}}{q^0})^2})}^{-1}
 \end{align}
-We can now easily see that there only existst positive solutions for $k$ if $\vb{q}>m^2$
-TODO, THIS I TRUE BUT THE RIGHT TERM ON RHS NEEDS MORE EXPLANATION.
+We can now easily see that there only exist positive solutions for $k$ if $\vb{q}^2>m^2$
+
+TODO, THIS I TRUE BUT THE RIGHT TERM ON RHS NEEDS MORE EXPLANATION. PROBABY CONSIDER EACH SPACE AND TIMLEIKE k SEPERATELY
+
+Thus we found a parametrization of the Ellipsoid that describes the zeros in $\ELIPT{i}{j}$
 
 \begin{equation}
-    r = \sqrt{(\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\va{q}}{q^0})^2})}^{-1}}
+    r = r(\va{\sigma}) = \sqrt{(\vb{q}^2-m^2){\qty(1-{\qty(\frac{\va{\sigma}\cdot\va{q}}{q^0})^2})}^{-1}}
 \end{equation}
 
 \subsection{Threshold subtraction}
-EXPLAIN BASIC IDEA
+EXPLAIN BASIC IDEA OF TRHRESHOLD SUBTRACTION
+
+Let us Taylor expand $\ELIPT{i}{j}$ to the first order in $k$ around the zero $r$.
+\begin{equation}
+    \ELIPT{i}{j} = 0 + (k-r) \eval{\pdv{k} \ELIPT{i}{j}}_{k=r} + \order{k^2}
+\end{equation}
+
 \begin{align}
-    \ELIPT{i}{j} & = 0 + (k-r) \eval{\pdv{k} \ELIPT{i}{j}}_{k=r} + \order{k^2} \\
-    &= \\
-    &= (k-r) \qty(r^2 \qty(\frac{1}{E_i}+\frac{1}{E_j})  - r \va{q}\va{\sigma}\qty(\frac{1}{E_i}-\frac{1}{E_j}))\\
-    &= (k-r) \eta_{ij}'(r)
+    I &= \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \qty(\frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}} + \dots)\\
+    &= \int_{0}^{\infty} \dd{k} \int_{S^2} \dd[2]{\sigma} k^2 \qty(\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}} + \dots)
 \end{align}
-
-TODO
-
-We can then define the counter term, that will cancel out the singularity in the improved ltd expression.
+We can now define a counter term that will cancel the singularity in the $r$ integral and simplify nicely.
 \begin{equation}
-    CT = \Theta(\lambda-\abs{k-\Re{r}}) \frac{1}{(k-r)\eta_{ij}'(r)}\eval[\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}|_{k = r}
+    CT = \Theta(\lambda-\abs{k-\Re(r)}) \frac{1}{(k-r)}\frac{r^2}{k^2} N(\va{\sigma})
+\end{equation}
+Where $N(\va{\sigma})$ is constant in the radius.
+\begin{equation}
+    N(\va{\sigma}) = \qty[\frac{1}{\pdv{k} \ELIPT{i}{j}}\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}]_{\va{k} = k\va{\sigma}}
+\end{equation}
+The partial derivative is easy to compute:
+
+\begin{equation}
+    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k\va{\sigma}} = \va{\sigma}\cdot\frac{\va{k}-\va{q}}{E_i} + \va{\sigma}\cdot\frac{\va{k}+\va{q}}{E_j}
 \end{equation}
 
-To perform the radial integration of the counter term we can notice that it is always of the following form.
+The radial part of the integration of the counterterm can be performed analytically!
+
 \begin{equation}
-    I_{CT} = \int_{-\lambda}^{\lambda} \dd{r} \frac{1}{r+i\Delta} = \ln(\frac{i\Delta+\lambda}{i\Delta-\lambda})
+    I_{CT} = \int_{S^2} \dd[2]{\sigma} N(\va{\sigma}) r^2(\va{\sigma}) \int_{-\lambda}^{\lambda} \\dd{k} \frac{1}{k-i\Im(r)}
 \end{equation}
-We can notice that the real part of this integration is always zero because $\abs{i\Delta+\lambda} = \abs{i\Delta-\lambda}$.
-We therefore only consider the complex part.
+
+To perform the radial integration of the counter term we can notice that it is of the following form.
 \begin{equation}
-    I_{CT} = i\qty(\arg(i\Delta + \lambda) - \arg(i\Delta - \lambda))
+    I_{CT, R} = \int_{-\lambda}^{\lambda} \dd{x} \frac{1}{x-i\Delta} = \ln(\frac{\lambda-i\Delta}{-\lambda-i\Delta})
+\end{equation}
+We can notice that the real part of this integration is always zero because $\abs{\lambda-i\Delta} = \abs{-\lambda-i\Delta}$. We therefore get.
+\begin{equation}
+    I_{CT, R} = i\qty(\arg(\lambda-i\Delta) - \arg(-\lambda-i\Delta))
 \end{equation}
 
 Let's consider this geometrically
+
 TODO ADD PICTURE
 
 \begin{equation}
-    I_{CT} = i\qty(2\atan(\frac{\Delta}{\lambda})-\pi)
+    I_{CT, R} =  -i\qty(\pi + 2\atan(\frac{\Delta}{\lambda}))
 \end{equation}
+
+We thus arrive at the final expression for the integrated counterterm
+
+\begin{equation}
+    I_{CT} = -i\int_{S^2} \dd[2]{\sigma} N(\va{\sigma}) \qty(\pi + 2\atan(\frac{\Im(r)}{\lambda}))
+\end{equation}
+
+WHAT ABOUT 2. ORDER SINGULARITIES, WHERE $\ELIPT{i}{j} = \ELIPT{k}{l} = 0$?
+IS IT NUMERICALLY STABLE ENOUGH TO SUBTRACT COUNTER TERM NUMERICALLY?
+IS THE PRINCIPLE SQUARE ROOT ALWAYS THE CORRECT CHOICE FOR THE OTHER TERMS IN $N(\va{\sigma})$?
+WHAT DO THE QUADRANTS OF THE COMPLEX MASS REPRESENT PHYSICALLY?
+HOW SHOULD I CHOOSE $\lambda$ PROBABLY AS LARGE AS POSSIBLE WITHOUT CREATING THE NEW SINGULARITY AT 0 DUE TO $\frac{1}{k^2}$
+maybe choose $\lambda = r/3$ because that reaches exactly to the extrema of $\frac{1}{k^2(k-r)}$
