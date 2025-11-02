@@ -1,0 +1,38 @@
+\begin{tikzpicture}[scale=1.2,>=latex]
+
+% Axes
+\draw[->,gray] (-3.5,0)--(3.5,0) node[right]{$\mathrm{Re}\,k^0$};
+\draw[->,gray] (0,-3.5)--(0,1.5) node[above]{$\mathrm{Im}\,k^0$};
+
+% Red poles (values roughly matching Python example)
+\foreach \x/\y/\lbl in {
+  -2/0.1/{-E1},
+  0.5/-0.1/{+E1},
+  -1.25/0.1/{-E2},
+  1.25/-0.1/{+E2},
+  -0.5/0.1/{-E3},
+  2/-0.1/{+E3}
+}{
+  \fill[red] (\x,\y) circle(1.8pt);
+  \node[above=3pt] at (\x,\y) {\lbl};
+}
+
+% Contour (clockwise semicircle in lower half-plane)
+\draw[thick,blue,
+  decoration={markings,mark=at position 0.25 with {\arrow{>}},
+  mark=at position 0.75 with {\arrow{>}}},
+  postaction={decorate}
+  ] (3,0) arc[start angle=0,end angle=-180,radius=3];
+
+% Lower line along real axis (closing contour)
+\draw[thick,blue,postaction={decorate},
+  decoration={markings,mark=at position 0.25 with {\arrow{>}},
+  mark=at position 0.75 with {\arrow{>}}}
+  ] (-3,0)--(3,0);
+
+% Labels for contour
+\node[blue,below right] at (2,-2.2) {$\Gamma$};
+\node[below right] at (3,0) {$R$};
+\node[below left] at (-3,0) {$-R$};
+
+\end{tikzpicture}

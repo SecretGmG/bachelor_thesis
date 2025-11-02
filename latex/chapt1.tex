@@ -1,0 +1,89 @@
+\chapter{Triangle Integral}
+
+The goal is to prepare the scalar triangle integral $I$ for numerical
+integration. e do this by integrating over the $k^0$ component analytically,
+giving us the Loop Tree Duality (LTD) expression. This ill then be further
+simplified (MENTION CROSS FREE FAMILY).
+
+\begin{figure}[H]
+    \centering
+    \input{assets/diagrams/traingle.tex}
+   \caption{Feynman diagram of the Triangle loop integral} \label{fig:triangle_feynman}
+\end{figure}
+
+\begin{equation}
+    I = \int \frac{\dd[4]{k}}{{(2\pi)}^4} \frac{i}{D_1D_2D_3} \label{eq:triangle_integral}
+\end{equation}
+with
+\begin{equation}
+    D_i = {(\vb{k}-\vb{q}_i)}^2-m^2+i\varepsilon \label{eq:denom}
+\end{equation}.
+and
+\begin{align}
+    \vb{q}_1 = \vb{k}_0            \\
+    \vb{q}_2 = \vb{k}_0 - \vb{p}_1 \\
+    \vb{q}_3 = \vb{k}_0 + \vb{p}_2
+\end{align}
+here $\vb{k}_0$ can be chosen freely, due to integrating over the entire spacetime.
+
+\section{Loop Tree Duality}
+We will perform the $k^0$ integration with the cauchy theorem. hen closing the
+contour such that only the poles coming from the principle square root are
+included, and closing it ith a semicircle ith radius $R$ it is easy to see that
+it's contribution vanishes as $R \to \infty$.
+%\begin{equation}
+%    \int_{0}^{-\pi} \dd{\phi} \frac{ir}{D_1D_2D_3} \sim \int_{0}^{-\pi} \dd{\phi} \order{r^{-5}}
+%\end{equation}
+
+The poles of the integrand from Eq.~\eqref{eq:integral} in $k^0$ are found to
+be
+\begin{equation}
+    k^0 = q_i^0 \pm \qty(\sqrt{{\qty(\va{k}-\va{q}_i)}^2+m^2}-i\varepsilon) = q_i^0 \pm \qty(E_i - i\varepsilon)
+\end{equation}
+Notice that the principle square root preserves the sign of the imaginary part of the argument. Thus we need to close the contour below if $\Im{m^2}\leq0$ and above otherwise. From now on we will assume that $\Im{m^2}\leq$. This contour is shown in Figure~\ref{fig:poles}.
+\begin{figure}[H]
+    \centering
+    \input{assets/diagrams/poles.tex}
+    \caption{Poles of the denominator}
+    \label{fig:poles}
+\end{figure}
+
+We can now apply cauchy's theorem to perform the $k^0$ integral.
+\begin{equation}
+    I = \int \frac{\dd[4]{k}}{{(2\pi)}^4} 2\pi i \sum_{i= 1}^{3} \On{Res}_{k^0 = q^0_i + E_i}\qty[\frac{i}{D_1D_2D_3}] \label{eq:cauchy}
+\end{equation}
+
+Let's compute the residues.
+\begin{equation}
+    \On{Res}_{k^0 = q^0_i + E_i}\qty[\frac{i}{D_1D_2D_3}] = \qty[\frac{i}{D_i'}\prod_{\neq j} \frac{1}{D_j}]_{k^0=E_i}= \frac{i}{2E_i} \prod_{i\neq j} \eval{\frac{1}{D_j}}_{k^0=E_i} \label{eq:residue}
+\end{equation}
+
+\newcommand{\ELIPT}[2]{\eta_{#1#2}^{++}}
+\newcommand{\HYPER}[2]{\eta_{#1#2}^{+-}}
+
+We can also introduce $\ELIPT{i}{j}$ called E-Surface and $\HYPER{i}{j}$ called H-Surface to simplify the algebra.
+
+\begin{align}
+    \eval{D_j}_{k^0=E_i} &= {\qty(q^0_i+E_i-q^0_j)}^2 - \overbrace{{\qty(\va{k}-\va{q}_j)}^2+m^2}^{E_j^2}\\
+    &= E_i^2+{q_i^0}^2+{q_j^0}^2-2q_i^0q_j^0+2q_i^0E_i - 2q_j^0E_i-E_j^2\\
+    &= \underbrace{\left(E_i+E_j+q_i^0-q_j^0\right)}_{\ELIPT{i}{j}}\underbrace{\left(E_i-E_j+q_i^0-q_j^0\right)}_{\HYPER{i}{j}} \label{eq:surfaces}
+\end{align}
+
+\newcommand{\BLTD}[3]{2E_{#1}\ELIPT{#1}{#2}\HYPER{#1}{#2}\ELIPT{#1}{#3}\HYPER{#1}{#3}}
+\begin{equation}
+    I =  \int \frac{\dd[3]{k}}{{(2\pi)}^3}\qty(\frac{1}{\BLTD{1}{2}{3}}+\frac{1}{\BLTD{2}{1}{3}}+\frac{1}{\BLTD{3}{1}{2}}) \label{eq:naive_ltd}
+\end{equation}
+
+While this is a nice expression, it is not yet suited for numeric integration, since all of the H-Surfaces contain singularities which would make the procedure numerically unstable. It turns out however that these singularities are spurious and can be removed by purely algebraic manipulations, shown in detail in Appendix~\ref{sec:improved_ltd}. The resulting expression contains only E-Surfaces.
+
+\begin{align*}
+I(q,p,m_\psi)
+&=  \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \Bigg[\\
+  &\frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}}
++ \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
++ \frac{1}{\ELIPT{1}{2}\ELIPT{3}{2}}
++ \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}
++ \frac{1}{\ELIPT{1}{3}\ELIPT{2}{3}}
++ \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
+\Bigg] \label{eq:improved_ltd}
+\end{align*}

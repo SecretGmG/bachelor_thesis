@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{report}
 
 %-- My Definitions
 \usepackage{mydefs}
@@ -20,8 +20,8 @@
 
 %to compile Feynman diagrams: uncomment these
 %can take a lot of compile time, set the compiler to LuaLaTex
-%\usepackage[compat=1.1.0]{tikz-feynman}
-%\usepackage{tikz}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\usepackage{tikz}
 
 %-- Computer science stuff
 \usepackage{algorithm, algpseudocode}
@@ -63,6 +63,7 @@
 %\setlength{\parskip}{0.5\baselineskip}
 
 %-----> Document begins here <-----
+
 \begin{document}
 
 % -- Title page
@@ -84,8 +85,9 @@ TODO
 \tableofcontents
 
 \clearpage
-\input{ltd.tex}
+\input{chapt1.tex}
 \input{thresh.tex}
+\input{appendix.tex}
 
 
 \end{document}
