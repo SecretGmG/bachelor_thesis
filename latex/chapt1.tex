@@ -35,7 +35,7 @@ it's contribution vanishes as $R \to \infty$.
 %    \int_{0}^{-\pi} \dd{\phi} \frac{ir}{D_1D_2D_3} \sim \int_{0}^{-\pi} \dd{\phi} \order{r^{-5}}
 %\end{equation}
 
-The poles of the integrand from Eq.~\eqref{eq:integral} in $k^0$ are found to
+The poles of the integrand from Eq.~\eqref{eq:triangle_integral} in $k^0$ are found to
 be
 \begin{equation}
     k^0 = q_i^0 \pm \qty(\sqrt{{\qty(\va{k}-\va{q}_i)}^2+m^2}-i\varepsilon) = q_i^0 \pm \qty(E_i - i\varepsilon)
@@ -93,38 +93,42 @@ TODO: MAYBE MENTION CFF HERE!
 
 \section{E-Surfaces}
 The E-Surfaces themselves may still have singularities. We will now study them more closely.
-Without loss of generality we will consider the case where $\va{k}_i = -\va{k}_j = \va{k}$, as it will make the following calculations less tedious.
+Let us consider the problem ins spherical coordinates
 \begin{equation}
-    \ELIPT{i}{j} =  \sqrt{{(\va{k}-\va{q})}^2+m^2} + \sqrt{{(\va{k}+\va{q})}^2+m^2} + 2k^0 \overset{!}{=} 0
+\va{k} = \va{k'} + \frac{1}{2}(\va{q}_i+\va{q}_j) \qquad \text{with} \qquad \va{k'} = k \, \hat{k} + \va{k}_0
 \end{equation}
-Notice that the square roots of the E-Surface can be eliminated, because it is of the following form
+Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface simplifies to the following form.
+\begin{equation}
+    \ELIPT{i}{j} =  \sqrt{{(\va{k'}-\va{q})}^2+m^2} + \sqrt{{(\va{k'}+\va{q})}^2+m^2} + 2q^0 \overset{!}{=} 0
+\end{equation}
+Notice that the square roots of the E-Surface can be eliminated:
 \begin{align}
     \sqrt{A}+\sqrt{B} &= C\\
     2\sqrt{AB} &= C^2-A-B\\
-    4AB &= (C^2-A-B)^2
+    4AB &= {(C^2-A-B)}^2
 \end{align}
 When we now insert and simplify, we get the following expression, which is a second order polynomial.
 \begin{equation}
-    (\va{k}\cdot\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
+    {(\va{k'}\cdot\va{q})}^2-({\va{k'}}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
 \end{equation}
 
-The geometry of the solution is more apparent when we parameterize this spherically, with $\va{k} = k\,\hat{k} + \va{k}_0$ where $\norm*{\hat{k}} = 1$ and $k = \norm*{\va{k}}$.
+The geometry of the solution is more apparent when we insert the parametrization.
 \begin{align}
     %(\va{k}\cdot\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0\\
     %&= k^2 \qty(\hat{k}\cdot \va{q})^2 - 2 k (\hat{k} \cdot \va{q})(\va{k}_0 \cdot \va{q}) + (\va{k}_0\cdot \va{q})^2
     %-k^2 {q^0}^2 + 2 k \hat{k}\cdot \va{k}_0 {q^0}^2 + \qty({q^0}^2 - \va{q}^2 - m^2) {q^0}^2\\
-    k^2 \qty(1-\qty(\frac{\hat{k}\cdot \va{q}}{q^0})^2) + 2 k \hat{k}\cdot \va{k}_0 - \qty(\vb{q}^2 - m^2) = 0 \label{eq:e_surface_quad}
+    k^2 \qty(1-{\qty(\frac{\hat{k}\cdot \va{q}}{q^0})}^2) + 2 k \hat{k}\cdot \va{k}_0 - \qty(\vb{q}^2 - m^2) = 0 \label{eq:e_surface_quad}
 \end{align}
 In the case where $\va{k}_0 = \va{0}$ it is made explicit, that the E-Surface is an ellipsoid and radially symmetric around the axis $\va{q}$.
 \begin{equation}
-    {k}^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\hat{k}\cdot\va{q}}{q^0})^2})}^{-1}
+    {k}^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\hat{k}\cdot\va{q}}{q^0})}^2)}^{-1}
 \end{equation}
 
 In this form it is also more convenient to find an existence condition for the E-Surface.
 First notice that, because the external momenta are all timelike, $\va{q}$ is also timelike. 
 This implies 
 \begin{equation}
-    {\qty(1-{\qty(\frac{\va{\sigma}\cdot\va{q}}{q^0})^2})}^{-1} > 0
+    {\qty(1-{\qty(\frac{\va{\sigma}\cdot\va{q}}{q^0})}^2)}^{-1} > 0
 \end{equation}
 We can now easily see that there only exist positive solutions for $k$ if $\vb{q}^2>m^2$
 
@@ -161,11 +165,11 @@ We can now define the form of our counterterm that will cancel the singularity i
 \end{equation}
 Where $f\neq 0$ is an arbitrary smooth function, $\chi (\va{k})$ is a mask, that is smooth at $\chi (\va{k}^*) = 1$ and $N(\va{\sigma})$ is a constant defined below.
 \begin{equation}
-    N(\hat{k}) = \qty[\frac{1}{\pdv{k} \ELIPT{i}{j}}\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}]_{\va{k}^*}
+    N(\hat{k}) = {\qty[\frac{1}{\pdv{k} \ELIPT{i}{j}}\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}]}_{\va{k}^*}
 \end{equation}
 The partial derivative is easy to compute
 \begin{equation}
-    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k \hat{k}} = \qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{k} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{k}]_{\va{k} = \va{k}^*}
+    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k \hat{k}} = {\qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{k} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{k}]}_{\va{k} = \va{k}^*}
 \end{equation}
 
 TODO: show that the limit $\lim_{k\to k^*} \frac{1}{\ELIPT{i}{j}} - \on{CT}$ is actually finite!
@@ -187,7 +191,7 @@ The radial integration is now easy to compute
     I_{CT, R} = \int_{-\lambda}^{\lambda} \dd{k} \frac{1}{k-k^*} = \ln(\frac{\lambda_1-k^*}{\lambda_2-k^*})
 \end{equation}
 Let's consider the special case where $\lambda_1 = \Re k^* - \lambda$ and $\lambda_2 = \Re k^* + \lambda$.
-Then the real part of this integration is always zero because $\abs{\lambda-i\Delta} = \abs{-\lambda-i\Delta}$, we find.
+Then the real part of this integration is always zero because $\abs{\lambda-i\Im k^*} = \abs{-\lambda-i\Im k^*}$, we find.
 \begin{equation}
     I_{CT, R} =  -i\qty(\pi + 2\atan(\frac{\Im k^*}{\lambda}))
 \end{equation}
@@ -195,3 +199,12 @@ Notice that this result implies that the counter term integration does not depen
 \begin{equation}
     I_{CT} = -i\int_{S^2} \dd[2]{\hat{k}} N(\hat{k}) I_{CT, R}
 \end{equation}
+The calculations above hold for arbitrary values of $k^* \not\in (-\infty,0]$ % chktex 9 chktex 17
+
+\subsubsection{Threshold subtraction in the actual integrand}
+Local cancelation of singularities. That's why we need to parameterize such that the parametrization match on the cross section.
+To keep both radii integrable in the way described above, the center needs to be chosen inside both surfaces.
+
+what if they touch? still possible to cancel locally by aligning. prob not necessary, but this might also increase stability if the almost touch.
+ 
+
