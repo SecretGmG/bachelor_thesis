@@ -1,14 +1,12 @@
 \chapter{Triangle Integral}
-
-The goal is to prepare the scalar triangle integral $I$ for numerical
-integration. e do this by integrating over the $k^0$ component analytically,
-giving us the Loop Tree Duality (LTD) expression. This will then be further
-simplified.
+The goal of this chapter is to apply Threshold subtraction to the triangle integral where the mass $m$ is complex, to show that the core ideas of threshold subtraction generalize.
+We will restrict ourselves to masses where $\Re(m^2) > 0$ and $\Im{m^2} \leq 0$ as it will make the signs and evaluations of square roots simpler.
+The procedure we want to describe is shown in figure~\ref{fig:triangle_feynman}, the corresponding integral is given in Eq.~\eqref{eq:triangle_integral}.
 
 \begin{figure}[H]
     \centering
     \input{assets/diagrams/traingle.tex}
-   \caption{Feynman diagram of the Triangle loop integral} \label{fig:triangle_feynman}
+   \caption{Feynman diagram of the Triangle loop integral}\label{fig:triangle_feynman}
 \end{figure}
 
 \begin{equation}
@@ -20,32 +18,25 @@ with
 \end{equation}.
 and
 \begin{align}
-    \vb{q}_1 = \vb{k}_0            \\
-    \vb{q}_2 = \vb{k}_0 - \vb{p}_1 \\
-    \vb{q}_3 = \vb{k}_0 + \vb{p}_2
+    \vb{q}_1 = \vb{0}           \\
+    \vb{q}_2 = - \vb{p}_1 \\
+    \vb{q}_3 = \vb{p}_2
 \end{align}
-here $\vb{k}_0$ can be chosen freely, due to integrating over the entire spacetime.
 
 \section{Loop Tree Duality}
-We will perform the $k^0$ integration with the cauchy theorem. hen closing the
-contour such that only the poles coming from the principle square root are
-included, and closing it ith a semicircle ith radius $R$ it is easy to see that
-it's contribution vanishes as $R \to \infty$.
-%\begin{equation}
-%    \int_{0}^{-\pi} \dd{\phi} \frac{ir}{D_1D_2D_3} \sim \int_{0}^{-\pi} \dd{\phi} \order{r^{-5}}
-%\end{equation}
-
-The poles of the integrand from Eq.~\eqref{eq:triangle_integral} in $k^0$ are found to
-be
+We will perform the $k^0$ integration with the cauchy theorem.
+For this we need to consider the poles of the integrand from Eq.~\eqref{eq:triangle_integral} in $k^0$. These are found to
+be the following.
 \begin{equation}
     k^0 = q_i^0 \pm \qty(\sqrt{{\qty(\va{k}-\va{q}_i)}^2+m^2}-i\varepsilon) = q_i^0 \pm \qty(E_i - i\varepsilon)
 \end{equation}
-Notice that the principle square root preserves the sign of the imaginary part of the argument. Thus we need to close the contour below if $\Im{m^2}\leq0$ and above otherwise. From now on we will assume that $\Im{m^2}\leq$. This contour is shown in Figure~\ref{fig:poles}.
+We will arbitrarily decide to close the contour around the poles corresponding to the principal square roots.
+Notice that the principal square root preserves the sign of the imaginary part of the argument. 
+Thus we need to close the contour below. This contour is shown in Figure~\ref{fig:poles}.
 \begin{figure}[H]
     \centering
     \input{assets/diagrams/poles.tex}
-    \caption{Poles of the denominator}
-    \label{fig:poles}
+    \caption{Poles of the denominator}\label{fig:poles}
 \end{figure}
 
 We can now apply cauchy's theorem to perform the $k^0$ integral.
@@ -55,7 +46,7 @@ We can now apply cauchy's theorem to perform the $k^0$ integral.
 
 Let's compute the residues.
 \begin{equation}
-    \On{Res}_{k^0 = q^0_i + E_i}\qty[\frac{i}{D_1D_2D_3}] = \qty[\frac{i}{D_i'}\prod_{\neq j} \frac{1}{D_j}]_{k^0=E_i}= \frac{i}{2E_i} \prod_{i\neq j} \eval{\frac{1}{D_j}}_{k^0=E_i} \label{eq:residue}
+    \On{Res}_{k^0 = q^0_i + E_i}\qty[\frac{i}{D_1D_2D_3}] = {\qty[\frac{i}{D_i'}\prod_{\neq j} \frac{1}{D_j}]}_{k^0=E_i}= \frac{i}{2E_i} \prod_{i\neq j} \eval{\frac{1}{D_j}}_{k^0=E_i} \label{eq:residue}
 \end{equation}
 
 \newcommand{\ELIPT}[2]{\eta_{#1#2}^{++}}
@@ -76,8 +67,6 @@ Inserting the results from Eq.~\eqref{eq:surfaces} and Eq.~\eqref{eq:residue} in
 
 While this is a nice expression, it is not yet suited for numeric integration, since all of the H-Surfaces contain singularities which would make the procedure numerically unstable. It turns out however that these singularities are spurious and can be removed by purely algebraic manipulations, shown in detail in Appendix~\ref{sec:improved_ltd}. The resulting expression contains only E-Surfaces.
 
-TODO: MAYBE MENTION CFF HERE!
-
 \begin{equation}
     I
     =  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \qty(
@@ -93,118 +82,101 @@ TODO: MAYBE MENTION CFF HERE!
 
 \section{E-Surfaces}
 The E-Surfaces themselves may still have singularities. We will now study them more closely.
-Let us consider the problem ins spherical coordinates
+Let us consider the problem in hemispherical coordinates centered around $\va{k_0}$. We also introduce $\va{k'}$ to simplify the algebra.
 \begin{equation}
-\va{k} = \va{k'} + \frac{1}{2}(\va{q}_i+\va{q}_j) \qquad \text{with} \qquad \va{k'} = k \, \hat{k} + \va{k}_0
+\va{k} = k \, \hat{\vb{k}} + \va{k_0} = \underbrace{k \, \hat{\vb{k}} + \va{k'_0}}_{\va{k'}} - \frac{1}{2}(\va{q}_i+\va{q}_j)
 \end{equation}
 Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface simplifies to the following form.
 \begin{equation}
     \ELIPT{i}{j} =  \sqrt{{(\va{k'}-\va{q})}^2+m^2} + \sqrt{{(\va{k'}+\va{q})}^2+m^2} + 2q^0 \overset{!}{=} 0
 \end{equation}
-Notice that the square roots of the E-Surface can be eliminated:
+Notice that if $q^0 > 0$ there cannot be any solutions, otherwise the square roots of the E-Surface can be eliminated by considering the following.
 \begin{align}
     \sqrt{A}+\sqrt{B} &= C\\
-    2\sqrt{AB} &= C^2-A-B\\
-    4AB &= {(C^2-A-B)}^2
+    \implies\quad 2\sqrt{AB} &= C^2-A-B\\
+    \implies\quad 4AB &= {(C^2-A-B)}^2
 \end{align}
-When we now insert and simplify, we get the following expression, which is a second order polynomial.
+When we now insert and simplify, we get the following expression characterizing the E-surface.
 \begin{equation}
-    {(\va{k'}\cdot\va{q})}^2-({\va{k'}}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0
+    {\va{k'}}^2 - {\qty(\va{k'}\cdot\va{v})}^2 = \vb{q}^2-m^2 \qquad \text{with} \qquad \va{v} = \frac{\va{q}}{q^0}
 \end{equation}
-
-The geometry of the solution is more apparent when we insert the parametrization.
-\begin{align}
-    %(\va{k}\cdot\va{q})^2-(\va{k}^2+\va{q}^2+m^2){q^0}^2+{q^0}^4 = 0\\
-    %&= k^2 \qty(\hat{k}\cdot \va{q})^2 - 2 k (\hat{k} \cdot \va{q})(\va{k}_0 \cdot \va{q}) + (\va{k}_0\cdot \va{q})^2
-    %-k^2 {q^0}^2 + 2 k \hat{k}\cdot \va{k}_0 {q^0}^2 + \qty({q^0}^2 - \va{q}^2 - m^2) {q^0}^2\\
-    k^2 \qty(1-{\qty(\frac{\hat{k}\cdot \va{q}}{q^0})}^2) + 2 k \hat{k}\cdot \va{k}_0 - \qty(\vb{q}^2 - m^2) = 0 \label{eq:e_surface_quad}
-\end{align}
-In the case where $\va{k}_0 = \va{0}$ it is made explicit, that the E-Surface is an ellipsoid and radially symmetric around the axis $\va{q}$.
+By inserting the parametrization we can then solve for the solutions in the radius $k$.
 \begin{equation}
-    {k}^2 = (\vb{q}^2-m^2){\qty(1-{\qty(\frac{\hat{k}\cdot\va{q}}{q^0})}^2)}^{-1}
+    {\qty(k \, \hat{\vb{k}} + \va{k'_0})}^2 - {\qty((k \, \hat{\vb{k}} + \va{k'_0})\cdot \va{v})}^2 = \vb{q}^2-m^2
 \end{equation}
-
-In this form it is also more convenient to find an existence condition for the E-Surface.
-First notice that, because the external momenta are all timelike, $\va{q}$ is also timelike. 
-This implies 
+We find the following second order polynomial.
 \begin{equation}
-    {\qty(1-{\qty(\frac{\va{\sigma}\cdot\va{q}}{q^0})}^2)}^{-1} > 0
+    \qty[1-\hat{\vb{k}} \cdot \va{v}] k^2 +  2 \qty[\hat{\vb{k}} \cdot \va{k'_0} - \qty(\hat{\vb{k}} \cdot \va{v})\qty(\va{k'_0} \cdot \va{v})]\, k + \qty[\va{k_0}^2 - {\qty(\va{k'_0} \cdot \va{v})} - \vb{q}^2 + m^2] = 0 \label{eq:e_surface_quad}
 \end{equation}
-We can now easily see that there only exist positive solutions for $k$ if $\vb{q}^2>m^2$
-
+The geometry of the E-surface is made more apparent when choosing the parametrization center such that $\va{k'_0} = \va{0}$. In this case the expression above can simplify to the following well known parametrization of an ellipsoid.
+\begin{equation}
+    k^2 = \frac{\vb{q}^2-m^2}{1-{\qty(\hat{\vb{k}} \cdot \va{v})}^2}
+\end{equation}
 \section{Threshold subtraction}
-EXPLAIN BASIC IDEA OF TRHRESHOLD SUBTRACTION
-
+local cancellation etc.
 \subsection{Subtraction of a single E-Surface}
-It makes sense to chose a parametrization in which there always exists a dimension where the singularity is integrable.
-The approach we will use is to parameterize the space spherically, choosing the centre inside the ellipsoid.
-The zeros along the radius can then be found with Eq.~\eqref{eq:e_surface_quad}.
-Due to this choice there will always only exist one positive solution which we will call $k^*$
-
-IDEA:
-CHOOSE CENTER EXACTLY IN MIDDLE, THEN PARAMETERIZE SO THAT VALUES ARE LOCAL ONLY NEAR CROSSOVER IN A WAY THAT ALWAYS WORKS.
-THIS SHOULD THEN ALSO WORK FOR THE DEGENERATE CASE WHERE THE SURFACES TOUCH??
-MIGHT BE MORE ELEGANT. BUT THE NECEASSARY TRANSFORMATION COULD BE COMPLICATED
-
-TODO
-
-Let us Taylor expand $\ELIPT{i}{j}$ to the first order in $k$ around the zero $k^*$, also define $\va{k}^* = k^*\,\hat{k}+\va{k}_0$
+Let's define a counterterm to subtract the E-surface pole from an integrand $\mathcal{I}$ of the form
 \begin{equation}
-    \ELIPT{i}{j} = 0 + (k-k^*) \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=\va{k}^*} + \order{k^2}
+    \mathcal{I} = \frac{f(\va{k})}{\ELIPT{i}{j}}
 \end{equation}
+where we parameterize the space hemispherically with the center $\va{k}_0$ chosen inside of the ellipsoid.
+The zeros along the radius can then be found with Eq.~\eqref{eq:e_surface_quad}.
+We will always find two solutions, which we will call $k^*_1$ and $k^*_2$.
 
-Remember that:
-\begin{align}
-    I &= \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \qty(\frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}} + \dots)\\
-    &= \int_{0}^{\infty} \dd{k} \int_{S^2} \dd[2]{\sigma} k^2 \qty(\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}} + \dots)
-\end{align}
-
+Let us Taylor expand $\ELIPT{i}{j}$ to the first order in $k$ around the zero $k^*_i$, also define $\va{k^*_i} = k^*\,\hat{\vb{k}} +\va{k_0}$
+\begin{equation}
+    \ELIPT{i}{j} = 0 + (k-k^*) \underbrace{\eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=\va{k}^*}}_{\eta'} + \order{k^2}
+\end{equation}
 We can now define the form of our counterterm that will cancel the singularity in $k^*$.
 \begin{equation}
-    \on{CT} = \frac{\chi (\va{k})}{(k-k^*)} \frac{\eval{f}_{\va{k}^*}}{f} N(\hat{k})
+    \on{CT} = \chi (\va{k}) \frac{f(\va{k^*_i})}{(k-k^*)\eta'}
 \end{equation}
-Where $f\neq 0$ is an arbitrary smooth function, $\chi (\va{k})$ is a mask, that is smooth at $\chi (\va{k}^*) = 1$ and $N(\va{\sigma})$ is a constant defined below.
-\begin{equation}
-    N(\hat{k}) = {\qty[\frac{1}{\pdv{k} \ELIPT{i}{j}}\frac{1}{(2E_1)(2E_2)(2E_3)} \frac{1}{\ELIPT{k}{l}}]}_{\va{k}^*}
-\end{equation}
+where $\chi (\va{k})$ is an arbitrary mask, that is smooth at $\chi (\va{k}^*) = 1$
 The partial derivative is easy to compute
 \begin{equation}
-    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k \hat{k}} = {\qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{k} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{k}]}_{\va{k} = \va{k}^*}
+    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k \hat{\vb{k}} } = {\qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{\vb{k}} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{\vb{k}} ]}_{\va{k} = \va{k}^*}
 \end{equation}
 
-TODO: show that the limit $\lim_{k\to k^*} \frac{1}{\ELIPT{i}{j}} - \on{CT}$ is actually finite!
+\subsection{Radially integrating the counterterm}
+The choice of the mask $\chi$ is important to ensure, that the analytical integration over the pole in the counterterm is feasible.
+The integral of the counterterm can be written in hemispherical coordinates centered around $\va{k_0}$.
 
-Parameterizing the space spherically centered around $\va{k}_0$
 \begin{equation}
-    I_{\on{CT}} = \int_{S^2} \dd[2]{\hat{k}} \int_{0}^{\infty} \dd{k} {k}^2 \on{CT}(\vec{k})
+    I_{\on{CT}} = \int_{S^2} \dd[2]{\hat{\vb{k}} } \int_{0}^{\infty} \dd{k} {k}^2 \on{CT}(\vec{k})
 \end{equation}
-Here we choose $f(\va{k}) = k^2$ such that the integration measure $k^2$ will be canceled out exactly.
-If we also choose $\chi(\va{k}) = \Theta(\lambda - \abs{k^*-k})$ with $\lambda < k^*$ we get a particularly simple integral.
+
+We can now notice some interesting things about the choice of $\chi$.
+\begin{itemize}
+    \item We can remove the jacobian $k^2$ by choosing $\chi = \frac{{k^*}^2}{k^2}$.
+    \item If $\chi = \frac{{k^*}^2}{k^2} f(k)$ where $f$ is an even function, the real part of the integration will be identically $0$  
+\end{itemize}
+Notice however that if we choose to eliminate the jacobian in this way we must ensure that either, the parametrization of the subtracted integrand has the same jacobian or that we include some other factors that ensure that $\chi$ stays finite as $k \to 0$.
+
+In our case we will choose the following mask $\chi$.
 \begin{equation}
     \chi{\va{k}} = \begin{cases}
-        1&k \in (\lambda_1, \lambda_2)\\
+        \frac{{k^*}^2}{k^2} & k \in (\lambda_1, \lambda_2)\\
         0& \text{else}
     \end{cases}
 \end{equation}
 The radial integration is now easy to compute
 \begin{equation}
-    I_{CT, R} = \int_{-\lambda}^{\lambda} \dd{k} \frac{1}{k-k^*} = \ln(\frac{\lambda_1-k^*}{\lambda_2-k^*})
+    I_{CT, R} = \int_{-\lambda_1}^{\lambda_2} \dd{k} \frac{1}{k-k^*} = \ln(\frac{-\lambda_1-k^*}{\lambda_2-k^*})
 \end{equation}
 Let's consider the special case where $\lambda_1 = \Re k^* - \lambda$ and $\lambda_2 = \Re k^* + \lambda$.
 Then the real part of this integration is always zero because $\abs{\lambda-i\Im k^*} = \abs{-\lambda-i\Im k^*}$, we find.
 \begin{equation}
     I_{CT, R} =  -i\qty(\pi + 2\atan(\frac{\Im k^*}{\lambda}))
 \end{equation}
-Notice that this result implies that the counter term integration does not depend on the causal prescription!
+In this result we recover the original TODO.
 \begin{equation}
-    I_{CT} = -i\int_{S^2} \dd[2]{\hat{k}} N(\hat{k}) I_{CT, R}
+    I_{CT} = -i\int_{S^2} \dd[2]{\hat{\vb{k}} } N(\hat{\vb{k}} ) I_{CT, R}
 \end{equation}
-The calculations above hold for arbitrary values of $k^* \not\in (-\infty,0]$ % chktex 9 chktex 17
 
 \subsubsection{Threshold subtraction in the actual integrand}
-Local cancelation of singularities. That's why we need to parameterize such that the parametrization match on the cross section.
-To keep both radii integrable in the way described above, the center needs to be chosen inside both surfaces.
+To simplify we choose a single center, for the integration
 
-what if they touch? still possible to cancel locally by aligning. prob not necessary, but this might also increase stability if the almost touch.
- 
 
+\subsection{Results}
+
+Examples for 
