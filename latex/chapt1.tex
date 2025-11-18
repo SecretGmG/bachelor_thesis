@@ -161,7 +161,7 @@ In our case we will choose the following mask $\chi$.
 \end{equation}
 The radial integration is now easy to compute
 \begin{equation}
-    I_{CT, R} = \int_{-\lambda_1}^{\lambda_2} \dd{k} \frac{1}{k-k^*} = \ln(\frac{-\lambda_1-k^*}{\lambda_2-k^*})
+    I_{CT, R} = \int_{\lambda_1}^{\lambda_2} \dd{k} \frac{1}{k-k^*} = \ln(\frac{\lambda_2-k^*}{\lambda_1-k^*})
 \end{equation}
 Let's consider the special case where $\lambda_1 = \Re k^* - \lambda$ and $\lambda_2 = \Re k^* + \lambda$.
 Then the real part of this integration is always zero because $\abs{\lambda-i\Im k^*} = \abs{-\lambda-i\Im k^*}$, we find.
@@ -179,4 +179,6 @@ To simplify we choose a single center, for the integration
 
 \subsection{Results}
 
-Examples for 
+Plots for threshold subtraction.
+
+Plots of numerical stability with relative error (dimensionless)
