@@ -1,12 +1,13 @@
- \feynmandiagram [horizontal=t2 to a, node distance=2.5cm] {
+ \feynmandiagram[horizontal=t2 to a] {
     % incoming particles on the left
-    p1 -- [momentum =\(\vb{p}_1\)] t1, p2 -- [momentum =\(\vb{p}_2\)] t3,
+    p1 [x=0, y=0]  -- [momentum =\(\vb{p}_1\)] t1 [x=3, y=0] , 
+    p2 [x=0, y=-4] -- [momentum =\(\vb{p}_2\)] t3 [x=3, y=-4],
 
     % triangle loop
-    t1 -- [momentum =\(\vb{k} + \vb{p}_1\)] t2 -- [momentum =\(\vb{k} - \vb{p}_2\)] t3 -- [momentum =\(\vb{k}\)] t1,
+    t1 -- [momentum =\(\vb{k} + \vb{p}_1\), edge label' = \(m_1\)] t2 
+    -- [momentum =\(\vb{k} - \vb{p}_2\), edge label' = \(m_3\)] t3 
+    -- [momentum =\(\vb{k}\), edge label' = \(m_2\)] t1,
 
     % outgoing particle on the right
-    t2 -- [momentum=\(\vb{p}_1+\vb{p}_2\)]a,
-
-    % invisible edge keeps p1, p2 parallel
-    p1 -- [opacity=0] p2 }; 
+    t2[x = 6.5, y=-2] -- [momentum=\(\vb{p}_1+\vb{p}_2\)]a [x = 9.5, y = -2],
+}; 
