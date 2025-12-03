@@ -277,8 +277,6 @@ To remove the threshold singularity corresponding to an E-surface, we will defin
 \begin{equation}
     \mathcal{I} = \frac{f(\va{k})}{\ELIPT{i}{j}}
 \end{equation}
-where the integration space is parametrized hemispherically with the center $\va{k}_0$ chosen inside of the ellipsoid.
-This choice is necessary to ensure local cancellations~\cite{}.
 The zeros of $\ELIPT{i}{j}$ along the radial direction can then be found with Eq.~\eqref{eq:e_surface_quad}.
 There are always two solution, which we will denote $k^*_+$ and $k^*_-$.
 
@@ -334,7 +332,11 @@ Finally, including the angular integration and both $k^*_-$ and $k^*_+$, the ful
     I_{\on{CT}} = \sum_{\pm} \frac{1}{2} \int_{S^2} \dd[2]{\hat{\vb{k}} } f(k^*) {k^*}^2 \ln(\frac{\lambda_2-k^*}{\lambda_1-k^*})
 \end{equation}
 The factor $\frac{1}{2}$ accounts for the fact that $\int_{S^2}$ integrates over the whole sphere thus integrating over two opposing hemispheres.
-\subsection{Threshold subtraction in the actual integrand}
+\subsection{Threshold subtraction of multiple E-surfaces}
+When starting to consider multiple E-surfaces we can simply add the counterterms for each E-surface separately.
+
+Let us consider two intersecting E-surfaces $\ELIPT{i}{j}$ and $\ELIPT{i}{k}$ with counterterms $I_{\on{CT}}^{\ELIPT{i}{j}}$ and $I_{\on{CT}}^{\ELIPT{i}{k}}$. We can see that the factor $f(k^*)$ in the counterterms of each E-surface diverge, as we approach the intersection of the E-surfaces. 
+
 In my examples we will only ever choose parametrizations centered around the origin $k^0 = \va{0}$. Without loss of generality we can reorder $\vb{q}_i$ such that $\vb{q}_1 < \vb{q}_2 < \vb{q}_3$. Thus the existence condition derived in Section~\ref{sec:e_surface_exist} is fulfilled for the following E-surfaces:
 \begin{itemize}
     \item $\ELIPT{1}{2}$
