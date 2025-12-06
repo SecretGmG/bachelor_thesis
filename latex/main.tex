@@ -4,7 +4,7 @@
 \usepackage{mydefs}
 
 %-- Math stuff
-\usepackage{mathtools, amsfonts, amsthm, amssymb}
+\usepackage{mathtools}
 %-- Physics and Chemistry stuff
 \usepackage{physics}
 
@@ -42,8 +42,7 @@
   citestyle=numeric,
   sorting=none
 ]{biblatex}
-%\addbibresource{bibliography.bib}
-
+\addbibresource{bachelor_thesis.bib}
 %-- Numbering
 \numberwithin{equation}{section}
 \numberwithin{algorithm}{section}
@@ -55,21 +54,18 @@
 \usepackage[top=20mm,bottom=20mm,left=25mm,right=25mm]{geometry}
 \usepackage[english]{babel}
 \selectlanguage{english}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{fancyhdr}
 \usepackage{parskip}
-\usepackage{csquotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 %\setlength{\parindent}{0pt}
 %\setlength{\parskip}{0.5\baselineskip}
 
 %-----> Document begins here <-----
-
-\bibliography{bachelor_thesis.bib}
 \begin{document}
 
 % -- Title page
 
-\title{Numerical integration of the scalar Triangle integral with a complex mass using threshold subtraction}
+\title{Regularising complex-valued thresholds in numerical integration of loop integrals}
 \author{Cedric Sigrist}
 \date{\today}
 \maketitle
@@ -77,7 +73,7 @@
 \clearpage
 
 \begin{abstract}
-TODO
+    TODO
 \end{abstract}
 \clearpage
 
@@ -88,18 +84,38 @@ TODO
 \clearpage
 
 \section{Introduction}
-%The numerical evaluation of multi-loop integrals in momentum space requires methods capable of efficiently regulating and isolating singular behavior. Threshold subtraction has proven to be an effective framework in this regard~\cite{kermanschah_numerical_2022} TODO ADD MORE. It was initially developed to address threshold singularities in~\cite{capatti_loop_2019} and subsequently extended to more intricate intersecting structures in~\cite{kermanschah_numerical_2022}.
-%
-%Existing applications, however, predominantly focus on integrals with real internal masses. In settings involving unstable particles, complex masses are unavoidable, and their presence modifies the location and character of the singularities. Whether the threshold subtraction method remains stable and reliable in this broader context is not a trivial question.
-%
-%In this work, I investigate the scalar triangle integral with complex internal masses as a controlled environment in which to test this extension. The triangle topology is sufficiently simple to allow for a transparent analysis, yet it retains essential features introduced by complex masses, including shifted branch cuts and modified threshold configurations. Demonstrating that threshold subtraction can be applied successfully in this setting broadens the scope of the method and represents a step toward its use in realistic multi-loop computations formulated within complex-mass schemes.
+The numerical evaluation of multi-loop integrals in momentum space requires
+methods capable of efficiently regulating and isolating singular behavior.
+Threshold subtraction has proven to be an effective framework in this
+regard~\cite{kermanschah_numerical_2022} TODO ADD MORE. It was initially
+developed to address threshold singularities in~\cite{capatti_loop_2019} and
+subsequently extended to more intricate intersecting structures
+in~\cite{kermanschah_numerical_2022}.
+
+Existing applications, however, predominantly focus on integrals with real
+internal masses. In settings involving unstable particles, complex masses are
+unavoidable, and their presence modifies the location and character of the
+singularities. Whether the threshold subtraction method remains stable and
+reliable in this broader context is not a trivial question.
+
+In this work, I investigate the scalar triangle integral with complex internal
+masses as a controlled environment in which to test this extension. The scalar
+triangle is sufficiently simple to allow for a transparent analysis, yet it
+retains essential features introduced by complex masses. Demonstrating that
+threshold subtraction can be applied successfully in this setting represents a
+step toward its use in realistic multi-loop computations formulated within
+complex-mass schemes.
+
+\textbf{TODO:} short intro to complex mass scheme.
+\textbf{TODO:} short roadmap
 
 \section{Scalar Triangle Integral}
-I consider the scalar Triangle integral, restricted to complex masses with $\Re(m_i^2) > 0$ and $\Im(m_i^2) \leq 0$.
+I consider the scalar Triangle integral, restricted to complex masses with
+$\Re(m_i^2) > 0$ and $\Im(m_i^2) \leq 0$.
 \begin{figure}[H]
     \centering
     \input{assets/diagrams/triangle.tex}
-   \caption{Feynman diagram of the scalar Triangle integral}\label{fig:triangle_feynman}
+    \caption{Feynman diagram of the scalar Triangle integral}\label{fig:triangle_feynman}
 \end{figure}
 The Feynman diagram in Figure~\ref{fig:triangle_feynman} produces equation~\eqref{eq:triangle_integral}.
 \begin{equation}
@@ -113,15 +129,24 @@ Notice that the feynman causal prescription $-i\varepsilon$ is included in the d
 
 The momenta $\vb{q_i}$ are defined as
 \begin{align}
-    \vb{q}_1 &= \vb{p_1}\\
-    \vb{q}_2 &= \vb{0}  \\
-    \vb{q}_3 &= -\vb{p_2}
+    \vb{q}_1 & = \vb{p_1}  \\
+    \vb{q}_2 & = \vb{0}    \\
+    \vb{q}_3 & = -\vb{p_2}
 \end{align}
 
 \subsection{Integration of the Loop Energy}
-There are many ways to perform the loop energy integration in eq.~\eqref{eq:triangle_integral}. Following the steps in~\cite{catani_loops_2008} to rederive the Loop Tree Duality (LTD) representation by integrating over the energy and then algebraically manipulating the resulting expression to get a result in the Cross Free Family (CFF) representation derived in~\cite{capatti_exposing_2023}.
+\textbf{TODO:} Explain why this is needed
 
-I will perform the $k^0$ integration with Cauchy's theorem. For this we need to consider the poles of the integrand from Eq.~\eqref{eq:triangle_integral} in $k^0$. These are given by
+There are many ways to perform the loop energy integration in
+eq.~\eqref{eq:triangle_integral}. Following the steps
+in~\cite{catani_loops_2008} to rederive the Loop Tree Duality (LTD)
+representation by integrating over the energy and then algebraically
+manipulating the resulting expression to get a result in the Cross Free Family
+(CFF) representation derived in~\cite{capatti_exposing_2023}.
+
+I will perform the $k^0$ integration with Cauchy's theorem. For this we need to
+consider the poles of the integrand from Eq.~\eqref{eq:triangle_integral} in
+$k^0$. These are given by
 \begin{equation}
     k^0 = q_i^0 \pm \qty(\sqrt{{\qty(\va{k}-\va{q}_i)}^2+m_i^2} - i\varepsilon) = q_i^0 \pm E_i
 \end{equation}
@@ -149,12 +174,13 @@ Let's compute the residues.
 \newcommand{\ELIPT}[2]{\eta_{#1#2}^{++}}
 \newcommand{\HYPER}[2]{\eta_{#1#2}^{+-}}
 
-We can also introduce $\ELIPT{i}{j}$ called E-Surface and $\HYPER{i}{j}$ called H-Surface.
+We can also introduce $\ELIPT{i}{j}$ called E-Surface and $\HYPER{i}{j}$ called
+H-Surface.
 
 \begin{align}
-    \eval{D_j}_{k^0=E_i} &= {\qty(q^0_i+E_i-q^0_j)}^2 - \overbrace{{\qty(\va{k}-\va{q}_j)}^2+m_j^2}^{E_j^2}\\
-    &= E_i^2+{q_i^0}^2+{q_j^0}^2-2q_i^0q_j^0+2q_i^0E_i - 2q_j^0E_i-E_j^2\\
-    &= \underbrace{\left(E_i+E_j+q_i^0-q_j^0\right)}_{\ELIPT{i}{j}}\underbrace{\left(E_i-E_j+q_i^0-q_j^0\right)}_{\HYPER{i}{j}} \label{eq:surfaces}
+    \eval{D_j}_{k^0=E_i} & = {\qty(q^0_i+E_i-q^0_j)}^2 - \overbrace{{\qty(\va{k}-\va{q}_j)}^2+m_j^2}^{E_j^2}                                                              \\
+                         & = E_i^2+{q_i^0}^2+{q_j^0}^2-2q_i^0q_j^0+2q_i^0E_i - 2q_j^0E_i-E_j^2                                                                            \\
+                         & = \underbrace{\left(E_i+E_j+q_i^0-q_j^0\right)}_{\ELIPT{i}{j}}\underbrace{\left(E_i-E_j+q_i^0-q_j^0\right)}_{\HYPER{i}{j}} \label{eq:surfaces}
 \end{align}
 Inserting the results from Eq.~\eqref{eq:surfaces} and Eq.~\eqref{eq:residue} into Eq.~\eqref{eq:cauchy} we get the Loop Tree duality expression.
 \newcommand{\BLTD}[3]{2E_{#1}\ELIPT{#1}{#2}\HYPER{#1}{#2}\ELIPT{#1}{#3}\HYPER{#1}{#3}}
@@ -162,10 +188,15 @@ Inserting the results from Eq.~\eqref{eq:surfaces} and Eq.~\eqref{eq:residue} in
     I =  \int \frac{\dd[3]{k}}{{(2\pi)}^3}\qty(\frac{1}{\BLTD{1}{2}{3}}+\frac{1}{\BLTD{2}{1}{3}}+\frac{1}{\BLTD{3}{1}{2}}) \label{eq:ltd}
 \end{equation}
 
-While this is a nice expression, it is not yet suited for numeric integration, since all of the H-Surfaces contain singularities which would make the procedure numerically unstable. It turns out however that these singularities are spurious and can be removed by purely algebraic manipulations, shown in detail in Appendix~\ref{sec:improved_ltd}. The resulting expression contains only E-Surfaces.
+While this is a nice expression, it is not yet suited for numeric integration,
+since all of the H-Surfaces contain singularities which would make the
+procedure numerically unstable. It turns out however that these singularities
+are spurious and can be removed by purely algebraic manipulations, shown in
+detail in Appendix~\ref{sec:improved_ltd}. The resulting expression contains
+only E-Surfaces.
 
 \begin{gather}
-    I =  \int \dd[3]{k} \mathcal{I}_{CFF} \\ 
+    I =  \int \dd[3]{k} \mathcal{I}_{CFF} \\
     \mathcal{I}_{CFF} = \frac{1}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \qty(
     \frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}}
     + \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
@@ -174,55 +205,85 @@ While this is a nice expression, it is not yet suited for numeric integration, s
     + \frac{1}{\ELIPT{1}{3}\ELIPT{2}{3}}
     + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
     )
-\label{eq:cff}
+    \label{eq:cff}
 \end{gather}
 
 \subsection{Cross Free Family}
-Equation~\eqref{eq:cff} can also be derived directly in a more diagrammatic way, as shown in~\cite{capatti_exposing_2023}. TODO
-
-\section{Threshold Subtraction}
-Short introduction, maybe with an easy example to follow
+Equation~\eqref{eq:cff} can also be derived directly in a more diagrammatic
+way, as shown in~\cite{capatti_exposing_2023}. TODO
 
 \section{E-Surface}
-Equation~\eqref{eq:cff} can still contain singularities, which need further treatment to be integrated numerically.
-The equation is singular when an E-Surface $\ELIPT{i}{j}$ is zero. For threshold subtraction to work, we will need to characterize these singularities. In the case of complex masses, this characterization needs some extra care. We need to make sure to find the zeros of the E-Surface in the complex plane, rather than in the real plane.
+Equation~\eqref{eq:cff} can still contain singularities, which need further
+treatment to be integrated numerically. The equation is singular when an
+E-Surface $\ELIPT{i}{j}$ is zero. For threshold subtraction to work, we will
+need to characterize these singularities. In the case of complex masses, this
+characterization needs some extra care. We need to make sure to find the zeros
+of the E-Surface in the complex plane, rather than in the real plane.
 
 Let us introduce the momentum $\va{k'}$ defined in equation~\eqref{eq:k_prime}.
 \begin{equation}
     \va{k'} = \va{k} - \frac{1}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime}
 \end{equation}
 
-Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface condition simplifies to the following form.
+Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface condition
+simplifies to the following form.
 \begin{equation}
     \ELIPT{i}{j} =  \sqrt{{(\va{k'}-\va{q})}^2+m_i^2} + \sqrt{{(\va{k'}+\va{q})}^2+m_j^2} + 2q^0 \overset{!}{=} 0\label{eq:e_surface}
 \end{equation}
 \subsubsection{E-Surface existence condition}\label{sec:e_surface_exist}
 %Maybe First do simplified case with $m_i = m_j = m$. show that it is indeed ellipsoid.
-Noticing that the E-Surface is of the same form as~\eqref{eq:identity} we can perform the following steps to remove the square roots, we need to however carefully track the signs of the terms, to make sure to not introduce extraneous solutions. In practice, we will do this by checking the solutions afterwards, by inserting it into the E-Surface equation and checking if the result equals zero.
-
-%TODO: maybe find GLOBAL existence condition to remove these extraneous solutions
-
+Noticing that the E-Surface is of the same form as~\eqref{eq:identity} we can
+perform the following steps to remove the square roots.
 \begin{equation}
     \sqrt{A}+\sqrt{B} + C = 0 \label{eq:identity}
 \end{equation}
-We can however already find a necessary but not sufficient condition for the existence of the E-Surface. Considering equation~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$ and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following identity must hold
+We can already find a necessary but not sufficient condition for the existence of the E-Surface. Considering equation~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$ and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following identity must hold
 \begin{equation}
-    C = 2 q^0 < 0
+    \Re(C) = 2 q^0 < 0 \label{eq:e_surface_existence_condition}
 \end{equation}
-This condition already excludes exactly half of the E-surfaces from having any solutions. We will now precede with the characterization of the solutions of the identity~\eqref{eq:identity}. Further extraneous solutions, that may be introduced in the following steps will be filtered later by checking. 
+This condition already excludes exactly half of the E-surfaces from having any solutions. We will now precede with the characterization of the solutions of the identity~\eqref{eq:identity}.
 \begin{align}
-    \sqrt{A}+\sqrt{B} + C = &0\\
-    \implies\quad 2\sqrt{AB} &= C^2-A-B\\
-    \implies\quad 4AB &= {(C^2-A-B)}^2\\
-    \implies\quad C^2 - 2(A+B) + {\qty(\frac{A-B}{C})}^2 &= 0 \label{eq:identity2}
+    \sqrt{A}+\sqrt{B} + C =                              & 0                        \\
+    \implies\quad 2\sqrt{AB}                             & = C^2-A-B                \\
+    \implies\quad 4AB                                    & = {(C^2-A-B)}^2          \\
+    \implies\quad C^2 - 2(A+B) + {\qty(\frac{A-B}{C})}^2 & = 0 \label{eq:identity2}
 \end{align}
-Applying this identity to the E-surface equation we find
-\begin{align*}
-    A-B &= -4\va{k'}\cdot \va{q} + m_i^2 - m_j^2\\
-    A+B &= 2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2
-\end{align*}
+
+\subsubsection{Treatment of extraneous solutions}
+The steps taken to derive equation~\eqref{eq:identity2} may introduce
+extraneous solutions to the E-Surface equation~\eqref{eq:e_surface}. I propose
+and compare two methods to remove these extraneous solutions.
+\begin{itemize}
+    \item Check solutions by inserting and checking if the expression evaluates to $0$.
+          This is very easy to implement numerically, but in practice it will
+          unfortunately need to rely on floating point precision. It is also necessary to
+          perform this check per input, as it is a local check.
+
+    \item Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over the reals. If it is
+          negative, then there exist solutions with $\Re(A)>0$ ans $\Re(B)>0$ and thus
+          the following steps can not introduce extraneous solutions. If the minimum
+          value is positive, then the following steps may introduce extraneous solutions.
+          This method may remove some valid solutions, but it is guaranteed to not
+          introduce extraneous solutions. Valid solutions removed in this way necessarily
+          lie in the complex plane however. We can easily compute the minimum value of
+          the equation~\eqref{eq:e_surface} by noticing that it is convex, solve for
+          $\nabla_{\va{k'}} \ELIPT{i}{j} = 0$, which yields
+          \begin{equation}
+              \va{k'}_{\text{min}} = \frac{m_j-m_i}{m_i+m_j} \va{q}
+          \end{equation}
+          We can then compute the minimum value of the E-Surface equation~\eqref{eq:e_surface} by evaluating it at this point.
+          This method is guaranteed to not introduce extraneous solutions, but it may remove valid solutions, which are necessarily in the complex plane. It is however a global condition, which means it can be applied to all inputs or even precomputed, thus improving performance.
+\end{itemize}
+
+\subsubsection{E-surface characterization}
+The E-Surface equation~\eqref{eq:e_surface} rewritten using
+equation~\eqref{eq:identity2}.
+%\begin{align*}
+%    A-B &= -4\va{k'}\cdot \va{q} + m_i^2 - m_j^2\\
+%    A+B &= 2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2
+%\end{align*}
 Which yields the following equation after some simplifications.
-\begin{equation} 
+\begin{equation}
     4{q^0}^2 - 2 \qty(2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2) + {\qty(\frac{-4 \va{k'}\cdot \va{q} + m_i^2 - m_j^2}{-2q^0})}^2= 0
 \end{equation}
 This equation can be further simplified, showing that it is quadratic in $\va{k}'$. Note, that $\vb{q}^2 = {q^0}^2 - \va{q}^2$.
@@ -235,12 +296,15 @@ This equation can be further simplified, showing that it is quadratic in $\va{k}
 with
 \begin{equation}
     \va{v} = \frac{\va{q}}{q^0}
-\qquad
+    \qquad
     \braket{m^2} = \frac{m_i^2 + m_j^2}{2}
-\qquad
+    \qquad
     \Delta = \frac{m_i^2 - m_j^2}{4q^0}
 \end{equation}
-To perform threshold subtraction we will need to find the roots of equation~\eqref{eq:quad_k_prime} along a given line $k = k\,\hat{\vb{k}} + \va{k_0}$. In this parametrization we have
+\subsection{E-surface in hemispherical coordinates}
+To perform threshold subtraction we will need to find the roots of
+equation~\eqref{eq:quad_k_prime} along a given line $k = k\,\hat{\vb{k}} +
+    \va{k_0}$. In this parametrization we have
 \begin{equation}
     \va{k'} =  k\,\hat{\vb{k}} + \underbrace{\va{k_0} - \frac{1}{2}(\va{q}_i+\va{q}_j)}_{\va{k'_0}} \label{eq:parametrization}
 \end{equation}
@@ -251,129 +315,186 @@ The roots of equation~\eqref{eq:quad_k_prime} in the radial variable $k$ in the 
 \end{equation}
 with
 \begin{align}
-    \alpha &= 1-{\qty(\hat{\vb{k}}\cdot\va{v})}^2\\
-    \beta &= 2(\hat{\vb{k}}\cdot\va{k'_0})-2(\hat{\vb{k}}\cdot\va{v})(\va{k'_0}\cdot\va{v})-2\Delta(\hat{\vb{k}}\cdot\va{v})\\
-    \gamma &= \va{k'_0}^2-{\qty(\va{k'_0}\cdot\va{v})}^2-2\Delta(\va{k'_0}\cdot\va{v})-\vb{q}^2+\braket{m^2}+\Delta^2
+    \alpha & = 1-{\qty(\hat{\vb{k}}\cdot\va{v})}^2                                                                             \\
+    \beta  & = 2(\hat{\vb{k}}\cdot\va{k'_0})-2(\hat{\vb{k}}\cdot\va{v})(\va{k'_0}\cdot\va{v})-2\Delta(\hat{\vb{k}}\cdot\va{v}) \\
+    \gamma & = \va{k'_0}^2-{\qty(\va{k'_0}\cdot\va{v})}^2-2\Delta(\va{k'_0}\cdot\va{v})-\vb{q}^2+\braket{m^2}+\Delta^2
 \end{align}
-This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which we will call $k^*_+$ and $k^*_-$. We now need to check if they actually solve the equation~\eqref{eq:e_surface}, because the derivation of equation~\eqref{eq:identity2} may have introduced extraneous solutions. With this procedure we will either find two solutions, or none. If real valued solutions exist, they will always be found with this procedure.
+This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which we will call $k^*_+$ and $k^*_-$. These solutions need to be checked for validity with one of the proposed methods.
 
-It is worthwhile to consider the case where $m_i = m_j = m$ to build geometric intuition of the solutions. In this case the quadratic equation~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions is more transparent. Choosing the parametrization~\eqref{eq:parametrization} with $\va{k'_0} = \va{k_0}$, we get
+\subsection{Equal-mass case}
+It is worthwhile to consider the case where $m_i = m_j = m \in \real$ to build
+geometric intuition of the solutions. In this case the quadratic
+equation~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions
+is more transparent.
+
+Choosing the parametrization~\eqref{eq:parametrization} with $\va{k'_0} =
+    \va{k_0}$, we get
 \begin{equation}
     k^2 = \frac{\vb{q}^2-m^2}{1-{\qty(\hat{\vb{k}} \cdot \va{v})}^2} \label{eq:quadratic_k_simple}
 \end{equation}
+Considering that if the external momenta are onshell, we find that $\norm{v} < 1$, this ensures ensures that we do not divide be zero, and the sign of the denominator is always positive.
+Thus we can see, that real solutions for $k$ only exist if $\vb{q}^2-m^2 > 0$. In this case equation~\eqref{eq:quadratic_k_simple} defines a prolate spheroid. This is the shape of the E-surface for equal-mass particles.
+In Figure~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
 
-Considering that if the external momenta are onshell, we find that $\norm{v} < 1$. In the case where $\vb{q}^2-m^2$, where real solutions exist, equation~\eqref{eq:quadratic_k_simple} defines a prolate spheroid.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{assets/e_surf_example}
+    \caption{Example of an E-surface in the equal mass case}\label{fig:e_surf_example}
+    Example of an E-surface in the equal mass case with $\vb{q} = (-2,0,0,-1)$ and $m = 1$.
+    The major axis is shown in red, the length of which was obtained from the quadratic equation~\eqref{eq:quadratic_k_simple}, the direction of the major axis was obtained as $\va{v}/\norm{\va{v}}$.
+    The E-surface itself is shown in cyan and was computed via equation~\eqref{eq:e_surface} and the python visualization tool \texttt{Pyvista}.
+\end{figure}
 
-\section{Threshold subtraction}\label{sec:thresh}
-Threshold singularities appear whenever a loop momentum $\va{k}$ is on an E-surface.
-These integrable singularities make numerical integration of the integrand impossible, if not treated appropriately
+\section{Threshold Subtraction for one E-Surface}\label{sec:thresh}
+Threshold singularities appear whenever a loop momentum $\va{k}$ is on an
+E-surface. These integrable singularities make numerical integration of the
+integrand impossible, if not treated appropriately
 
-The idea of threshold subtraction is straightforward: isolate the pole generated by a single E-surface and subtract a locally defined counterterm that reproduces its behavior exactly at the singular point. This ensures that the combined integrand remains finite everywhere in the integration domain. In a well chosen parametrization, it suffices to integrate along a a single dimension to integrate over the pole. This integration can be performed analytically, or with some oder stable procedure, thus eliminating the singularity entirely.
+The idea of threshold subtraction is straightforward: isolate the pole
+generated by a single E-surface and subtract a locally defined counterterm that
+reproduces its behavior exactly at the singular point. This ensures that the
+combined integrand remains finite everywhere in the integration domain. In a
+well chosen parametrization, it suffices to integrate along a a single
+dimension to integrate over the pole. This integration can be performed
+analytically, or with some oder stable procedure, thus eliminating the
+singularity entirely.
 
-In resent approaches, only singularities lying exactly in the integration domain are considered for threshold subtraction~\cite{kermanschah_numerical_2022,kermanschah_numerical_2024,capatti_loop_2019}. In this thesis I extend this idea to singularities that are not exactly in the integration domain, but instead are shifted to the complex plane. While not strictly necessary for the convergence of the integrand, this extension allows for a more general treatment of singularities and improves numerical stability in cases where the singularities are very close to the integration domain.
+In resent approaches, only singularities lying exactly in the integration
+domain are considered for threshold
+subtraction~\cite{kermanschah_numerical_2022,kermanschah_numerical_2024,capatti_loop_2019}.
+In this thesis I extend this idea to singularities that are not exactly in the
+integration domain, but instead are shifted to the complex plane. While not
+strictly necessary for the convergence of the integrand, this extension allows
+for a more general treatment of singularities and improves numerical stability
+in cases where the singularities are very close to the integration domain.
 
 \subsection{Subtraction of a single E-Surface}
-To remove the threshold singularity corresponding to an E-surface, we will define a local counterterm for an integrand of the form
+To remove the threshold singularity corresponding to an E-surface, we will
+define a local counterterm for an integrand of the form
 \begin{equation}
-    \mathcal{I} = \frac{f(\va{k})}{\ELIPT{i}{j}}
+    \mathcal{I} = \frac{f_{ij}(\va{k})}{\ELIPT{i}{j}}
 \end{equation}
-The zeros of $\ELIPT{i}{j}$ along the radial direction can then be found with Eq.~\eqref{eq:e_surface_quad}.
-There are always two solution, which we will denote $k^*_+$ and $k^*_-$.
+where $f_{ij}$ is the coefficient of $\ELIPT{i}{j}$, i.e., the factor that remains after factoring out $\ELIPT{i}{j}$ from the integrand.
+The zeros of $\ELIPT{i}{j}$ along the radial direction can then be found with Eq.~\eqref{eq:quadratic_k}.
 
-The singular behavior of the integrand can fully be captured by the first-order taylor expansion in $\ELIPT{i}{j}$ around the pole. Let us consider only the pole $k^*_{\pm}$ for now.
+Denote the set of solutions, checked for validity with one of the methods
+described in Section~\ref{sec:e_surface_exist}, as $\mathcal{K}_{ij}$, it
+contains at most two solutions.
+
+The singular behavior of the integrand can fully be captured by the first-order
+taylor expansion in $\ELIPT{i}{j}$ around a pole, located at $k^* \in
+    \mathcal{K}_{ij}$.
 \begin{equation}
-    \ELIPT{i}{j} = 0 + (k-k^*_{\pm}) \underbrace{\eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=\va{k^*_{\pm}}}}_{\eta'} + \order{k^2}
+    \ELIPT{i}{j} = 0 + (k-k^*) \underbrace{\eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=\va{k^*}}}_{\eta'_{ij}} + \order{{(k-k^*)}^2}
 \end{equation}
-We can now define a counterterm that will cancel the singularity in $k^*_{\pm}$.
+We can now define a counterterm that will cancel the singularity at $k^*$
 \begin{equation}
-    \on{CT}_{ij}(k^*_{\pm}) = \chi (\va{k}) \frac{f(\va{k^*_{\pm}})}{(k-k^*_{\pm}) \, \eta'}
+    \on{CT}_{ij, k^*}(k) = \chi (\va{k}) \frac{f(\va{k^*})}{(k-k^*) \, \eta'_{ij}}
 \end{equation}
-where $\chi (\va{k})$ is an arbitrary mask, that is smooth at $\chi (\va{k}^*_{\pm}) = 1$ and vanishing as $\abs{k-k^*_{\pm}} \to \infty$
+where $\chi (\va{k})$ is an arbitrary mask, that is smooth at $\chi (\va{k}^*) = 1$ and vanishing as $\abs{k-k^*} \to \infty$
 The partial derivative along the radial variable $k$ is straightforward to compute explicitly.
 \begin{equation}
-    \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k^*_{\pm} \hat{\vb{k}} } = {\qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{\vb{k}} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{\vb{k}} ]}_{\va{k} = k^*_{\pm} \hat{\vb{k}}}
+    \eta'_{ij} = \eval{\pdv{k} \ELIPT{i}{j}}_{\va{k}=k^* \hat{\vb{k}} } = {\qty[\frac{1}{E_i}(\va{k}-\va{q}_i)\cdot \hat{\vb{k}} + \frac{1}{E_j}(\va{k}-\va{q}_j)\cdot \hat{\vb{k}} ]}_{\va{k} = k^* \hat{\vb{k}}}
 \end{equation}
 
-By construction, subtracting the counterterm $\on{CT}_{ij}(k^*_{\pm})$ will remove the singularity at $k^*_{\pm}$ from the integrand. By choosing the mask $\chi$ appropriately we can ensure that it is possible to integrate along the radius of the counterterm analytically. This allows to add the subtracted counterterm back to the final result in an integral in a way that completely removes the singularity.
+By construction, subtracting the counterterm $\on{CT}_{ij}(k^*)$ will remove
+the singularity at $k^*$ from the integrand.
 
 \subsection{Radially integrating the counterterm}
-The choice of the mask $\chi$ determines many properties of the counterterm.
-Writing the counterterm integral in hemispherical coordinates centered at $\va{k_0}$, we have
-
+The choice of the mask $\chi$ determines many properties of the counterterm. We
+can write the radial integral in hemispherical coordinates centered at
+$\va{k_0}$
 \begin{equation}
-    I_{\on{CT}} = \frac{1}{2} \int_{S^2} \dd[2]{\hat{\vb{k}} } \int_{0}^{\infty} \dd{k} {k}^2 \on{CT}(\vec{k})
+    I_{ij} \int_{-\infty}^{\infty} \dd{k} {k}^2 \on{CT}_{ij, k^*} (\vec{k})
+\end{equation}
+with
+\begin{equation}
+    \va{k} = k \hat{\vb{k}} + \va{k_0}
 \end{equation}
 
 Several useful observations can be made on the choice of $\chi$.
 \begin{itemize}
-    \item By choosing $\chi = \frac{{k^*\pm}^2}{k^2}$, the Jacobian factor $k^2$ is canceled, leaving a simple $\frac{1}{k-k^*_{\pm}}$ integrand for the radial integral.
-    \item If $\chi = \frac{{k^*_{\pm}}^2}{k^2} f(k)$ where $f$ is an even function, the real part of the integration vanishes, simplifying the computation.
+    \item By choosing $\chi = \frac{{k^*\pm}^2}{k^2}$, the Jacobian factor $k^2$ is
+          canceled, leaving a simple $\frac{1}{k-k^*}$ integrand for the radial
+          integral. Care must be taken when canceling the Jacobian factor this way. The
+          parametrization of the subtracted integrand must match the parametrization of
+          the counterterm, or other additional steps must be taken, to not introduce
+          additional singularities into the integrand. In this thesis we will only
+          consider the case where the counterterm is parametrized in the same way as the
+          integrand.
+    \item If $\chi = \frac{{k^*}^2}{k^2} f(k)$ where $f$ is an even function, the
+          real part of the integration vanishes, simplifying the computation.
 \end{itemize}
-Care must be taken when canceling the Jacobian factor this way. The parametrization of the subtracted integrand must match the parametrization of the counterterm, or other additional steps must be taken, to not introduce additional singularities into the integrand. In this thesis we will only consider the case where the counterterm is parametrized in the same way as the integrand.
 
-For our purposes we choose a mask that is only nonzero in a finite region.
+For our purposes we choose a mask that is only nonzero in a finite region and cancels the Jacobian factor.
 \begin{equation}
     \chi{\va{k}} = \begin{cases}
-        \frac{{k^*_{\pm}}^2}{k^2} & k \in (\lambda_1, \lambda_2)\\
-        0& \text{else}
+        \frac{{k^*}^2}{k^2} & k \in (\lambda_1, \lambda_2) \\
+        0                         & \text{else}
     \end{cases}
 \end{equation}
-The radial integration is now straightforward.
+With this choice the radial integral becomes particularly simple
 \begin{equation}
-   \int \dd{k} I_{\on{CT}}(k^*_{\pm}) = \int_{\lambda_1}^{\lambda_2} \dd{k} \frac{1}{k-k^*_{\pm}} = \ln(\frac{\lambda_2-k^*_{\pm}}{\lambda_1-k^*_{\pm}})
+    \int \dd{k} I_{\on{CT}}(k^*) = \int_{\lambda_1}^{\lambda_2} \dd{k} \frac{1}{k-k^*} = \ln(\frac{\lambda_2-k^*}{\lambda_1-k^*})
 \end{equation}
-In the special case, where $\lambda_1 = \Re k^*_{\pm} - \lambda$ and $\lambda_2 = \Re k_{\pm}^* + \lambda$, the real part vanishes due to symmetry around $\Re k^*_{\pm}$, leaving
+In the special case, where $\lambda_1 = \Re k^* - \lambda$ and $\lambda_2 = \Re k^* + \lambda$, the real part vanishes due to symmetry around $\Re k^*$, leaving
 \begin{equation}
-    \int \dd{k} =  -i \qty(\pi + 2\arctan(\frac{\Im k^*_{\pm}}{\lambda}))
+    \int \dd{k} =  -i \qty(\pi + 2\arctan(\frac{\Im k^*}{\lambda}))
 \end{equation}
-This result is consistent with the result derived in~\cite{capatti_exposing_2023}.
-Finally, including the angular integration and both $k^*_-$ and $k^*_+$, the full counterterm contribution of a single E-surface reads
-\begin{equation}
-    I_{\on{CT}} = \sum_{\pm} \frac{1}{2} \int_{S^2} \dd[2]{\hat{\vb{k}} } f(k^*) {k^*}^2 \ln(\frac{\lambda_2-k^*}{\lambda_1-k^*})
-\end{equation}
-The factor $\frac{1}{2}$ accounts for the fact that $\int_{S^2}$ integrates over the whole sphere thus integrating over two opposing hemispheres.
-\subsection{Threshold subtraction of multiple E-surfaces}
-When starting to consider multiple E-surfaces we can simply add the counterterms for each E-surface separately.
+This result is consistent with the result derived in~\cite{capatti_exposing_2023} as $\Im k^* \to 0$
+\section{Multiple E-Surfaces}
+When starting to consider multiple E-surfaces we can simply add the
+counterterms for each E-surface separately.
 
-Let us consider two intersecting E-surfaces $\ELIPT{i}{j}$ and $\ELIPT{i}{k}$ with counterterms $I_{\on{CT}}^{\ELIPT{i}{j}}$ and $I_{\on{CT}}^{\ELIPT{i}{k}}$. We can see that the factor $f(k^*)$ in the counterterms of each E-surface diverge, as we approach the intersection of the E-surfaces. 
+Without loss of generality we can reorder $\vb{q}_i$ such that $\vb{q}_1 <
+    \vb{q}_2 < \vb{q}_3$. Thus the existence condition derived in
+equation~\eqref{eq:e_surface_existence_condition} is fulfilled for the
+E-Surfaces $\ELIPT{i}{j}$ with $i<j$. Each of these may require it's own
+counterterm.
 
-In my examples we will only ever choose parametrizations centered around the origin $k^0 = \va{0}$. Without loss of generality we can reorder $\vb{q}_i$ such that $\vb{q}_1 < \vb{q}_2 < \vb{q}_3$. Thus the existence condition derived in Section~\ref{sec:e_surface_exist} is fulfilled for the following E-surfaces:
-\begin{itemize}
-    \item $\ELIPT{1}{2}$
-    \item $\ELIPT{2}{3}$
-    \item $\ELIPT{1}{3}$
-\end{itemize}
-Each of these requires it's own counterterm.
-As an example, consider $\ELIPT{1}{2}$.
-First we need to collect all of the terms in the integrand containing the relevant E-surface $\ELIPT{1}{2}$. 
-This factor corresponds exactly to the function $f$ introduced in Section~\ref{sec:thresh}.
+Consider $\ELIPT{1}{2}$ as an example, to compute the factor $f_{12}$ we need to collect all factors containing $1/\ELIPT{1}{2}$ from equation~\eqref{eq:cff}.
 \begin{equation}
-    \ELIPT{1}{2} \qty{1}{{(4\pi)}^3}\frac{1}{E_1E_2E_3} \qty(\frac{1}{\ELIPT{1}{3}}+\frac{1}{\ELIPT{2}{3}}) = \ELIPT{3}{2} \, f(\va{k})
+    \ELIPT{1}{2} \frac{1}{{(4\pi)}^3}\frac{1}{E_1E_2E_3} \qty(\frac{1}{\ELIPT{1}{3}}+\frac{1}{\ELIPT{3}{2}}) = \ELIPT{1}{2} \, f(\va{k})
 \end{equation}
-The counterterm removing the pole at either $k^*_+$ or $k^*_-$ is therefore given by
+The counterterm removing the pole at either $k^*\in \mathcal{K}_{12}$ is therefore given by
 \begin{equation}
-    \on{CT}_{12}(k^*_\pm) = \chi(k-k^*) \, f(\va{k}) \,\frac{1}{\eta'_{12}} \,  \frac{1}{k-k^*_\pm}
+    \on{CT}_{12}(k^*) = \chi(k-k^*) \, f(\va{k}) \,\frac{1}{\eta'_{12}} \,  \frac{1}{k-k^*}
 \end{equation}
-where $\eta_{12}'$ is the radial derivative of $\ELIPT{1}{2}$ evaluated at the pole.
 The same procedure applies to $\ELIPT{2}{3}$ and $\ELIPT{1}{3}$
-The integral is then finally given by
+
+\subsection{Definition of the full integral}
+For the numerical final numerical integration it is useful to combine the everything into a single integral.
+This improves numerical stability and allows for better optimization of the integrand.
+
+For the threshold subtraction in the counterterm $-\lambda_1 = \lambda_2 = \lambda$ for all of the counterterms allows us to write the entire combined integrand as a single integral. This allows for better compiler optimization of the integrand and may also improve numerical stability by better capturing correlations and cancellations between the different parts.
+
+There are many ways to add the radially integrated counterterm back into an integrand over $k \in \real^3$. I define a mask that is constant when $\abs{k}<\lambda$ and vanishes everywhere else. By normalizing the mask, such that the radial integral is equal to one, the integrated counterterm can be added back into the integrand.
+
+By introducing factors $\mathbf{a}, \mathbf{b}, \mathbf{c}$ to scale the original integrand, the counterterm and the integrated counterterm we can then also use a single implementation to evaluate any of these integrands, by setting the appropriate factors to zero.
+
 \begin{equation}
-    I = \int \dd[3]{k} \qty(\mathcal{I}_{CFF} - \sum_{\pm} \sum_{(i,j) \in \{(1,2),(2,3),(1,3)\}} \on{CT}_{ij}(k^*_\pm)) + \sum_{\pm} \sum_{(i,j) \in \{(1,2),(2,3),(1,3)\}} I_{\on{CT}_{ij}}(k^*_\pm)
+    I = \int \dd[3]{k}\qty[ \mathbf{a}\;\mathcal{I}_{CFF} + \sum_{i<j} \sum_{k^* \in \mathcal{K}_{ij}} \qty( -\mathbf{b}\;\text{CT}_{ij}(k^*) + \mathbf{c}\;I_{\on{CT}_{ij}}(k^*) \frac{3\Theta(\lambda-\abs{k})}{2\lambda^3})] \label{eq:integrand}
 \end{equation}
 
-\section{Numerical Integration}
-The numerical integration is performed with the Python API of the \texttt{symbolica} library~\cite{symbolica}.
-\texttt{Symbolica} supports compilation of symbolic expressions into optimized assembly code for fast evaluation. It also provides an efficient implementation of the \texttt{VEGAS} Monte Carlo integration algorithm, which is well suited for this problem.
+\subsection{Local cancellation in Counterterm}
+\textbf{TODO:} Explain what might be a problem, and why it is not.
+
+\section{Numerical implementation}
+The numerical integration is performed with the Python API of the
+\texttt{Symbolica} library \texttt{Symbolica} supports
+compilation of symbolic expressions into optimized assembly code for fast
+evaluation. It also provides an efficient implementation of the \texttt{VEGAS}
+Monte Carlo integration algorithm, which is well suited for this problem.
 \subsection{Parametrization}
 \texttt{Symbolica} provides efficient sampling in $N$-dimensional hypercubes.
 There are many reasonable choices to map from the unit hypercube to hemispherical coordinates. I choose the following mapping from unit hypercubes to the relevant parametrizations with their respective Jacobians $J$.
 
 \subsubsection{parametrization of the unit hemisphere}
 \begin{equation}
-    \vb{\hat{k}}(u, v) = 
+    \vb{\hat{k}}(u, v) =
     \begin{pmatrix}
-        \sin(\phi) \cos(2 \pi w)\\
-        \sin(\phi) \sin(2 \pi w)\\
+        \sin(\phi) \cos(2 \pi w) \\
+        \sin(\phi) \sin(2 \pi w) \\
         \cos(\phi)
     \end{pmatrix}
 \end{equation}
@@ -396,16 +517,33 @@ with
 \end{equation}
 
 \section{Results}
+With this implementation we will now discuss multiple examples, comparing the
+results with and without threshold subtraction, to determine the success of the
+method. As a baseline reference we will compare the results with the
+\textit{OneLOop} package~\cite{hameren_oneloop_2011}. In conjunction to this
+Thesis I created an open source repository \textit{OneLOop
+    Bridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}} that
+provides Python and Rust bindings for the \textit{OneLOop} package, which is
+written in fortran.
 
-Plots for threshold subtraction.
+\subsection{Small regularizing masses}
 
-Plots of numerical stability with relative error (dimensionless)
+\textbf{TODO:} Showcase example where i decrease the imaginary part of the mass. Subtraction keeps stability, while the unsubtracted integral diverges. Show the log log plot of the convergence here.
 
-\section{Discussion}
+\subsection{Imaginary E-surfaces}
 
+\textbf{TODO:} Showcase example the threshold mass is not yet reached. Subtraction keeps stability as the E-surface comes into existence. Compare with integral, where only real E-surfaces are subtracted.
+
+\subsection{Anomalous thresholds}
+\textbf{TODO:} Explain why they are interesting, explain why and how to choose the integration center, as i did, show numerical stability, compute the integral exactly on the threshold~\cite{passarino_peaks_2018}
+
+\section{Conclusion}
+Why good idea, computations where this can be used (mention complex mass scheme
+here). Discuss that for higher loop count finding the roots may be harder to
+find. Showcase how newtons method converges.
 
 \printbibliography
-\input{appendix.tex}
 
+\input{appendix.tex}
 
 \end{document}
