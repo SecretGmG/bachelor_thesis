@@ -222,7 +222,7 @@ of the E-Surface in the complex plane, rather than in the real plane.
 
 Let us introduce the momentum $\va{k'}$ defined in equation~\eqref{eq:k_prime}.
 \begin{equation}
-    \va{k'} = \va{k} - \frac{1}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime}
+    \va{k'} = \va{k} - \frac{\va{q}_i}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime}
 \end{equation}
 
 Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface condition
@@ -254,12 +254,14 @@ The steps taken to derive equation~\eqref{eq:identity2} may introduce
 extraneous solutions to the E-Surface equation~\eqref{eq:e_surface}. I propose
 and compare two methods to remove these extraneous solutions.
 \begin{itemize}
-    \item Check solutions by inserting and checking if the expression evaluates to $0$.
+    \item \textbf{Numerical Check Existence Condition:}\\
+    Check solutions by inserting and checking if the expression evaluates to $0$.
           This is very easy to implement numerically, but in practice it will
           unfortunately need to rely on floating point precision. It is also necessary to
           perform this check per input, as it is a local check.
 
-    \item Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over the reals. If it is
+    \item \textbf{Minimum Value Existence Condition:}\\
+        Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over the reals. If it is
           negative, then there exist solutions with $\Re(A)>0$ ans $\Re(B)>0$ and thus
           the following steps can not introduce extraneous solutions. If the minimum
           value is positive, then the following steps may introduce extraneous solutions.
@@ -321,7 +323,7 @@ with
 \end{align}
 This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which we will call $k^*_+$ and $k^*_-$. These solutions need to be checked for validity with one of the proposed methods.
 
-\subsection{Equal-mass case}
+\subsection{Equal-mass case}~\label{sec:equal_mass_case}
 It is worthwhile to consider the case where $m_i = m_j = m \in \real$ to build
 geometric intuition of the solutions. In this case the quadratic
 equation~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions
@@ -470,11 +472,13 @@ For the threshold subtraction in the counterterm $-\lambda_1 = \lambda_2 = \lamb
 
 There are many ways to add the radially integrated counterterm back into an integrand over $k \in \real^3$. I define a mask that is constant when $\abs{k}<\lambda$ and vanishes everywhere else. By normalizing the mask, such that the radial integral is equal to one, the integrated counterterm can be added back into the integrand.
 
-By introducing factors $\mathbf{a}, \mathbf{b}, \mathbf{c}$ to scale the original integrand, the counterterm and the integrated counterterm we can then also use a single implementation to evaluate any of these integrands, by setting the appropriate factors to zero.
+By introducing factors $\mathbf{a}, \mathbf{b}, \mathbf{c} \in \{0,1\}$ to scale the original integrand, the counterterm and the integrated counterterm we can then also use a single implementation to evaluate any of these integrands, by setting the appropriate factors to zero.
 
 \begin{equation}
     I = \int \dd[3]{k}\qty[ \mathbf{a}\;\mathcal{I}_{CFF} + \sum_{i<j} \sum_{k^* \in \mathcal{K}_{ij}} \qty( -\mathbf{b}\;\text{CT}_{ij}(k^*) + \mathbf{c}\;I_{\on{CT}_{ij}}(k^*) \frac{3\Theta(\lambda-\abs{k})}{2\lambda^3})] \label{eq:integrand}
 \end{equation}
+
+\textbf{TODO:} Improve explanation.
 
 \subsection{Local cancellation in Counterterm}
 \textbf{TODO:} Explain what might be a problem, and why it is not.
@@ -485,11 +489,13 @@ The numerical integration is performed with the Python API of the
 compilation of symbolic expressions into optimized assembly code for fast
 evaluation. It also provides an efficient implementation of the \texttt{VEGAS}
 Monte Carlo integration algorithm, which is well suited for this problem.
+
 \subsection{Parametrization}
 \texttt{Symbolica} provides efficient sampling in $N$-dimensional hypercubes.
 There are many reasonable choices to map from the unit hypercube to hemispherical coordinates. I choose the following mapping from unit hypercubes to the relevant parametrizations with their respective Jacobians $J$.
 
-\subsubsection{parametrization of the unit hemisphere}
+\textbf{Unit Hemisphere}
+
 \begin{equation}
     \vb{\hat{k}}(u, v) =
     \begin{pmatrix}
@@ -505,7 +511,8 @@ with
     J_{\vb{\hat{k}}} = 2 \pi
 \end{equation}
 
-\subsubsection{Spherical Parametrization}
+\textbf{Hemispherical coordinates}
+
 \begin{equation}
     \va{k}(u, v, w) = r \vb{\hat{k}}(u, v)
 \end{equation}
@@ -516,31 +523,96 @@ with
     J = \frac{r^2 \, J_{\vb{\hat{k}}}}{{(1-\tilde{u})}^2}
 \end{equation}
 
-\section{Results}
-With this implementation we will now discuss multiple examples, comparing the
-results with and without threshold subtraction, to determine the success of the
-method. As a baseline reference we will compare the results with the
-\textit{OneLOop} package~\cite{hameren_oneloop_2011}. In conjunction to this
-Thesis I created an open source repository \textit{OneLOop
-    Bridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}} that
-provides Python and Rust bindings for the \textit{OneLOop} package, which is
-written in fortran.
+\subsection{Reference}
+The \textit{OneLOop} package~\cite{hameren_oneloop_2011} provides implementation for scalar loop integrals with up to 4 legs. I will use the open source package \textit{OneLOopBridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}} that was written in conjunction to this thesis to compute the reference values for the integrals.\textit{OneLOopBridge} provides Python and Rust bindings for the \textit{OneLOop} package, which is written in fortran.
 
-\subsection{Small regularizing masses}
+\section{Small regularizing masses}\label{sec:regularizing_masses}
+It is possible to regularize the integral by adding a small imaginary part to the masses. In this example I show the effect of this regularization on the numerical stability of the integral. As the regularization becomes smaller the threshold subtraction becomes necessary to ensure numerical stability of the integral.
 
-\textbf{TODO:} Showcase example where i decrease the imaginary part of the mass. Subtraction keeps stability, while the unsubtracted integral diverges. Show the log log plot of the convergence here.
+For this example we use a configuration where minimum value existence condition is met for every E-surface with $i<j$. Due to this choice the radial solutions are guaranteed to be valid.
 
-\subsection{Imaginary E-surfaces}
+The external momenta in this example are chosen, such that they are aligned with the $z$-axis and in the COM-system.
+The masses in this example are always chosen to be equal $m_i = m$.
 
-\textbf{TODO:} Showcase example the threshold mass is not yet reached. Subtraction keeps stability as the E-surface comes into existence. Compare with integral, where only real E-surfaces are subtracted.
+\begin{align*}
+    \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 \qquad \Re(m) = \SI{0.2}{\GeV}
+\end{align*}
 
-\subsection{Anomalous thresholds}
+The threshold subtraction radius $\lambda$ is chosen to be $\lambda = 2.5$.
+
+It is now possible to visualize the threshold subtraction using complex masses to regularize the integrand, as shown in Figure~\ref{fig:threshols subtraction}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{assets/threshold_subtraction.png}
+    \caption{Threshold Subtraction}\label{fig:threshols subtraction}
+    Visualization of the threshold subtraction, with complex mass regularization $\Im(m) = \SI{-0.01}{\GeV}$.
+    The unsubtracted integrand, the counterterm and the subtracted integrand are shown in the $xz$-plane. The colormap is such the brightness corresponds to the absolute value of the function and the hue corresponds to the phase, with cyan corresponding to positive values and red corresponding to negative values.
+\end{figure}
+
+The integration is performed using the complex mass regularization for $-\Im(m)$ approaching zero. We can measure the convergence of the monte carlo integration using the coefficient of variation, defined as the standard deviation divided by the mean. The result of the numerical integration is shown in Figure~\ref{fig:cv_mass_reg}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{assets/mass_regularization_convergence.png}
+    \caption{Coefficient of variation of the complex mass regularization}\label{fig:cv_mass_reg}
+\end{figure}
+
+
+\section{Threshold masses}
+
+We will now take a closer look at what happens in configurations with real masses, where imaginary solutions to the E-surface equation~\eqref{eq:e_surface} exist. We will check if subtracting the imaginary solutions in these cases improve numerical stability.
+
+Using the same kinematic configuration as in Section~\ref{sec:regularizing_masses} and equal internal masses $m_i = m$,we will vary the mass to check numerical stability of the integral as E-surfaces cross the boundary of having real to complex solutions.
+
+\begin{align*}
+    \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2} 2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 = \SI{8}{\GeV^2} \qquad \Im(m) = 0
+\end{align*}
+
+Using the E-surface existence condition for the equal mass case derived in Section~\ref{sec:equal_mass_case} we can compute the values of the masses where the E-surface equation~\eqref{eq:e_surface} goes from having real to complex solutions. We will call these masses threshold masses. For this example they are
+\begin{equation}
+    m^2 = \SI{0.25}{\GeV} \qquad m^2 = \SI{0.75}{\GeV} \qquad  m^2 = \SI{2}{\GeV}
+\end{equation}
+
+Plotting the integral over a range including all of these threshold masses shown in Figure~\ref{fig:threshold_masses_integral} we see that, at least superficially, both methods of subtracting E-surfaces converge well on the correct result. We can also note that for masses larger than the largest threshold mass, the imaginary part of the integrand is equal to zero. This is expected, because in this case no singularities exist in the real valued integrand, that could introduce any imaginary part.
+
+It is important to note however, that for the per-sample method, the imaginary part of the integrand is not equal to zero, even in this region, because complex solutions of the E-surface equation get subtracted. As we can see, the per-sample method still converges well in this case, showing that the imaginary parts of the counterterm and integrated counterterm cancel themselves out exactly.
+
+The numerical stability of the two methods can be compared better, when plotting the Coefficient of variation, as shown in Figure~\ref{fig:cv_threshold_masses}. Somewhat surprisingly, the global method converges better than the per-sample method, this is likely because in the per-sample method the imaginary part of the integrand is not equal to zero, introducing unnecessary variance, while in the global method it is.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/threshold_masses_real.png}
+        \caption{Real value of the integrand}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/threshold_masses_imag.png}
+        \caption{Imaginary value of the integrand}
+    \end{subfigure}
+    \caption{Integration for a range of masses}\label{fig:threshold_masses_integral}
+    Real and imaginary values of the integrand comparing the per-sample and global E-surface existence conditions over a range of masses including the threshold masses of this configuration.
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{assets/cv_threshold_masses}
+    \caption{Coefficient of variation for a range of masses}\label{fig:cv_threshold_masses}
+    Coefficient of variation for a range of masses comparing the per-sample and global E-surface existence conditions.
+\end{figure}
+
+
+\section{Anomalous thresholds}
 \textbf{TODO:} Explain why they are interesting, explain why and how to choose the integration center, as i did, show numerical stability, compute the integral exactly on the threshold~\cite{passarino_peaks_2018}
 
+\section{Generalization to higher loop count}
+\textbf{TODO:} Explain what might be a problem, and what might not be. Showcase how newtons method converges.
+
 \section{Conclusion}
-Why good idea, computations where this can be used (mention complex mass scheme
-here). Discuss that for higher loop count finding the roots may be harder to
-find. Showcase how newtons method converges.
+\textbf{TODO:} Write conclusion
 
 \printbibliography
 
