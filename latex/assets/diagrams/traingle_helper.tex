@@ -1,0 +1,31 @@
+ \newcommand{\foo}[1]{\ifx#1+\string fermion \else\string anti fermion \fi}
+ \newcommand{\TriDiag}[3]{
+\vcenter{\hbox{
+ \feynmandiagram[horizontal=t2 to a, scale = 0.8] {
+    t1 [x=0, y=0, %label = above left:1
+    ] -- [\foo{#1}, %edge label = 1
+    ] t2 [x = 1.8, y=-1, %label = right:3
+    ]
+    -- [\foo{#2}, %edge label = 2
+    ] t3 [x=0, y=-2, %label = below left:3
+    ]
+    -- [\foo{#3}, %edge label = 3
+    ] t1
+};}}
+}
+
+ \newcommand{\TriDiagLabeled}[3]{
+\vcenter{\hbox{
+ \feynmandiagram[horizontal=t2 to a, scale = 0.8] {
+    t1 [x=0, y=0, label = above left:1
+    ] -- [\foo{#1}, edge label = 1
+    ] t2 [x = 1.8, y=-1, label = right:2
+    ]
+    -- [\foo{#2}, edge label = 2
+    ] t3 [x=0, y=-2, label = below left:3
+    ]
+    -- [\foo{#3}, edge label = 3
+    ] t1
+};}}
+}
+

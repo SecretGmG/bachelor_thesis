@@ -1,20 +1,21 @@
 \appendix
 \section{Rewriting the LTD expression}\label{sec:improved_ltd}
-We now want to rewrite this expression into a form that is better suited for numerical integration.
-For this we will make heavy use of the following identities.
+We now want to rewrite this expression into a form that is better suited for
+numerical integration. For this we will make heavy use of the following
+identities.
 \begin{equation}
     \frac{1}{xy} = \frac{1}{x-y}\qty(\frac{1}{y}-\frac{1}{x})
 \end{equation}
 The following relations also hold for the $\eta$ coefficients.
 \begin{align}
-    \HYPER{i}{j} &= -\HYPER{j}{i}               \label{eq:hyper_antisym}\\
-    \ELIPT{i}{j}-\HYPER{i}{j} &= 2E_j           \label{eq:elipt_min_hyper}\\
-    \ELIPT{i}{k}-\ELIPT{j}{k} &= \HYPER{i}{j}   \label{eq:elipt_min_elipt}\\
-    \HYPER{i}{j}+\HYPER{j}{k}+\HYPER{k}{i} &= 0 \label{eq:hyper_cycle}
+    \HYPER{i}{j}                           & = -\HYPER{j}{i}               \label{eq:hyper_antisym} \\
+    \ELIPT{i}{j}-\HYPER{i}{j}              & = 2E_j           \label{eq:elipt_min_hyper}            \\
+    \ELIPT{i}{k}-\ELIPT{j}{k}              & = \HYPER{i}{j}   \label{eq:elipt_min_elipt}            \\
+    \HYPER{i}{j}+\HYPER{j}{k}+\HYPER{k}{i} & = 0 \label{eq:hyper_cycle}
 \end{align}
 To start we can notice the following useful identity
 \begin{align}
-    \frac{1}{\ELIPT{i}{j}\HYPER{i}{j}} &= \frac{1}{2E_j}\qty(\frac{1}{\HYPER{i}{j}} - \frac{1}{\ELIPT{i}{j}}) \label{eq:rewrite_1}
+    \frac{1}{\ELIPT{i}{j}\HYPER{i}{j}} & = \frac{1}{2E_j}\qty(\frac{1}{\HYPER{i}{j}} - \frac{1}{\ELIPT{i}{j}}) \label{eq:rewrite_1}
 \end{align}
 Applying Eq.~\eqref{eq:rewrite_1} to the integrand we get
 %\begin{align}
@@ -23,48 +24,48 @@ Applying Eq.~\eqref{eq:rewrite_1} to the integrand we get
 %\end{align}
 \newcommand{\HMFRAC}[2]{\left(\frac{1}{\HYPER{#1}{#2}}-\frac{1}{\ELIPT{#1}{#2}}\right)}
 \begin{align*}
-I(q,p,m_\psi) =&  \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \Bigg[\\
-      &  \phantom{{}+{}}
-          \HMFRAC{1}{2}\HMFRAC{1}{3}\\
-      &  +\HMFRAC{2}{1}\HMFRAC{2}{3}\\
-      &  +\HMFRAC{3}{1}\HMFRAC{3}{2}
-      \Bigg]
+    I(q,p,m_\psi) = & \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \Bigg[ \\
+                    & \phantom{{}+{}}
+    \HMFRAC{1}{2}\HMFRAC{1}{3}                                                              \\
+                    & +\HMFRAC{2}{1}\HMFRAC{2}{3}                                           \\
+                    & +\HMFRAC{3}{1}\HMFRAC{3}{2}
+    \Bigg]
 \end{align*}
 This can be expanded
 \begin{align*}
-I(q,p,m_\psi)
-&= \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_12E_2E_3} \Bigg[\\
-&  \frac{1}{\HYPER{1}{2}\HYPER{1}{3}}
- - \frac{1}{\HYPER{1}{2}\ELIPT{1}{3}}
- - \frac{1}{\ELIPT{1}{2}\HYPER{1}{3}}
- + \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}\\
-&+ \frac{1}{\HYPER{2}{1}\HYPER{2}{3}}
- - \frac{1}{\HYPER{2}{1}\ELIPT{2}{3}}
- - \frac{1}{\ELIPT{2}{1}\HYPER{2}{3}}
- + \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}\\
-&+ \frac{1}{\HYPER{3}{1}\HYPER{3}{2}}
- - \frac{1}{\HYPER{3}{1}\ELIPT{3}{2}}
- - \frac{1}{\ELIPT{3}{1}\HYPER{3}{2}}
- + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
-\Bigg]
+    I(q,p,m_\psi)
+     & = \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_12E_2E_3} \Bigg[ \\
+     & \frac{1}{\HYPER{1}{2}\HYPER{1}{3}}
+        - \frac{1}{\HYPER{1}{2}\ELIPT{1}{3}}
+        - \frac{1}{\ELIPT{1}{2}\HYPER{1}{3}}
+    + \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}                               \\
+     & + \frac{1}{\HYPER{2}{1}\HYPER{2}{3}}
+        - \frac{1}{\HYPER{2}{1}\ELIPT{2}{3}}
+        - \frac{1}{\ELIPT{2}{1}\HYPER{2}{3}}
+    + \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}                               \\
+     & + \frac{1}{\HYPER{3}{1}\HYPER{3}{2}}
+        - \frac{1}{\HYPER{3}{1}\ELIPT{3}{2}}
+        - \frac{1}{\ELIPT{3}{1}\HYPER{3}{2}}
+        + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
+        \Bigg]
 \end{align*}
 and then rearranged
 \begin{align*}
-I(q,p,m_\psi)
-&=  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[\\
-&\phantom{{}+{}}
-  \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
-+ \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}
-+ \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}\\
-&
--\frac{1}{\HYPER{1}{2}}\qty(\frac{1}{\ELIPT{1}{3}} - \frac{1}{\ELIPT{2}{3}})
--\frac{1}{\HYPER{3}{1}}\qty(\frac{1}{\ELIPT{3}{2}} - \frac{1}{\ELIPT{1}{2}})
--\frac{1}{\HYPER{2}{3}}\qty(\frac{1}{\ELIPT{2}{1}} - \frac{1}{\ELIPT{3}{1}})\\
-&
-+ \frac{1}{\HYPER{1}{2}\HYPER{1}{3}}
-+ \frac{1}{\HYPER{2}{1}\HYPER{2}{3}}
-+ \frac{1}{\HYPER{3}{1}\HYPER{3}{2}}
-\Bigg]
+    I(q,p,m_\psi)
+     & =  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[           \\
+     & \phantom{{}+{}}
+    \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
+    + \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}
+    + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}                                         \\
+     &
+    -\frac{1}{\HYPER{1}{2}}\qty(\frac{1}{\ELIPT{1}{3}} - \frac{1}{\ELIPT{2}{3}})
+    -\frac{1}{\HYPER{3}{1}}\qty(\frac{1}{\ELIPT{3}{2}} - \frac{1}{\ELIPT{1}{2}})
+    -\frac{1}{\HYPER{2}{3}}\qty(\frac{1}{\ELIPT{2}{1}} - \frac{1}{\ELIPT{3}{1}}) \\
+     &
+    + \frac{1}{\HYPER{1}{2}\HYPER{1}{3}}
+    + \frac{1}{\HYPER{2}{1}\HYPER{2}{3}}
+    + \frac{1}{\HYPER{3}{1}\HYPER{3}{2}}
+    \Bigg]
 \end{align*}
 %We will now show that the purely hyperbolic terms vanish, for this we need
 %\begin{align}
@@ -77,27 +78,84 @@ I(q,p,m_\psi)
 %    &=
 %    \frac{\HYPER{1}{2}-\HYPER{1}{2}+\HYPER{3}{1}-\HYPER{1}{3}+\HYPER{2}{3}-\HYPER{3}{2}}{\HYPER{1}{2}\HYPER{2}{3}\HYPER{3}{1}} = 0
 %\end{align}
-We will now show that the purely hyperbolic terms vanish,
-for this we can simply put the on a common denominator and apply Eq.~\eqref{eq:hyper_cycle}.
+We will now show that the purely hyperbolic terms vanish, for this we can
+simply put the on a common denominator and apply Eq.~\eqref{eq:hyper_cycle}.
 \begin{equation}
     \frac{\HYPER{1}{2}+\HYPER{2}{3}+\HYPER{3}{1}}{\HYPER{1}{3}\HYPER{2}{3}\HYPER{3}{1}} = 0
 \end{equation}
 We now only need to take care of the mixed terms. For this we can use the identity
 \begin{align}
     -\frac{1}{\HYPER{i}{j}} \qty(\frac{1}{\ELIPT{i}{k}}-\frac{1}{\ELIPT{j}{k}})
-&= \frac{1}{\HYPER{i}{j}} \qty(\frac{\ELIPT{i}{k}-\ELIPT{j}{k}}{\ELIPT{i}{k}\ELIPT{j}{k}})\\
-&= \frac{1}{\ELIPT{i}{k}\ELIPT{j}{k}} \label{eq:rewrite_2}
+     & = \frac{1}{\HYPER{i}{j}} \qty(\frac{\ELIPT{i}{k}-\ELIPT{j}{k}}{\ELIPT{i}{k}\ELIPT{j}{k}}) \\
+     & = \frac{1}{\ELIPT{i}{k}\ELIPT{j}{k}} \label{eq:rewrite_2}
 \end{align}
 Here we used Eq.~\eqref{eq:elipt_min_elipt} in the last step.
 Applying Eq.~\eqref{eq:rewrite_2} to each mixed term we get our final result.
 \begin{align*}
-I(q,p,m_\psi)
-&=  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[\\
-  &\frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}}
-+ \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
-+ \frac{1}{\ELIPT{1}{2}\ELIPT{3}{2}}
-+ \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}
-+ \frac{1}{\ELIPT{1}{3}\ELIPT{2}{3}}
-+ \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
-\Bigg]
+    I(q,p,m_\psi)
+     & =  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[ \\
+     & \frac{1}{\ELIPT{2}{1}\ELIPT{3}{1}}
+        + \frac{1}{\ELIPT{1}{2}\ELIPT{1}{3}}
+        + \frac{1}{\ELIPT{1}{2}\ELIPT{3}{2}}
+        + \frac{1}{\ELIPT{2}{1}\ELIPT{2}{3}}
+        + \frac{1}{\ELIPT{1}{3}\ELIPT{2}{3}}
+        + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
+        \Bigg]
 \end{align*}
+
+\section{OneLOopBridge}\label{sec:oneloopbridge}
+
+\textit{OneLOopBridge} provides a lightweight Rust and Python interface to the \textit{OneLOop} Fortran library, providing access to scalar one-loop integrals with up to four external legs. The package was developed to offer a safe, idiomatic, and reproducible way to evaluate loop integrals.
+
+The underlying \textit{OneLOop} library implements analytic expressions for
+dimensionally regularized scalar one-loop integrals, returning their Laurent
+expansion in the dimensional regulator $\varepsilon = (4-d)/2$.
+\textit{OneLOopBridge} exposes these routines by providing save Rust bindings
+and a Python interface. In addition to the computation of integrals, and
+interface is provided to access the most important internal settings of
+\textit{OneLOop}, namely:
+\begin{itemize}
+    \item the renormalization scale,
+    \item the on-shell threshold,
+    \item and the internal logging level.
+\end{itemize}
+
+All integral routines return a \texttt{ResultOLO} object containing the
+coefficients of the Laurent expansion,
+\begin{equation}
+    I = \varepsilon^{-2} I_{-2} + \varepsilon^{-1} I_{-1} + I_{0} + \mathcal{O}(\varepsilon)
+\end{equation}
+where finite integrals automatically yield vanishing divergent coefficients. The coefficients are accessible individually. A global conversion factor \texttt{TO\_FEYNMAN} is provided to translate results to the conventional Feynman integral normalization.
+
+\subsection{Rust Interface}
+
+The Rust API mirrors the structure of the underlying integrals and emphasizes
+explicitness. Each function corresponds to a specific configuration and takes
+the relevant kinematic invariants and squared masses as arguments. Complex
+masses are supported via \texttt{num\_complex::Complex64}.
+
+Typical usage involves computing Lorentz invariants externally and passing them
+to the wrapper functions. The returned \texttt{ResultOLO} struct provides
+accessor methods for the Laurent coefficients.
+
+The package can simply be installed using \texttt{cargo}
+
+\begin{minted}{bash}
+cargo add --git https://github.com/SecretGmG/OneLOopBridge
+\end{minted}
+
+\subsection{Python Interface}
+Python bindings are generated using \texttt{maturin} and \texttt{PyO3},
+exposing the same functionality as the rust interface. The package includes
+python stub files, allowing the users linting and type checking to integrate
+the library.
+
+To install and compile the python bindings it is necessary to download the
+repository and compile it manually. Then run maturin to install the bindings
+into an active python environment. This can be done by running the following
+inside an active python environment. Note that this will change the current
+working directory.
+\begin{minted}{bash}
+git clone https://github.com/SecretGmG/OneLOopBridge.git
+cd OneLOopBridge && make -f Makefile develop
+\end{minted}

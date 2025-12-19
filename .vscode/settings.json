@@ -8,6 +8,7 @@
         "-interaction=nonstopmode",
         "-file-line-error",
         "-outdir=build",
+        "-shell-escape",
         "%DOC%"
       ]
     }
