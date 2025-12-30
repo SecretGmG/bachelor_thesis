@@ -144,7 +144,16 @@ step toward its use in realistic multi-loop computations formulated within
 complex-mass schemes.
 
 \textbf{TODO:} short intro to complex mass scheme.
-\textbf{TODO:} short roadmap
+
+In this thesis, I will first derive the Cross Free Family (CFF) representation
+of the triangle integral, first algebraically, and then in a newer more
+Diagrammatic way due to~\cite{capatti_derivation_2023}. This representation is
+suited for threshold subtraction. Following this derivation I will define the
+counterterm used in the threshold subtraction. First for a single
+sub-expression, called E-surface, and then for all of the E-surfaces of the
+integral. With said counterterms defined, I will define the final
+threshold-subtracted integral, which will be numerically integrated using
+Monte Carlo integration. The numerical stability of this integral is then examined with a few selected examples. First I will look at the equal mass case, with small widths. Then I will look at the equal mass case with no width, exploring what happens as E-surfaces come into play. Finally I will look at kinematics showcasing anomalous thresholds and try to interpret the results using the geometry of the E-surfaces
 
 \section{Scalar Triangle Integral}
 I consider the scalar Triangle integral, restricted to complex masses with
@@ -268,16 +277,24 @@ resulting expression contains only E-Surfaces.
 \end{gather}
 
 \subsection{Cross Free Family}
-Equation~\eqref{eq:cff} can also be derived directly using a diagrammatic approach, derived in~\cite{capatti_exposing_2023}.
+Equation~\eqref{eq:cff} can also be derived directly using a diagrammatic
+approach, derived in~\cite{capatti_exposing_2023}.
 
-It shows, that the CFF representation can be obtained by summing over all possible acyclic edge orientations of the given graph. In the case of the triangle, there are six possible edge orientations $S = {\{+,-\}}^3 \setminus \{(+,+,+), (-,-,-)\}$.
+It shows, that the CFF representation can be obtained by summing over all
+possible acyclic edge orientations of the given graph. In the case of the
+triangle, there are six possible edge orientations $S = {\{+,-\}}^3 \setminus
+    \{(+,+,+), (-,-,-)\}$.
 
 \begin{align}
-\mathcal{I}_{CFF} &= \frac{1}{{(2\pi)}^3}\frac{1}{\prod_{m=1}^{3} 2i\,E_m} \sum_{\va{\sigma} \in S} \hat{\mathbbm{1}}_{\va{\sigma}}\\
-&=\frac{1}{{(4\pi)}^3} \frac{-1}{E_1E_2E_3} \qty[\TriDiag{-}{+}{+} + \TriDiag{+}{-}{+} + \TriDiag{+}{+}{-} + \TriDiag{+}{-}{-} + \TriDiag{-}{+}{-} + \TriDiag{-}{-}{+}]
+    \mathcal{I}_{CFF} & = \frac{1}{{(2\pi)}^3}\frac{1}{\prod_{m=1}^{3} 2i\,E_m} \sum_{\va{\sigma} \in S} \hat{\mathbbm{1}}_{\va{\sigma}}                                                       \\
+                      & =\frac{1}{{(4\pi)}^3} \frac{-1}{E_1E_2E_3} \qty[\TriDiag{-}{+}{+} + \TriDiag{+}{-}{+} + \TriDiag{+}{+}{-} + \TriDiag{+}{-}{-} + \TriDiag{-}{+}{-} + \TriDiag{-}{-}{+}]
 \end{align}
 
-Note that up to permutations of the indices all of these diagrams are equivalent. We will therefore consider one diagram, and note that the result is symmetric under the exchange of the indices. It is shown in~\cite{capatti_derivation_2023}, how this diagram can be evaluated by recursively retracting contracting edges.
+Note that up to permutations of the indices all of these diagrams are
+equivalent. We will therefore consider one diagram, and note that the result is
+symmetric under the exchange of the indices. It is shown
+in~\cite{capatti_derivation_2023}, how this diagram can be evaluated by
+recursively retracting contracting edges.
 
 \begin{equation}
     \TriDiagLabeled{+}{-}{+} \quad = \frac{i}{\tilde{E}_1 + \tilde{E}_2} \frac{i}{\tilde{E}_1 + \tilde{E}_3}
@@ -293,7 +310,6 @@ Thus the sum of the $\tilde{E}_1$ values corresponds exactly to the e-surface $\
     \TriDiagLabeled{+}{-}{+} = \frac{-1}{\ELIPT{1}{2}\ELIPT{1}{3}}
 \end{equation}
 
-
 \section{E-Surface}
 Equation~\eqref{eq:cff} can still contain singularities, which need further
 treatment to be integrated numerically. The equation is singular when an
@@ -302,28 +318,39 @@ need to characterize these singularities. In the case of complex masses, this
 characterization needs some extra care. We need to make sure to find the zeros
 of the E-Surface in the complex plane, rather than in the real plane.
 
-Let us introduce the momentum $\va{k'}$ defined in equation~\eqref{eq:k_prime}.
-\begin{equation}
-    \va{k'} = \va{k} - \frac{\va{q}_i}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime}
-\end{equation}
-
-Defining $\vb{q} = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j)$, the E-Surface condition
-simplifies to the following form.
+Let us introduce the following definitions.
+\begin{align}
+    \va{k'} & = \va{k} - \frac{\va{q}_i}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime} \\
+    \vb{q}  & = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j) \label{eq:q}
+\end{align}
+This the E-Surface simplifies to the following form.
 \begin{equation}
     \ELIPT{i}{j} =  \sqrt{{(\va{k'}-\va{q})}^2+m_i^2} + \sqrt{{(\va{k'}+\va{q})}^2+m_j^2} + 2q^0 \overset{!}{=} 0\label{eq:e_surface}
 \end{equation}
+
 \subsubsection{E-Surface existence condition}\label{sec:e_surface_exist}
-%Maybe First do simplified case with $m_i = m_j = m$. show that it is indeed ellipsoid.
-Noticing that the E-Surface is of the same form as~\eqref{eq:identity} we can
-perform the following steps to remove the square roots.
-\begin{equation}
-    \sqrt{A}+\sqrt{B} + C = 0 \label{eq:identity}
-\end{equation}
-We can already find a necessary but not sufficient condition for the existence of the E-Surface. Considering equation~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$ and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following identity must hold
+Equation~\eqref{eq:e_surface} allows us to find a necessary but not sufficient
+condition for the existence of the E-Surface. Considering
+equation~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$
+and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following
+identity must hold, because the evaluations of the square roots always have
+positive real parts.
 \begin{equation}
     \Re(C) = 2 q^0 < 0 \label{eq:e_surface_existence_condition}
 \end{equation}
-This condition already excludes exactly half of the E-surfaces from having any solutions. We will now precede with the characterization of the solutions of the identity~\eqref{eq:identity}.
+This condition already excludes exactly half of the E-surfaces from having any solutions because
+\begin{equation}
+    i \leftrightarrow j \implies q \leftrightarrow -q
+\end{equation}
+This also implies that there exists an ordering of the indices $i$ and $j$ such that the condition~\eqref{eq:e_surface_existence_condition} holds exactly when $i<j$.
+
+To make further progress we will assume that the condition
+in~\eqref{eq:e_surface_existence_condition} holds and precede by noticing that
+the E-Surface is of the same structure as the following.
+\begin{equation}
+    \sqrt{A}+\sqrt{B} + C = 0 \label{eq:identity}
+\end{equation}
+We will now derive a characterization of the solutions of equation~\eqref{eq:identity}.
 \begin{align}
     \sqrt{A}+\sqrt{B} + C =                              & 0                        \\
     \implies\quad 2\sqrt{AB}                             & = C^2-A-B                \\
@@ -331,10 +358,10 @@ This condition already excludes exactly half of the E-surfaces from having any s
     \implies\quad C^2 - 2(A+B) + {\qty(\frac{A-B}{C})}^2 & = 0 \label{eq:identity2}
 \end{align}
 
-\subsubsection{Treatment of extraneous solutions}
+\subsubsection{Treatment of extraneous solutions}\label{sec:extraneous_solutions}
 The steps taken to derive equation~\eqref{eq:identity2} may introduce
 extraneous solutions to the E-Surface equation~\eqref{eq:e_surface}. I propose
-and compare two methods to remove these extraneous solutions.
+and compare two methods to treat these extraneous solutions.
 \begin{itemize}
     \item \textbf{Numerical Check Existence Condition:}\\
           Check solutions by inserting and checking if the expression evaluates to $0$.
@@ -343,15 +370,17 @@ and compare two methods to remove these extraneous solutions.
           perform this check per sample, which in turn means that samples concerning the same E-surface may be excluded / included depending on the solid angle $\hat{\vb{k}}$.
 
     \item \textbf{Minimum Value Existence Condition:}\\
-          Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over the reals. If it is
+          Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over real valued inputs. If the real part is
           negative, then there exist solutions with $\Re(A)>0$ ans $\Re(B)>0$ and thus
-          the following steps can not introduce extraneous solutions. If the minimum
-          value is positive, then the following steps may introduce extraneous solutions.
-          This method may remove some valid solutions, but it is guaranteed to not
+          the derivation of equation~\eqref{eq:identity2} can not introduce extraneous solutions. If the minimum
+          value is positive, then extraneous solutions may have been introduced and thus we need to remove them.
+          This method may remove valid solutions, but it is guaranteed to not
           introduce extraneous solutions. Valid solutions removed in this way necessarily
-          lie in the complex plane. We can easily compute the minimum value of
-          the equation~\eqref{eq:e_surface} by noticing that it is convex and solving for
-          $\nabla_{\va{k'}} \ELIPT{i}{j} = 0$, which yields
+          lie in the complex plane and thus may not significantly affect the result.
+
+          To compute the minimum value of the equation~\eqref{eq:e_surface}, we can
+          notice that it is convex and solve for $\nabla_{\va{k'}} \ELIPT{i}{j} = 0$,
+          which yields
           \begin{equation}
               \va{k'}_{\text{min}} = \frac{m_j-m_i}{m_i+m_j} \va{q}
           \end{equation}
@@ -359,17 +388,19 @@ and compare two methods to remove these extraneous solutions.
 \end{itemize}
 
 \subsubsection{E-surface characterization}
-The E-Surface equation~\eqref{eq:e_surface} rewritten using
-equation~\eqref{eq:identity2}.
+For the characterization of the E-surface we will need a single quadratic
+equation in some radial variable $k$. We can do this by rewriting the E-Surface
+equation~\eqref{eq:e_surface} using equation~\eqref{eq:identity2}. After some
+simplification this yields
 %\begin{align*}
 %    A-B &= -4\va{k'}\cdot \va{q} + m_i^2 - m_j^2\\
 %    A+B &= 2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2
 %\end{align*}
-Which yields the following equation after some simplifications.
 \begin{equation}
     4{q^0}^2 - 2 \qty(2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2) + {\qty(\frac{-4 \va{k'}\cdot \va{q} + m_i^2 - m_j^2}{-2q^0})}^2= 0
 \end{equation}
-This equation can be further simplified, showing that it is quadratic in $\va{k}'$. Note, that $\vb{q}^2 = {q^0}^2 - \va{q}^2$.
+This equation can be further simplified, showing that it is quadratic in $\va{k}'$.
+At this point it also makes sense to simplify with the lorentz invariant quantity $\vb{q}^2 = {q^0}^2 - \va{q}^2$.
 %\begin{equation}
 %    \vb{q}^2-\frac{m_i^2 + m_j^2}{2} - \va{k'}^2 + {\qty(\va{k'}\cdot \frac{\va{q}}{q^0})}^2 - 2 \qty(\frac{m_i^2 - m_j^2}{4q^0}) \qty(\va{k'}\cdot \frac{\va{q}}{q^0}) + {\qty(\frac{m_i^2 - m_j^2}{4q^0})}^2 = 0
 %\end{equation}
@@ -404,6 +435,17 @@ with
 \end{align}
 This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which we will call $k^*_+$ and $k^*_-$. These solutions need to be checked for validity with one of the proposed methods.
 
+Additional care needs to be taken when the solutions $k^*$ are real, as the
+prescription of the solutions is not well defined in this case and will be
+relevant in Section~\ref{sec:thresh}. The prescription may be reintroduced to
+the factors $\alpha, \beta, \gamma$ via the mass $m_i \to m_i - i\varepsilon$.
+By carefully propagating this prescription through the quadratic formula we
+will obtain the correct solutions.
+
+\begin{align}
+    k^*_{\pm} = \frac{-\beta \pm \sqrt{\beta^2-4\alpha\gamma}}{2\alpha} \pm i\varepsilon
+\end{align}
+
 \subsection{Equal-mass case}~\label{sec:equal_mass_case}
 It is worthwhile to consider the case where $m_i = m_j = m \in \real$ to build
 geometric intuition of the solutions. In this case the quadratic
@@ -411,11 +453,12 @@ equation~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions
 is more transparent.
 
 Choosing the parametrization~\eqref{eq:parametrization} with $\va{k'_0} =
-    \va{k_0}$, we get
+    \va{k_0}$ it is possible to simplify equation~\eqref{eq:quadratic_k} to
+simplify the quadratic equation into the following.
 \begin{equation}
     k^2 = \frac{\vb{q}^2-m^2}{1-{\qty(\hat{\vb{k}} \cdot \va{v})}^2} \label{eq:quadratic_k_simple}
 \end{equation}
-Considering that if the external momenta are onshell, we find that $\norm{v} < 1$, this ensures that we do not divide be zero, and the sign of the denominator is always positive.g
+Considering that if the external momenta are onshell, we find that $\norm{v} < 1$. This ensures that we do not divide be zero, and the sign of the denominator is always positive.
 Thus we can see, that real solutions for $k$ only exist if $\vb{q}^2-m^2 > 0$. In this case equation~\eqref{eq:quadratic_k_simple} defines a prolate spheroid. This is the shape of the E-surface for equal-mass particles.
 In Figure~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
 
@@ -439,7 +482,7 @@ reproduces its behavior exactly at the singular point. This ensures that the
 combined integrand remains finite everywhere in the integration domain. In a
 well chosen parametrization, it suffices to integrate along a a single
 dimension to integrate over the pole. This integration can be performed
-analytically, or with some oder stable procedure, thus eliminating the
+analytically, or with some other stable procedure, thus eliminating the
 singularity entirely.
 
 In resent approaches, only singularities lying exactly in the integration
@@ -551,20 +594,21 @@ The same procedure applies to $\ELIPT{2}{3}$ and $\ELIPT{1}{3}$
 
 \subsection{Definition of the full integral}
 For the numerical final numerical integration it is useful to combine the
-everything into a single integral. This approach improves compiler optimization of
-the integrand and may also improve numerical stability by better capturing
+everything into a single integral. This approach improves compiler optimization
+of the integrand and may also improve numerical stability by better capturing
 correlations and cancellations between the different parts.
 
 There are many ways to add the radially integrated counterterm back into an
-integrand over $k \in \real^3$. For now we will consider a general mask $g(k)$, which is normalized along the radial variable $k$.
+integrand over $k \in \real^3$. For now we will consider a general mask $g(k)$,
+which is normalized along the radial variable $k$.
 \begin{equation}
     \int \dd{k} k^2 g(k) = 1
 \end{equation}
 
 By introducing factors $\mathbf{a}, \mathbf{b}, \mathbf{c} \in \{0,1\}$ to
 scale the original integrand, the counterterm and the integrated counterterm we
-can then also use a single implementation to evaluate any of the relevant integrands,
-by setting the appropriate factors to zero.
+can then also use a single implementation to evaluate any of the relevant
+integrands, by setting the appropriate factors to zero.
 
 \begin{equation}
     I =
@@ -599,7 +643,7 @@ There are many reasonable choices to map from the unit hypercube to hemispherica
 \textbf{Unit Hemisphere}
 
 \begin{equation}
-    \vb{\hat{k}}(u, v) =
+    \vb{\hat{k}}(v, w) =
     \begin{pmatrix}
         \sin(\phi) \cos(2 \pi w) \\
         \sin(\phi) \sin(2 \pi w) \\
@@ -616,7 +660,7 @@ with
 \textbf{Hemispherical coordinates}
 
 \begin{equation}
-    \va{k}(u, v, w) = r \vb{\hat{k}}(u, v)
+    \va{k}(u, v, w) = r \vb{\hat{k}}(v, w)
 \end{equation}
 
 \begin{equation}
@@ -632,18 +676,16 @@ source package
 \textit{OneLOopBridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}}
 that was written in conjunction to this thesis to compute the reference values
 for the integrals.\textit{OneLOopBridge} provides Python and Rust bindings for
-the \textit{OneLOop} package, which is written in fortran. A more detailed description of the usage of \textit{OneLOopBridge} can be found in Appendix~\ref{sec:oneloopbridge}.
+the \textit{OneLOop} package, which is written in fortran. A more detailed
+description of the usage of \textit{OneLOopBridge} can be found in
+Appendix~\ref{sec:oneloopbridge}.
 
-\section{Small regularizing masses}\label{sec:regularizing_masses}
+\section{Small width}\label{sec:regularizing_masses}
 It is possible to regularize the integral by adding a small imaginary part to
 the masses. In this example I show the effect of this regularization on the
 numerical stability of the integral. As the regularization becomes smaller the
 threshold subtraction becomes necessary to ensure numerical stability of the
-integral.
-
-For this example we use a configuration where minimum value existence condition
-is met for every E-surface with $i<j$. Due to this choice the radial solutions
-are guaranteed to be valid.
+integral, even for small \textit{finite} widths.
 
 The external momenta in this example are chosen, such that they are aligned
 with the $z$-axis and in the COM-system. The masses in this example are always
@@ -653,29 +695,88 @@ chosen to be equal $m_i = m$.
     \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 = \SI{8}{\GeV^2}\qquad \Re(m) = \SI{0.2}{\GeV}
 \end{align*}
 
-The threshold subtraction radius $\lambda$ is chosen to be $\lambda = 2.5$.
+In this example all of the three possible E-surfaces exist, this can be easily
+checked by applying the minimum value existence condition derived in
+Section~\ref{sec:extraneous_solutions}.
 
-It is now possible to visualize the threshold subtraction using complex masses
-to regularize the integrand, as shown in Figure~\ref{fig:threshols
-    subtraction}.
+This example will be used to compare the convergence behavior of different
+hyperparameter, as the width, which regularizes the integral gets smaller and
+thus the threshold subtraction becomes necessary. The following setups will be
+compared:
+
+\begin{itemize}
+    \item \textbf{No subtraction}
+    \item \textbf{Centered subtraction} Threshold subtraction where the effective region of the subtraction is centered around the origin, with a radius of $\lambda = \SI{2.5}{\GeV}$. The mask for the integrated counterterm is similarly a sphere with the same radius.
+    \item \textbf{Sliver subtraction} Threshold subtraction where the effective region of the subtraction is a sliver with a half width of $\lambda = \SI{1}{\GeV}$. Similarly the mask for the integrated counterterm is a sliver with the same half width.
+\end{itemize}
+
+The threshold subtraction for the centered and uncentered cases are shown in
+Figure~\ref{fig:threshold subtraction_centered} and Figure~\ref{fig:threshold
+    subtraction_uncentered} respectively. On the lower half of the plots, where the
+integrand is shown along the $z$-axis it can be seen qualitatively that the
+threshold subtraction successfully removes the poles and flattens the
+integrand. We may also notice, that the sliver threshold subtraction produces
+more discontinuities.
+
+Subtracting a sliver does however have the advantage of being more robust with
+respect to the choice of the hyperparameter $\lambda$, which is the half width
+of the sliver, as the subtraction region will \textit{always} contain the pole.
+Whereas subtracting a centered region will only contain the pole if the
+hyperparameter is large enough.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{assets/threshold_subtraction.png}
-    \caption{Threshold Subtraction}\label{fig:threshols subtraction}
-    Visualization of the threshold subtraction, with complex mass regularization $\Im(m) = \SI{-0.01}{\GeV}$.
+    \includegraphics[width=0.9\textwidth]{assets/small_width/centered_subtraction.png}
+    \caption{Centered Threshold Subtraction}\label{fig:threshold subtraction_uncentered}
+    Visualization of the threshold subtraction, with complex mass $m = (0.2-0.01 \mathit{i})\si{\GeV}$, using the
+    The unsubtracted integrand, the counterterm and the subtracted integrand are shown in the $xz$-plane. The colormap is such the brightness corresponds to the absolute value of the function and the hue corresponds to the phase, with cyan corresponding to positive values and red corresponding to negative values.
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{assets/small_width/uncentered_subtraction.png}
+    \caption{Sliver Threshold Subtraction}\label{fig:threshold subtraction_centered}
+    Visualization of the threshold subtraction, with complex mass $m = (0.2-0.01 \mathit{i})\si{\GeV}$.
     The unsubtracted integrand, the counterterm and the subtracted integrand are shown in the $xz$-plane. The colormap is such the brightness corresponds to the absolute value of the function and the hue corresponds to the phase, with cyan corresponding to positive values and red corresponding to negative values.
 \end{figure}
 
 The integration is performed using the complex mass regularization for
-$-\Im(m)$ approaching zero. We can measure the convergence of the monte carlo
-integration using the coefficient of variation, defined as the standard
-deviation divided by the mean. The result of the numerical integration is shown
-in Figure~\ref{fig:cv_mass_reg}.
+$-\Im(m)$ approaching zero. This coefficient is computed separately for the
+real and imaginary parts of the integration. The result of the numerical
+integration is shown in Figure~\ref{fig:small_width_integration}. It can be
+seen, that both the sliver and centered subtraction converge well on the
+correct result, even as the width gets smaller.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{assets/mass_regularization_convergence.png}
-    \caption{Coefficient of variation of the complex mass regularization}\label{fig:cv_mass_reg}
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/small_width/integration_centered.png}
+        \caption{Integration for centered subtraction}
+        Integration for the centered subtraction for a range of decay widths.
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/small_width/integration_uncentered.png}
+        \caption{Integration for uncentered subtraction}
+        Integration for the sliver subtraction for a range of decay widths.
+    \end{subfigure}
+    \caption{Comparison of subtraction regions across a range decay widths}\label{fig:small_width_integration}
+\end{figure}
+
+We can measure the convergence of the monte carlo integration using the
+coefficient of variation, defined as the standard deviation divided by the
+mean.
+\begin{equation}
+    \on{CV} = \frac{\sigma}{\mu}
+\end{equation}
+The coefficient of variation is shown in Figure~\ref{fig:small_width_cv}. It can be seen, that both subtraction methods have a great impact on the convergence of the integral. The coefficient of variation of the unsubtracted method increases exponentially as the width gets smaller, while the coefficient of variation of the subtracted method is less sensitive to the width. It is also interesting to note, that the centered subtraction has a lower coefficient of variation than the sliver subtraction. This difference may be caused by fact that the sliver subtraction produces more discontinuities, which may make it harder for the VEGAS sampler to learn the integrand.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/small_width/cv.png}
+    \caption{Coefficient of variation for a range of masses}\label{fig:small_width_cv}
+    Coefficient of variation for a range of masses comparing the per-sample and global E-surface existence conditions.
 \end{figure}
 
 \section{Threshold masses}
@@ -683,10 +784,11 @@ in Figure~\ref{fig:cv_mass_reg}.
 We will now take a closer look at what happens in configurations with real
 masses, where imaginary solutions to the E-surface
 equation~\eqref{eq:e_surface} exist. We will check if subtracting the imaginary
-solutions in these cases improve numerical stability.
+solutions in these cases improve numerical stability especially for
+configurations very close to thresholds where E-surfaces come into existence.
 
 Using the same kinematic configuration as in
-Section~\ref{sec:regularizing_masses} and equal internal masses $m_i = m$,we
+Section~\ref{sec:regularizing_masses} and equal internal masses $m_i = m$, we
 will vary the mass to check numerical stability of the integral as E-surfaces
 cross the boundary of having real to complex solutions.
 
@@ -718,34 +820,41 @@ per-sample method still converges well in this case, showing that the imaginary
 parts of the counterterm and integrated counterterm cancel themselves out
 exactly.
 
-The numerical stability of the two methods can be compared better, when
-plotting the Coefficient of variation, as shown in
-Figure~\ref{fig:cv_threshold_masses}. Somewhat surprisingly, the global method
-converges better than the per-sample method, this is likely because in the
-per-sample method the imaginary part of the integrand is not equal to zero,
-introducing unnecessary variance, while in the global method it is.
-
+The result of the numerical integration is shown in
+Figure~\ref{fig:threshold_masses_integral}. It can be seen, that both methods
+converge well on the correct result.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{assets/threshold_masses_real.png}
-        \caption{Real value of the integrand}
-    \end{subfigure}%
+        \includegraphics[width=\textwidth]{assets/threshold_masses/global_check.png}
+        \caption{With Minimum Value Existence Condition}
+    \end{subfigure}
     \hfill
     \begin{subfigure}[t]{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{assets/threshold_masses_imag.png}
-        \caption{Imaginary value of the integrand}
+        \includegraphics[width=\textwidth]{assets/threshold_masses/per_sample_check.png}
+        \caption{without Minimum Value Existence Condition}
     \end{subfigure}
-    \caption{Integration for a range of masses}\label{fig:threshold_masses_integral}
-    Real and imaginary values of the integrand comparing the per-sample and global E-surface existence conditions over a range of masses including the threshold masses of this configuration.
+    \caption{Integration Result with different E-surface Existence Conditions}\label{fig:threshold_masses_integral}
+\end{figure}
+
+It is more interesting to look at the coefficient of variation for the
+different methods. This is shown in Figure~\ref{fig:threshold_masses_cv}. It is
+to be expected, that for masses, smaller then the smallest threshold mass $m^2
+    < \SI{0.25}{\GeV}$
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/threshold_masses/cv.png}
+    \caption{Coefficient of variation for a range of masses}\label{fig:threshold_masses_cv}
+    Coefficient of variation for a range of masses comparing the per-sample and global E-surface existence conditions.
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{assets/cv_threshold_masses}
-    \caption{Coefficient of variation for a range of masses}\label{fig:cv_threshold_masses}
+    \includegraphics[width=\textwidth]{assets/threshold_masses/cv_zoomed.png}
+    \caption{Coefficient of variation for a range of masses}\label{fig:threshold_masses_cv_zoomed}
     Coefficient of variation for a range of masses comparing the per-sample and global E-surface existence conditions.
 \end{figure}
 
