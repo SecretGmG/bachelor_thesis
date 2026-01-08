@@ -19,5 +19,7 @@
       "tools": ["latexmk"]
     }
   ],
-  "cSpell.words": [],
+  "cSpell.words": [
+    "complexification"
+  ],
 }
