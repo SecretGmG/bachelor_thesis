@@ -78,20 +78,11 @@
 \begin{abstract}
     The Standard Model of particles involves many unstable particles, such as the mediators of the weak force, the Z and W-bosons, as well as the top quark. Effects from the finite lifetime of these particles can be captured by modifying their momentum-space propagators with the addition of an imaginary value to their on-shell mass, involving the particles decay width. This modification is consistently realized through a modification of the renormalization conditions for the theory within the \emph{complex-mass scheme}.
 
-    In this thesis, we explore the consequences of this complexification of
-    propagator masses in the context of the numerical computation of loop integrals
-    in momentum space using the Loop-Tree duality. In particular, the
-    regularization of threshold singularities needs to be generalized in this case
-    since the threshold loci lie in the complex plane.
+    In this thesis, we explore the consequences of this complexification of propagator masses in the context of the numerical computation of loop integrals in momentum space using the Loop-Tree duality. In particular, the regularization of threshold singularities needs to be generalized in this case since the threshold loci lie in the complex plane.
 
-    By parameterizing the integrand in hemispherical coordinates these complex
-    thresholds can be regularized. We show that as the imaginary part of the
-    threshold location gets small the subtraction of the complex singularities is
-    necessary for optimal convergence. We also explore the possibility of
-    subtracting thresholds with no real solutions, even for real valued masses, but
-    we do not find improvements in this case. Finally, we also study the geometric
-    properties of E-surfaces corresponding to anomalous thresholds, also called
-    \emph{triangle singularities}.
+    By parameterizing the integrand in hemispherical coordinates these complex thresholds can be regularized. We show that as the imaginary part of the threshold location gets small the subtraction of the complex singularities is necessary for optimal convergence. We also explore the possibility of subtracting thresholds with no real solutions, even for real valued masses, but we do not find improvements in this case.
+    
+    %Finally, we also study the geometric properties of E-surfaces corresponding to anomalous thresholds, also called  \emph{triangle singularities}.
 \end{abstract}
 \clearpage
 
@@ -102,25 +93,13 @@
 \clearpage
 
 \section{Introduction}
-Perturbative quantum field theory (QFT) is a framework for describing the
-interactions between elementary particles in the Standard Model of particle
-physics. It is essential for describing cross-sections, decay rates, and other
-physical properties of particles and interactions, which can be measured
-experimentally.
+Perturbative quantum field theory (QFT) is a framework for describing the interactions between elementary particles in the Standard Model of particle physics. It is essential for describing cross-sections, decay rates, and other physical properties of particles and interactions, which can be measured experimentally.
 
-As experimental accuracy improves, it is increasingly important to compute
-accurate higher-order contributions of these expansions.
+As experimental accuracy improves, it is increasingly important to compute accurate higher-order contributions of these expansions.
 
-The non-trivial contribution of higher-order corrections is often dominated by
-loop integrals, which are increasingly difficult to compute with existing
-analytical methods like integration by parts~\cite{laporta_high-precision_2000}
-or differential equation systems for master
-integrals~\cite{henn_multiloop_2013}.
+The non-trivial contribution of higher-order corrections is often dominated by loop integrals, which are increasingly difficult to compute with existing analytical methods like integration by parts~\cite{laporta_high-precision_2000} or differential equation systems for master integrals~\cite{henn_multiloop_2013}.
 
-Because of this, the numerical evaluation of loop integrals has become an
-active area of research in recent years. There are many different methods
-available including sector decomposition implemented in
-\texttt{pySecDec}~\cite{borowka_pysecdec_2018}.
+Because of this, the numerical evaluation of loop integrals has become an active area of research in recent years. There are many different methods available including sector decomposition implemented in \texttt{pySecDec}~\cite{borowka_pysecdec_2018}.
 
 Performing the integral in momentum space often facilitates its interpretation
 in terms of the relevant physics at play, mostly because energy scales, as well
@@ -207,7 +186,7 @@ numerical stability when subtracting thresholds located far from the real axis.
 Section~\ref{sec:conclusion} concludes the thesis with a summary and outlook.
 
 \section{Scalar triangle integral}\label{sec:scalar_triangle}
-we consider the scalar triangle integral, restricted to complex masses with
+We consider the scalar triangle integral, restricted to complex masses with
 $\Re(m_i^2) > 0$ and $\Im(m_i^2) \leq 0$.
 \begin{figure}[H]
     \centering
@@ -222,7 +201,7 @@ with
 \begin{equation}
     D_i = {(\vb{k}-\vb{q}_i)}^2-{\qty(m_i-i\varepsilon)}^2\label{eq:denom}
 \end{equation}
-Notice that the feynman causal prescription $-i\varepsilon$ is included in the definition of the denominator.
+Notice that the Feynman causal prescription $-i\varepsilon$ is included in the definition of the denominator.
 
 The momenta $\vb{q_i}$ are defined as
 \begin{align}
@@ -251,7 +230,7 @@ integrand can the be visualized for all values of $(\vb{k}^0, \vb{k^1}) \in
 We can however already notice, that the number of poles in the $\vb{k}^0$
 variable seem to be independent of $\vb{k}^1$. We will now take a closer look
 at the poles in the $\vb{k}^0$ variable to then integrate along it
-analytically. This does not only have the huge benefit of simplifying the
+analytically. This does not only have the significant benefit of simplifying the
 singularity structure greatly, allowing for the use of threshold subtraction,
 it also removes a dimension from the integration domain, improving performance.
 
@@ -310,7 +289,7 @@ While this is a nice expression, it is not yet suited for numerical
 integration, since all of the H-surfaces contain singularities which would make
 the procedure numerically unstable. It turns out however that these
 singularities are spurious and can be removed by purely algebraic
-manipulations, shown in detail in Appendix~\ref{sec:improved_ltd}. The
+manipulations, shown in detail in Appendix~\ref{app:cff}. The
 resulting expression contains only E-surfaces.
 
 \begin{gather}
@@ -330,22 +309,17 @@ resulting expression contains only E-surfaces.
 Equation~\eqref{eq:cff} can also be derived directly using a diagrammatic
 approach, derived in~\cite{capatti_exposing_2023}.
 
-It shows, that the CFF representation can be obtained by summing over all
-possible acyclic edge orientations of the given graph. In the case of the
-triangle, there are six possible edge orientations $S = {\{+,-\}}^3 \setminus
-    \{(+,+,+), (-,-,-)\}$. \textbf{MORE DETAILS NEEDED}
+It shows, that the CFF representation can be obtained by recursively summing over all possible acyclic edge orientations of the given graph. In the case of the triangle, there are six possible acyclic edge orientations $\mathcal{S} = {\{+,-\}}^3 \setminus
+    \{(+,+,+), (-,-,-)\}$. Incidentally, these correspond exactly to the permutations of nodes in the triangle. It is easy to see this, by considering that an acyclic edge orientation of the triangle is exactly defined by the locations of a source node, a sink node and a middle node. These nodes may be permuted to obtain all acyclic edge orientations.
+
+For each of these acyclic edge orientations an object $\hat{\mathbbm{1}}_{\va{\sigma}}$, which depends on the edge orientation $\sigma \in \mathcal{S}$ this quantity is defined rigorously in~\cite{capatti_derivation_2023}. In the context of this thesis we will contend with the understanding, that it can be computed diagrammatically from the oriented triangle graph.
 
 \begin{align}
-    \mathcal{I}_{CFF} & = \frac{1}{{(2\pi)}^3}\frac{1}{\prod_{m=1}^{3} 2i\,E_m} \sum_{\va{\sigma} \in S} \hat{\mathbbm{1}}_{\va{\sigma}}                                                       \\
+    \mathcal{I}_{CFF} & = \frac{1}{{(2\pi)}^3}\frac{1}{\prod_{m=1}^{3} 2i\,E_m} \sum_{\va{\sigma} \in \mathcal{S}} \hat{\mathbbm{1}}_{\va{\sigma}}                                                       \\
                       & =\frac{1}{{(4\pi)}^3} \frac{-1}{E_1E_2E_3} \qty[\TriDiag{-}{+}{+} + \TriDiag{+}{-}{+} + \TriDiag{+}{+}{-} + \TriDiag{+}{-}{-} + \TriDiag{-}{+}{-} + \TriDiag{-}{-}{+}]
 \end{align}
 
-Note that up to permutations of the indices all of these diagrams are
-equivalent. We will therefore consider one diagram, and note that the result is
-symmetric under the exchange of the indices. It is shown
-in~\cite{capatti_derivation_2023}, how this diagram can be evaluated by
-recursively contracting edges. \textbf{MORE DETAILS NEEDED}
-
+We can notice that up to permutations of the indices all of these diagrams are equivalent. We will therefore consider one diagram, and note that the result is symmetric under the exchange of the indices. It is shown in~\cite{capatti_derivation_2023}, how this diagram can be evaluated by recursively contracting edges. Skipping the details of the contraction procedure, we can write the result of the computation as
 \begin{equation}
     \TriDiagLabeled{+}{-}{+} \quad = \frac{i}{\tilde{E}_1 + \tilde{E}_2} \frac{i}{\tilde{E}_1 + \tilde{E}_3}
 \end{equation}
@@ -360,22 +334,11 @@ Thus the sum of the $\tilde{E}_1$ values corresponds exactly to the E-surface $\
     \TriDiagLabeled{+}{-}{+} = \frac{-1}{\ELIPT{1}{2}\ELIPT{1}{3}}
 \end{equation}
 
-It is now easy to see, how the CFF representation in eq.~\eqref{eq:cff}
-corresponds exactly to the sum of all permutations of the triangle diagrams.
-This method can also be used to derive expressions suited for threshold
-subtraction at higher loop counts making it especially well suited for this
-approach.
+It is now easy to see, how the CFF representation in eq.~\eqref{eq:cff} corresponds exactly to the sum of all permutations of the triangle diagrams. This method can also be used to derive expressions suited for threshold subtraction at higher loop counts making it especially well suited for this approach.
 
-\section{E-surfaces}\label{sec:e_surface}
-Equation~\eqref{eq:cff} can still contain singularities, which need further
-treatment to be integrated numerically. The equation is singular when an
-E-surface $\ELIPT{i}{j}$ is zero. For threshold subtraction to work it is
-necessary to characterize these singularities. In the case of complex masses,
-this characterization needs some extra care.
+\section{E-surfaces}\label{sec:e_surface} Equation~\eqref{eq:cff} can still contain singularities, which need further treatment to be integrated numerically. The equation is singular when an E-surface $\ELIPT{i}{j}$ is zero. For threshold subtraction to work it is necessary to characterize these singularities. In the case of complex masses, this characterization needs some extra care.
 
-Let us introduce the following coordinate transformation and shorthand
-notation, which rewrites the E-surface such that the two on-shell-energy terms
-are symmetrical.
+Let us introduce the following coordinate transformation and shorthand notation, which rewrites the E-surface such that the two on-shell-energy terms are symmetrical.
 \begin{align}
     \va{k'} & = \va{k} - \frac{\va{q}_i}{2}(\va{q}_i+\va{q}_j) \label{eq:k_prime} \\
     \vb{q}  & = \frac{1}{2}\qty(\vb{q}_i-\vb{q}_j) \label{eq:q}
@@ -386,24 +349,21 @@ Thus the E-surface simplifies to the following form.
 \end{equation}
 
 \subsubsection{E-surface existence condition}\label{sec:e_surface_exist}
-Equation~\eqref{eq:e_surface} allows us to find a necessary but not sufficient
-condition for the existence of the E-surface. Considering
-eq.~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$
-and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following
-identity must hold, because the evaluations of the square roots always have
-positive real parts.
+Equation~\eqref{eq:e_surface} allows us to find a necessary but not sufficient condition for the existence of the E-surface. Considering eq.~\eqref{eq:identity} and remembering that we assume $\Re(m_i^2) > 0$ and $\Re(m_j^2) > 0$ we find that for any solution to exist, the following identity must hold, because the evaluations of the square roots always have positive real parts.
+
 \begin{equation}
     \Re(C) = 2 q^0 < 0 \qquad \Leftrightarrow \qquad q_i^0 < q_j^0 \label{eq:e_surface_existence_condition}
 \end{equation}
+
 This condition already excludes exactly half of the E-surfaces from having any solutions because the sign of $q^0$ flips when permuting the indices $i, j$.
+
 \begin{equation}
     i \leftrightarrow j \implies q \leftrightarrow -q
 \end{equation}
+
 This also implies that there exists an ordering of the indices $i$ and $j$ such that the condition~\eqref{eq:e_surface_existence_condition} holds exactly when $i<j$.
 
-To make further progress we will assume that the condition
-in~\eqref{eq:e_surface_existence_condition} holds and proceed by noticing that
-the E-surface is of the same structure as the following.
+To make further progress we will assume that the condition in~\eqref{eq:e_surface_existence_condition} holds and proceed by noticing that the E-surface is of the same structure as the following.
 \begin{equation}
     \sqrt{A}+\sqrt{B} + C = 0 \label{eq:identity}
 \end{equation}
@@ -416,9 +376,7 @@ We will now derive a characterization of the solutions of eq.~\eqref{eq:identity
 \end{align}
 
 \subsubsection{Treatment of extraneous solutions}\label{sec:extraneous_solutions}
-The steps taken to derive eq.~\eqref{eq:identity2} may introduce
-extraneous solutions to the E-surface eq.~\eqref{eq:e_surface}. We propose
-and compare two methods to treat these extraneous solutions.
+The steps taken to derive eq.~\eqref{eq:identity2} may introduce extraneous solutions to the E-surface eq.~\eqref{eq:e_surface}. We propose and compare two methods to treat these extraneous solutions.
 \begin{itemize}
     \item \textbf{Numerical Check Existence Condition:}\\
           Check solutions by inserting and checking if the expression evaluates to $0$.
@@ -427,34 +385,18 @@ and compare two methods to treat these extraneous solutions.
           perform this check per sample, which in turn means that samples concerning the same E-surface may be excluded / included depending on the solid angle $\hat{\vb{k}}$.
 
     \item \textbf{Minimum Value Existence Condition:}\\
-          Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over real valued inputs.
-          If the real part of the minimum value is negative, then there exist solutions with $\Re(A)>0$ and $\Re(B)>0$ and thus the derivation of eq.~\eqref{eq:identity2} cannot introduce extraneous solutions. If the minimum value is positive, then extraneous solutions may have been introduced and thus we need to remove them.
+        Compute the minimum value of $\sqrt{A}+\sqrt{B}+C = 0$ over real valued inputs. If the real part of the minimum value is negative, then there exist solutions with $\Re(A)>0$ and $\Re(B)>0$ and thus the derivation of eq.~\eqref{eq:identity2} cannot introduce extraneous solutions. If the minimum value is positive, then extraneous solutions may have been introduced and thus we need to remove them.This method may remove valid solutions, but it is guaranteed to not introduce extraneous solutions. Valid solutions removed in this way necessarily lie in the complex plane and thus may not significantly affect the result.
 
-          This method may remove valid solutions, but it is guaranteed to not introduce
-          extraneous solutions. Valid solutions removed in this way necessarily lie in
-          the complex plane and thus may not significantly affect the result.
-
-          To compute the minimum value of the eq.~\eqref{eq:e_surface}, we can
-          notice that it is convex and solve for $\nabla_{\va{k'}} \ELIPT{i}{j} = 0$,
-          which yields
-          \begin{equation}
-              \va{k'}_{\text{min}} = \frac{m_j-m_i}{m_i+m_j} \va{q}
-          \end{equation}
-          We can then compute the minimum value of the E-surface eq.~\eqref{eq:e_surface} by evaluating it at this point.
-
-          Strictly speaking, this method is only valid if the function $\sqrt{A} +
-              \sqrt{B} + C$ is real and convex. But in practice threshold subtraction is not
-          needed if the complex part of the integrand is large. As the complex part of
-          the integrand gets small and the threshold subtraction is needed, the
-          estimation of the minimum value gets more accurate. Because of this we may
-          still use this approximation to try as an alternative to the numerical check.
+        To compute the minimum value of the eq.~\eqref{eq:e_surface}, we can notice that it is convex and solve for $\nabla_{\va{k'}} \ELIPT{i}{j} = 0$, which yields
+        \begin{equation}
+            \va{k'}_{\text{min}} = \frac{m_j-m_i}{m_i+m_j} \va{q}
+        \end{equation}
+        
+        We can then compute the minimum value of the E-surface eq.~\eqref{eq:e_surface} by evaluating it at this point.Strictly speaking, this method is only valid if the function $\sqrt{A} + \sqrt{B} + C$ is real and convex. But in practice threshold subtraction is not needed if the complex part of the integrand is large. As the complex part of the integrand gets small and the threshold subtraction is needed, the estimation of the minimum value gets more accurate. Because of this we may still use this heuristic to as an alternative to the numerical check.
 \end{itemize}
 
 \subsubsection{E-surface characterization}
-For the characterization of the E-surface we will need a single quadratic
-equation in some radial variable $k$. We can do this by rewriting the E-surface
-eq.~\eqref{eq:e_surface} using eq.~\eqref{eq:identity2}. After some
-simplification this yields
+For the characterization of the E-surface we will need a single quadratic equation in some radial variable $k$. We can do this by rewriting the E-surface eq.~\eqref{eq:e_surface} using eq.~\eqref{eq:identity2}. After some simplification this yields
 %\begin{align*}
 %    A-B &= -4\va{k'}\cdot \va{q} + m_i^2 - m_j^2\\
 %    A+B &= 2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2
@@ -462,8 +404,7 @@ simplification this yields
 \begin{equation}
     4{q^0}^2 - 2 \qty(2\va{k'}^2 + 2 \va{q}^2 + m_i^2 + m_j^2) + {\qty(\frac{-4 \va{k'}\cdot \va{q} + m_i^2 - m_j^2}{-2q^0})}^2= 0
 \end{equation}
-This equation can be further simplified, showing that it is quadratic in $\va{k}'$.
-At this point it also makes sense to simplify with the lorentz invariant quantity $\vb{q}^2 = {q^0}^2 - \va{q}^2$.
+This equation can be further simplified, showing that it is quadratic in $\va{k}'$. At this point it also makes sense to simplify with the Lorentz invariant quantity $\vb{q}^2 = {q^0}^2 - \va{q}^2$.
 %\begin{equation}
 %    \vb{q}^2-\frac{m_i^2 + m_j^2}{2} - \va{k'}^2 + {\qty(\va{k'}\cdot \frac{\va{q}}{q^0})}^2 - 2 \qty(\frac{m_i^2 - m_j^2}{4q^0}) \qty(\va{k'}\cdot \frac{\va{q}}{q^0}) + {\qty(\frac{m_i^2 - m_j^2}{4q^0})}^2 = 0
 %\end{equation}
@@ -479,10 +420,7 @@ with
     \Delta = \frac{m_i^2 - m_j^2}{4q^0}
 \end{equation}
 \subsection{E-surface in hemispherical coordinates}
-To perform threshold subtraction, the the roots of
-eq.~\eqref{eq:quad_k_prime} along a given line $k = k\,\hat{\vb{k}} +
-    \va{k_0}$ are needed, as they determine the location of the singularities. In
-this parametrization we have
+To perform threshold subtraction, the roots of eq.~\eqref{eq:quad_k_prime} along a given line $k = k\,\hat{\vb{k}} + \va{k_0}$ are needed, as they determine the location of the singularities. In this parametrization we have
 \begin{equation}
     \va{k'} =  k\,\hat{\vb{k}} + \underbrace{\va{k_0} - \frac{1}{2}(\va{q}_i+\va{q}_j)}_{\va{k'_0}} \label{eq:parametrization}
 \end{equation}
@@ -499,32 +437,19 @@ with
 \end{align}
 This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which will be called $k^*_+$ and $k^*_-$. These solutions need to be checked for validity with one of the proposed methods.
 
-Additional care needs to be taken when the solutions $k^*$ are real, as the
-prescription of the solutions is not well defined in this case and will be
-relevant in Section~\ref{sec:threshold_subtraction}. The prescription may be
-reintroduced to the factors $\alpha, \beta, \gamma$ via the mass $m_i \to m_i -
-    i\varepsilon$. By carefully propagating this prescription through the quadratic
-formula we will obtain the correct solutions.
+Additional care needs to be taken when the solutions $k^*$ are real, as the prescription of the solutions is not well defined in this case and will be relevant in Section~\ref{sec:threshold_subtraction}. The prescription may be reintroduced to the factors $\alpha, \beta, \gamma$ via the mass $m_i \to m_i -     i\varepsilon$. By carefully propagating this prescription through the quadratic formula we will obtain the correct solutions.
 
 \begin{align}
     k^*_{\pm} = \frac{-\beta \pm \sqrt{\beta^2-4\alpha\gamma}}{2\alpha} \pm i\varepsilon \label{eq:quad_k_solutions}
 \end{align}
 
-\subsection{Equal-mass case}~\label{sec:equal_mass_case}
-It is worthwhile to consider the case where $m_i = m_j = m \in \real$ to build
-geometric intuition of the solutions. In this case the quadratic
-eq.~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions
-is more transparent.
+\subsection{Equal-mass case}~\label{sec:equal_mass_case} It is worthwhile to consider the case where $m_i = m_j = m \in \real$ to build geometric intuition of the solutions. In this case the quadratic eq.~\eqref{eq:quadratic_k} simplifies, and the geometry of the solutions is more transparent.
 
-Choosing the parametrization~\eqref{eq:parametrization} with $\va{k'_0} =
-    \va{k_0}$ it is possible to simplify the quadratic
-eq.~\eqref{eq:quadratic_k} into the following.
+Choosing the parametrization~\eqref{eq:parametrization} with $\va{k'_0} = \va{k_0}$ it is possible to simplify the quadratic eq.~\eqref{eq:quadratic_k} into the following.
 \begin{equation}
     k^2 = \frac{\vb{q}^2-m^2}{1-{\qty(\hat{\vb{k}} \cdot \va{v})}^2} \label{eq:quadratic_k_simple}
 \end{equation}
-Considering that if the external momenta are on-shell, we find that $\norm{v} < 1$. This ensures that we do not divide be zero, and the sign of the denominator is always positive.
-Thus we can see, that real solutions for $k$ only exist if $\vb{q}^2-m^2 > 0$. In this case eq.~\eqref{eq:quadratic_k_simple} defines a prolate spheroid. This is the shape of the E-surface for equal-mass particles.
-In fig.~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
+Considering that if the external momenta are on-shell, we find that $\norm{v} < 1$. This ensures that we do not divide by zero, and the sign of the denominator is always positive. Thus we can see, that real solutions for $k$ only exist if $\vb{q}^2-m^2 > 0$. In this case eq.~\eqref{eq:quadratic_k_simple} defines a prolate spheroid. This is the shape of the E-surface for equal-mass particles. In fig.~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
 
 \begin{figure}[H]
     \centering
@@ -538,11 +463,11 @@ In fig.~\ref{fig:e_surf_example} we see an example of an E-surface in the equal 
 \section{Threshold subtraction}\label{sec:threshold_subtraction}
 Threshold singularities appear whenever a loop momentum $\va{k}$ is on an E-surface. These integrable singularities make numerical integration of the integrand impossible, if not treated appropriately.
 
-The idea of threshold subtraction is straightforward: isolate the pole generated by a threshold and subtract a locally defined counterterm that reproduces its behavior exactly at the singular point. This ensures that the combined integrand remains finite everywhere in the integration domain. In a well chosen parametrization, it suffices to integrate along a a single dimension to integrate over the pole. This integration can be performed analytically, or with some other stable procedure, thus eliminating the singularity entirely.
+The idea of threshold subtraction is straightforward: isolate the pole generated by a threshold and subtract a locally defined counterterm that reproduces its behavior exactly at the singular point. This ensures that the combined integrand remains finite everywhere in the integration domain. In a well chosen parametrization, it suffices to integrate along a single dimension to integrate over the pole. This integration can be performed analytically, or with some other stable procedure, thus eliminating the singularity entirely.
 
 In recent approaches, only singularities lying exactly in the integration domain are considered for threshold subtraction~\cite{kermanschah_numerical_2022,kermanschah_numerical_2024,capatti_loop_2019}. In this thesis we extend this idea to singularities that are not exactly in the integration domain, but instead are shifted to the complex plane. While not strictly necessary for the convergence of the integrand, this extension allows for a more general treatment of singularities and improves numerical stability in cases where the singularities are very close to the integration domain.
 
-\subsection{Subtraction of a single E-surface}
+\subsection{Subtraction of a single E-surface}\label{sec:single_e_surf}
 As a starting point, we will consider the case of a single E-surface defined below.
 \begin{equation}
     \mathcal{I} = \frac{f(\va{k})}{\ELIPT{i}{j}} \label{eq:single_counterterm}
@@ -559,7 +484,7 @@ We can now define a counterterm that will cancel the singularity at $k^*$, simpl
 \begin{equation}
     \on{CT}_{ij, k^*}(k) = \chi (\va{k}) \frac{f(\va{k^*})}{(k-k^*) \, \eta'_{ij}}
 \end{equation}
-where $\chi (\va{k})$ is an mask, that is smooth at $\chi (\va{k}^*) = 1$ and vanishing as $\abs{k-k^*} \to \infty$.
+where $\chi (\va{k})$ is a mask, that is smooth at $\chi (\va{k}^*) = 1$ and vanishing as $\abs{k-k^*} \to \infty$.
 
 The partial derivative along the radial variable $k$ is straightforward to compute explicitly.
 \begin{equation}
@@ -617,18 +542,18 @@ Regarding the choice of the hyperparameters $\mu(k^*)$ and $\lambda(k^*)$ We wil
     In which case the subtraction region would be independent of the location of the threshold. This means that we must manually ensure that the parameter $\lambda_0$ is chosen large enough to include the threshold in the subtraction region.
     \begin{align}
         \mu(k^*) &= 0\\
-        \lambda(k^*) &= \Re(k^*)
+        \lambda(k^*) &= \lambda_0
     \end{align}
     \item \textbf{Sliver region with constant width}\\
     In which case the subtraction region would be a sliver with a half width of $\lambda_0$. This has the advantage of being more robust with respect to the choice of the hyperparameter $\lambda_0$.
     \begin{align}
-        \mu(k^*) &= \Re{k^*}\\
+        \mu(k^*) &= \Re(k^*)\\
         \lambda(k^*) &= \lambda_0
     \end{align}
     \item \textbf{Sliver region with variable width}\\
     In which case the subtraction region would be a sliver with a half width of $\lambda_0$ centered around the threshold located in the complex plane. Meaning that the subtraction region viewed from the real axis would get smaller as the imaginary part of the threshold gets larger.
     \begin{align}
-        \lambda(k^*) &= \lambda_0\\
+        \lambda(k^*) &= \Re(k^*)\\
         \lambda(k^*) &= \sqrt{\lambda_0^2 - {\Im(k^*)}^2}\Theta(\lambda_0^2 - {\Im(k^*)}^2) \label{eq:sliver_mod}
     \end{align}
 \end{itemize}
@@ -681,13 +606,11 @@ We consider the simple approach, where the integrated counterterm is scaled by s
 \end{equation}
 
 For our purposes we will consider two different functions $g(k)$
-\begin{equation}
-    g_{\Theta}(k) = \Theta(\Lambda - \abs{\Re(k)-\mu}) \frac{3}{{(\mu+\Lambda)}^3 - {(\mu-\Lambda)}^3}
-\end{equation}
-
-\begin{equation}
-    g_{\exp}(k) = \exp(-\frac{{(\Re(k)-\mu)}^2}{\Lambda^2}) \frac{1}{\sqrt{\pi} \Lambda (\mu^2 + \frac{\Lambda^2}{2})}
-\end{equation}
+\begin{align}
+    g_{\Theta}(k) &= \Theta(\Lambda - \abs{\Re(k)-\mu}) \frac{3}{{(\mu+\Lambda)}^3 - {(\mu-\Lambda)}^3}\\
+    g_{\exp}(k) &= \exp(-\frac{{(\Re(k)-\mu)}^2}{\Lambda^2}) \frac{1}{\sqrt{\pi} \Lambda (\mu^2 + \frac{\Lambda^2}{2})}
+\end{align}
+with the hyperparameter $\Lambda$ which controls the width of the region where the integrated counterterm is added back. We will always choose the hyperparameter $\mu$ to coincide with the location of the threshold subtraction region defined in sect.~\ref{sec:single_e_surf}.
 
 To facilitate implementation of both the original integrand, the counterterm, integrated counterterm and any combination thereof we will also introduce the scaling factors $\mathbf{a}, \mathbf{b}, \mathbf{c} \in \{0,1\}$ to
 scale the original integrand, the counterterm and the integrated counterterm we can evaluate any of the relevant integrands, by setting the appropriate factors to zero.
@@ -715,7 +638,7 @@ The minimum value existence condition is controlled via an additional hyperparam
 
 All other hyperparameters and parameters can be set via a context object which is used to call the compiled expression.
 
-implThe source code of our implementation is available on github under the MIT license\footnote{\url{https://github.com/SecretGmG/triangler}}.
+The source code of our implementation is available on github under the MIT license\footnote{\url{https://github.com/SecretGmG/triangler}}. It contains jupyter notebooks which can be used to run all of the examples presented in sect.~\ref{sec:results}
 
 
 \subsection{Numerical Integration}
@@ -863,15 +786,7 @@ masses, where imaginary solutions to the E-surface eq.~\eqref{eq:e_surface} exis
 solutions in these cases improve numerical stability especially for
 configurations very close to thresholds where E-surfaces come into existence.
 
-Using the same kinematic configuration as in Section~\ref{sec:small_width} and
-equal internal masses $m_i = m$. The real valued mass $m$ will be swept across
-a large range of values to check numerical stability of the integral as
-E-surfaces go out of existence. In the case of the minimum value existence
-condition the subtraction for these E-surfaces simply stops, while in the case
-of the numerical check the threshold subtraction is still applied to complex
-solutions. It will be interesting to see if the numerical check is more stable
-than the minimum value existence condition, especially near the threshold
-masses.
+Using the same kinematic configuration as in Section~\ref{sec:small_width} and equal internal masses $m_i = m$. The real valued mass $m$ will be swept across a large range of values to check numerical stability of the integral as E-surfaces go out of existence. In the case of the minimum value existence condition the subtraction for these E-surfaces simply stops, while in the case of the numerical check the threshold subtraction is still applied to complex solutions. It will be interesting to see if the numerical check is more stable than the minimum value existence condition, especially near the threshold masses.
 
 \begin{align*}
     \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 = \SI{8}{\GeV^2} \qquad \Im(m) = 0
@@ -909,7 +824,7 @@ The result of the numerical integration is shown in fig.~\ref{fig:threshold_mass
 
 It is more interesting to look at the coefficient of variation for the different methods. This is shown in fig.~\ref{fig:threshold_masses_cv}. As expected the integration for masses smaller than the smallest threshold mass $m^2 < \SI{0.25}{\GeV^2}$ has exactly the same behavior for the per-sample check and minimum value check. More interesting is that we can see that even for larger masses, up to the largest threshold mass $m^2 < \SI{2}{\GeV^2}$, the coefficient of variation of the two methods are very close to each other. As the largest threshold mass $m^2 < \SI{2}{\GeV}^2$ is reached, the coefficient of variation for the per-sample method starts to diverge from the minimum value method. Surprisingly it is the minimum value method that has the lower coefficient of variation.
 
-We can qualitatively check if the threshold subtraction successfully regularizes the integrand by plotting the threshold subtraction for a configuration with a mass near t he threshold mass $m = (\sqrt{2} + \delta)\si{\GeV}$. This is shown in fig.~\ref{fig:threshold_masses_sub}. It can be seen, that the threshold subtraction indeed regularizes the integrand, so the reason for the divergence is not due to a failure of the threshold subtraction method.
+We can qualitatively check if the threshold subtraction successfully regularizes the integrand by plotting the threshold subtraction for a configuration with a mass near the threshold mass $m = (\sqrt{2} + \delta)\si{\GeV}$. This is shown in fig.~\ref{fig:threshold_masses_sub}. It can be seen, that the threshold subtraction indeed regularizes the integrand, so the reason for the divergence is not due to a failure of the threshold subtraction method.
 
 To investigate this further we plot the coefficient of variation for a smaller range of masses near $m^2 < \SI{2}{\GeV^2}$ This is shown in fig.~\ref{fig:threshold_masses_cv_zoomed}. There it can be seen, that the coefficient of variation for the unsubtracted method starts to decrease even for masses smaller than the threshold mass. This indicates that as the size of the E-surface decreases, its effect on the integrand becomes less important. As the E-surface transitions from a 2-dimensional spheroid to a 0-D point, the effect of the E-surface on the integrand vanishes. Threshold subtraction can increase the coefficient of variation slightly by enlarging the integrand over broad regions, where it initially might have been close to zero. This small increase in the coefficient of variation likely is the reason for the slightly worse performance of the per-sample method. This is an interesting and important observation, as it indicates that threshold subtraction is not effective for ``imaginary'' E-surfaces, meaning that the per-sample method is not needed and the more performant and numerically stable minimum value method can be used.
 \begin{figure}[H]
@@ -928,10 +843,11 @@ To investigate this further we plot the coefficient of variation for a smaller r
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/threshold_masses/centered_subtraction_m=1.4+eps_maxeta=l.png}
-    \caption{Threshold subtraction near the larges threshold mass}\label{fig:threshold_masses_sub}
+    \includegraphics[width=\textwidth]{assets/threshold_masses/subtraction_of_imag_e_surf.png}
+    \caption{Threshold subtraction near the larges threshold mass}\label{fig:threshold_masses_sub}\label{fig:sub_of_imag_e_surf}
     Threshold subtraction near the largest threshold mass $m = \sqrt{2}\,\si{\GeV} + \delta$ with $\delta = \SI{1e-5}{\GeV}$
 \end{figure}
+
 
 %\section{Anomalous thresholds}
 %Anomalous thresholds are peaks that arise for certain kinematics even without
@@ -1070,9 +986,12 @@ To investigate this further we plot the coefficient of variation for a smaller r
 
 \section{Conclusion}\label{sec:conclusion}
 
-In this thesis we was able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the cross free family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration, as shown in fig.~\ref{fig:threshold_masses_cv_zoomed} in Section~\ref{sec:threshold_masses}. More generally, it can be seen, that the geometrical configuration of the E-surfaces, at least qualitatively, correlates strongly with the presence of anomalous thresholds! This should motivate further study of the geometrical properties of the E-surfaces for higher loop counts. The physical interpretation and significance of E-surfaces in general is something that warrants further research. Mathematically showing how touching E-surfaces correspond to anomalous thresholds, may lead to a deeper understand of anomalous thresholds in general.
+In this thesis we were able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the cross free family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration, as shown in fig.~\ref{fig:threshold_masses_cv_zoomed} in Section~\ref{sec:threshold_masses} even though the thresholds are subtracted correctly as seen in fig.~\ref{fig:sub_of_imag_e_surf}. The reason for this is that the geometrical size of the E-surfaces is small, in fact point like, in these cases which makes their contribution vanish, even without the subtraction. Due to this reason we think that subtraction of such thresholds may still be useful in some other cases, where the geometrical size of the threshold surface is large.
 
-As an initial exploratory step in the exploration of the higher loop count cases, we have qualitatively investigated the convergence of Newtons method for higher loop count integrals in Section~\ref{sec:generalization_to_higher_loop_count}. These initial findings suggests that even in the higher loop count case, no more than two solutions can be found.
+
+%More generally, we can see that the geometrical configuration of the E-surfaces, at least qualitatively, correlates strongly with the presence of anomalous thresholds! This should motivate further study of the geometrical properties of the E-surfaces for higher loop counts. The physical interpretation and significance of E-surfaces in general is something that warrants further research. Mathematically showing how touching E-surfaces correspond to anomalous thresholds, may lead to a deeper understand of anomalous thresholds in general.
+
+%As an initial exploratory step in the exploration of the higher loop count cases, we have qualitatively investigated the convergence of Newtons method for higher loop count integrals in Section~\ref{sec:generalization_to_higher_loop_count}. These initial findings suggests that even in the higher loop count case, no more than two solutions can be found.
 
 \section*{Acknowledgements}
 I would like to thank my advisor, Professor Valentin Hirschi, for his guidance and support throughout this research. Our many discussions significantly deepened my understanding of the subject. I also thank Ben Ruijl for his help with topics related to symbolica.
