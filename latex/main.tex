@@ -214,7 +214,7 @@ $\Re(m_i^2) > 0$ and $\Im(m_i^2) \leq 0$.
     \input{assets/diagrams/triangle.tex}
     \caption{Feynman diagram of the scalar triangle integral}\label{fig:triangle_feynman}
 \end{figure}
-The Feynman diagram in Figure~\ref{fig:triangle_feynman} produces eq.~\eqref{eq:triangle_integral}.
+The Feynman diagram in fig.~\ref{fig:triangle_feynman} produces eq.~\eqref{eq:triangle_integral}.
 \begin{equation}
     I = \int \frac{\dd[4]{k}}{{(2\pi)}^4} \frac{i}{D_1 \, D_2 \, D_3} \label{eq:triangle_integral}
 \end{equation}
@@ -235,9 +235,9 @@ The momenta $\vb{q_i}$ are defined as
 The structure of the singularities of the triangle
 integral~\eqref{eq:triangle_integral} is intricate, and the singularities are
 present even for large momenta $\vb{k}^\mu \to \infty$. This can be illustrated
-by considering eq~\eqref{eq:triangle_integral} in one spatial dimension. The
+by considering eq.~\eqref{eq:triangle_integral} in one spatial dimension. The
 integrand can the be visualized for all values of $(\vb{k}^0, \vb{k^1}) \in
-    \real^2$, as shown in Figure~\ref{fig:1d_example}.
+    \real^2$, as shown in fig.~\ref{fig:1d_example}.
 
 \begin{figure}[H]
     \centering
@@ -272,7 +272,7 @@ with
 \begin{equation}
     E_i = \sqrt{{\qty(\va{k}-\va{q}_i)}^2+m_i^2} - i\varepsilon
 \end{equation}
-Closing the contour around the poles corresponding to the principal square roots leads to the contour shown in Figure~\ref{fig:poles}
+Closing the contour around the poles corresponding to the principal square roots leads to the contour shown in fig.~\ref{fig:poles}
 \begin{figure}[H]
     \centering
     \input{assets/diagrams/poles.tex}
@@ -468,7 +468,7 @@ At this point it also makes sense to simplify with the lorentz invariant quantit
 %    \vb{q}^2-\frac{m_i^2 + m_j^2}{2} - \va{k'}^2 + {\qty(\va{k'}\cdot \frac{\va{q}}{q^0})}^2 - 2 \qty(\frac{m_i^2 - m_j^2}{4q^0}) \qty(\va{k'}\cdot \frac{\va{q}}{q^0}) + {\qty(\frac{m_i^2 - m_j^2}{4q^0})}^2 = 0
 %\end{equation}
 \begin{equation}
-    \va{k'}^2 - {\qty(\va{k'}\cdot\va{v})}^2 - 2 \Delta \qty(\va{k'}\cdot\va{v}) - \vb{q}^2 + \braket{m^2} + \Delta^2 = 0 \label{eq:quad_k_prime}
+    \va{k'}^2 - {\qty(\va{k'}\cdot\va{v})}^2 + 2 \Delta \qty(\va{k'}\cdot\va{v}) - \vb{q}^2 + \braket{m^2} - \Delta^2 = 0 \label{eq:quad_k_prime}
 \end{equation}
 with
 \begin{equation}
@@ -495,7 +495,7 @@ with
 \begin{align}
     \alpha & = 1-{\qty(\hat{\vb{k}}\cdot\va{v})}^2                                                                             \\
     \beta  & = 2(\hat{\vb{k}}\cdot\va{k'_0})-2(\hat{\vb{k}}\cdot\va{v})(\va{k'_0}\cdot\va{v})-2\Delta(\hat{\vb{k}}\cdot\va{v}) \\
-    \gamma & = \va{k'_0}^2-{\qty(\va{k'_0}\cdot\va{v})}^2-2\Delta(\va{k'_0}\cdot\va{v})-\vb{q}^2+\braket{m^2}+\Delta^2
+    \gamma & = \va{k'_0}^2-{\qty(\va{k'_0}\cdot\va{v})}^2-2\Delta(\va{k'_0}\cdot\va{v})-\vb{q}^2+\braket{m^2}-\Delta^2
 \end{align}
 This quadratic equation can be solved with the standard quadratic formula, and thus always has exactly two complex valued solutions, which will be called $k^*_+$ and $k^*_-$. These solutions need to be checked for validity with one of the proposed methods.
 
@@ -524,7 +524,7 @@ eq.~\eqref{eq:quadratic_k} into the following.
 \end{equation}
 Considering that if the external momenta are on-shell, we find that $\norm{v} < 1$. This ensures that we do not divide be zero, and the sign of the denominator is always positive.
 Thus we can see, that real solutions for $k$ only exist if $\vb{q}^2-m^2 > 0$. In this case eq.~\eqref{eq:quadratic_k_simple} defines a prolate spheroid. This is the shape of the E-surface for equal-mass particles.
-In Figure~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
+In fig.~\ref{fig:e_surf_example} we see an example of an E-surface in the equal mass case.
 
 \begin{figure}[H]
     \centering
@@ -597,16 +597,41 @@ Several useful observations can be made on the choice of $\chi$.
 For our purposes we choose a mask that is only nonzero in a finite region and cancels the Jacobian factor.
 \begin{equation}
     \chi{\va{k}} = \begin{cases}
-        \frac{{k^*}^2}{k^2} & \abs{\Re(k)-\mu} < \lambda \\
+        \frac{{k^*}^2}{k^2} & \abs{\Re(k)-\mu(k^*)} < \lambda(k^*) \\
         0                   & \text{else}
     \end{cases} \label{eq:mask}
 \end{equation}
-With the real valued hyperparameters $\mu$ and $\lambda$. For a successful subtraction we need to make sure, that the pole of the counterterm is inside the mask, i.e. $\abs{\Re(k^*)-\mu} < \lambda$.
+
+% NOTE: choosing Re(k^*) instead of k^* still works if k^* is real, but does not work for small values of k^*!!!
+% Should maybe write this down somewhere 
+
+With the real valued hyperparameters $\mu(k^*)$ and $\lambda(k^*)$. For a successful subtraction we need to make sure, that the pole of the counterterm is inside the mask, i.e. $\abs{\Re(k^*)-\mu(k^*)} < \lambda(k^*)$.
 With this choice performing the radial integral becomes particularly simple
 \begin{equation}
-    \int \dd{k} I_{\on{CT}}(k^*) = \int_{\mu - \lambda}^{\mu + \lambda} \dd{k} \frac{1}{k-k^*} = \ln(\frac{\mu + \lambda-k^*}{\mu-\lambda-k^*}) \label{eq:integrated_counterterm}
+    \int \dd{k} I_{\on{CT}}(k^*) = f(\va{k^*}) \int_{\mu(k^*) - \lambda(k^*)}^{\mu(k^*) + \lambda(k^*)} \dd{k} \frac{1}{k-k^*} = f(\va{k^*}) \ln(\frac{\mu(k^*) + \lambda(k^*)-k^*}{\mu(k^*)-\lambda(k^*)-k^*}) \label{eq:integrated_counterterm}
 \end{equation}
 
+Regarding the choice of the hyperparameters $\mu(k^*)$ and $\lambda(k^*)$ We will consider 3 different combinations.
+\begin{itemize}
+    \item \textbf{Centered region with constant radius}\\
+    In which case the subtraction region would be independent of the location of the threshold. This means that we must manually ensure that the parameter $\lambda_0$ is chosen large enough to include the threshold in the subtraction region.
+    \begin{align}
+        \mu(k^*) &= 0\\
+        \lambda(k^*) &= \Re(k^*)
+    \end{align}
+    \item \textbf{Sliver region with constant width}\\
+    In which case the subtraction region would be a sliver with a half width of $\lambda_0$. This has the advantage of being more robust with respect to the choice of the hyperparameter $\lambda_0$.
+    \begin{align}
+        \mu(k^*) &= \Re{k^*}\\
+        \lambda(k^*) &= \lambda_0
+    \end{align}
+    \item \textbf{Sliver region with variable width}\\
+    In which case the subtraction region would be a sliver with a half width of $\lambda_0$ centered around the threshold located in the complex plane. Meaning that the subtraction region viewed from the real axis would get smaller as the imaginary part of the threshold gets larger.
+    \begin{align}
+        \lambda(k^*) &= \lambda_0\\
+        \lambda(k^*) &= \sqrt{\lambda_0^2 - {\Im(k^*)}^2}\Theta(\lambda_0^2 - {\Im(k^*)}^2) \label{eq:sliver_mod}
+    \end{align}
+\end{itemize}
 %We may compare this result with the result derived in~\cite{kermanschah_numerical_2022}, where only real valued thresholds are considered. Therefore they choose a symmetric mask so that the real part of the counterterm vanishes.
 %Our mask is also symmetric, if we choose the hyperparameters correctly, namely where $\mu = \Re k^*$. In this case real part vanishes due to symmetry around $\Re k^*$ and the result becomes
 %\begin{equation}
@@ -657,11 +682,11 @@ We consider the simple approach, where the integrated counterterm is scaled by s
 
 For our purposes we will consider two different functions $g(k)$
 \begin{equation}
-    g_{\Theta}(k) = \Theta(\lambda - \abs{\Re(k)-\mu}) \frac{3}{{(\mu+\lambda)}^3 - {(\mu-\lambda)}^3}
+    g_{\Theta}(k) = \Theta(\Lambda - \abs{\Re(k)-\mu}) \frac{3}{{(\mu+\Lambda)}^3 - {(\mu-\Lambda)}^3}
 \end{equation}
 
 \begin{equation}
-    g_{\exp}(k) = \exp(-\frac{{(\Re(k)-\mu)}^2}{\lambda^2}) \frac{1}{\sqrt{\pi} \lambda (\mu^2 + \frac{\lambda^2}{2})}
+    g_{\exp}(k) = \exp(-\frac{{(\Re(k)-\mu)}^2}{\Lambda^2}) \frac{1}{\sqrt{\pi} \Lambda (\mu^2 + \frac{\Lambda^2}{2})}
 \end{equation}
 
 To facilitate implementation of both the original integrand, the counterterm, integrated counterterm and any combination thereof we will also introduce the scaling factors $\mathbf{a}, \mathbf{b}, \mathbf{c} \in \{0,1\}$ to
@@ -677,14 +702,42 @@ Introducing the scaling factors and the factor $g(k)$ to eq.~\eqref{eq:integral_
 
 \section{Numerical implementation}\label{sec:numerical_implementation}
 
-The numerical implementation of the integrand in eq.~\eqref{eq:integrand} is performed in Python using the Python API of the \texttt{Symbolica} library~\cite{symbolica}, which supports compilation of symbolic expressions into optimized assembly code for fast evaluation and implements efficient algorithms for numerical integration. The source code of our implementation is available on github under the MIT license\footnote{\url{https://github.com/SecretGmG/triangler}}.
+The numerical implementation of the integrand in eq.~\eqref{eq:integrand} is performed in Python using the Python API of the \texttt{Symbolica} library~\cite{symbolica}, which supports compilation of symbolic expressions into optimized assembly code for fast evaluation and the \emph{VEGAS} algorithm for numerical integration.
+
+Our implementations allows for the building of the integrand from eq.~\eqref{eq:integrand}. It is possible to choose between any of the following features during the build process of the expression.
+\begin{itemize}
+    \item Enable/disable the numerical check existence condition.
+    \item Choose between the $g_{\exp}$ and $g_\Theta$ scaling functions.
+    \item Choose whether the center of the subtraction region $\mu$ should be chosen at the real value of the location of the threshold $\mu = \Re(k^*)$ or at the origin of the coordinate system $\mu = 0$.
+    \item Choose whether or not to modify the hyperparameter $\lambda$ in accordance to eq.~\eqref{eq:sliver_mod} $\lambda = \sqrt{\lambda_0^2 - {\Im(k^*)}^2}\Theta(\lambda_0^2 - {\Im(k^*)}^2)$
+\end{itemize}
+The minimum value existence condition is controlled via an additional hyperparameter which determines the maximum allowed value of $\min_{\vb{k}} \ELIPT{i}{j}$ for each E-surface. To enable the minimum value existence condition set the hyperparameter zero, to disable the minimum value existence condition set the hyperparameter to infinity.
+
+All other hyperparameters and parameters can be set via a context object which is used to call the compiled expression.
+
+implThe source code of our implementation is available on github under the MIT license\footnote{\url{https://github.com/SecretGmG/triangler}}.
 
 
 \subsection{Numerical Integration}
-TODO: Short primer on numerical integration and measuring convergence.
 
-\subsubsection{Parametrization}
-\texttt{Symbolica} provides efficient sampling in $N$-dimensional hypercubes.
+Monte Carlo integration estimates an integral by sampling the integrand at randomly chosen points in the integration domain. The integral is approximated by the sample mean multiplied by the volume of the domain. Since the estimator is an average, its uncertainty can be estimated by the standard error of the mean, given by the sample standard deviation divided by the square root of the number of samples.
+
+Symbolica implements the \emph{VEGAS} algorithm for numerical integration, which adapts the sampling grid to the shape of the integrand, sampling regions where the integrand is large more frequently and regions where the integrand is small, thus improving the accuracy of the estimate.
+
+The \emph{VEGAS} algorithm treats each dimension separately and partitions each dimension into $n$ bins. Samples are taken from the grid by sampling a floating point number between $0$ and $1$ per dimension.
+
+The grid starts out uniformly, but then adapts to concentrate around the peaks. Since each bin is sampled with equal probability, with smaller bins are sampled more often. This drastically improves the convergence of the algorithm and lowers the error.
+
+Symbolica only supports integration of real-valued functions. However, because its integration algorithm separates sampling, evaluation, and aggregation, we can extend it to complex-valued integrands by treating the real and imaginary parts as independent real-valued estimators. The sampling grid is adapted using the absolute value of the integrand, ensuring that regions important for both components are sampled.
+
+To compare different hyperparameter choices, we require an error measure that is independent of both the number of samples and the scale of the external momenta. We therefore use the coefficient of variation (CV), defined as the ratio of the estimated standard error to the absolute value of the estimated mean.
+
+\begin{equation}
+    CV = \frac{\sigma_I}{\abs{\bar{I}}}
+\end{equation}
+
+
+\emph{Symbolica} will always sample points in $N$-dimensional hypercube. The integral we actually want to compute is however 3-dimensional, specifically parameterized hemispherically.
 There are many reasonable choices to map from the unit hypercube to hemispherical coordinates. We choose the following mapping from unit hypercubes to the relevant parametrizations with their respective Jacobians $J$.
 
 \textbf{Unit Hemisphere}
@@ -717,38 +770,22 @@ with
 \end{equation}
 
 \subsection{Reference}
-The \textit{OneLOop} package~\cite{hameren_oneloop_2011} provides
-implementation for scalar loop integrals with up to 4 legs. We will use the
-open source package
-\textit{OneLOopBridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}}
-that was written in conjunction to this thesis to compute the reference values
-for the integrals.\textit{OneLOopBridge} provides Python and Rust bindings for
-the \textit{OneLOop} package, which is written in Fortran. A more detailed
-description of the usage of \textit{OneLOopBridge} can be found in
-Appendix~\ref{sec:oneloopbridge}.
+To check our implementation we need to compare it to some reference values.\@\textit{OneLOop} implements the analytical solutions for scalar loop integrals with up to 4 legs, thus providing the exact results for the integrals we are interested in. To facilitate the comparison we have implemented a Python wrapper for the \textit{OneLOop} package called \textit{OneLOopBridge}\footnote{\url{https://github.com/SecretGmG/OneLOopBridge}} that was written in conjunction to this thesis to compute the reference values for the integrals.\@\textit{OneLOopBridge} provides Python and Rust bindings for the \textit{OneLOop} package, which is written in Fortran. A more detailed description of the usage of \textit{OneLOopBridge} can be found in Appendix~\ref{app:oneloopbridge}.
 
 \section{Results}\label{sec:results}
 \subsection{Small width}\label{sec:small_width}
-It is possible to regularize the integral by adding a small imaginary part to
-the masses. In this example we show the effect of this regularization on the
-numerical stability of the integral. As the regularization becomes smaller the
-threshold subtraction becomes necessary to ensure numerical stability of the
-integral, even for small finite widths.
+It is possible to regularize the integral by adding a small imaginary part to the masses. In this example we show the effect of this regularization on the numerical stability of the integral. As the regularization becomes smaller the threshold subtraction becomes necessary to ensure numerical stability of the integral, even for small finite widths.
 
-The external momenta in this example are chosen, such that they are aligned
-with the $z$-axis and in the COM-system. The masses in this example are always
-chosen to be equal $m_i = m$.
+The external momenta in this example are chosen, such that they are aligned with the $z$-axis and in the COM-system. The masses in this example are always chosen to be equal $m_i = m$.
 
 \begin{align*}
-    \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 = \SI{8}{\GeV^2}\qquad \Re(m) = \SI{0.2}{\GeV}
+    \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1}+\vb{p_2})}^2 = \SI{8}{\GeV^2}\qquad m = (1+\gamma i)\SI{0.4}{\GeV}
 \end{align*}
+where $\gamma$ is a dimensionless parameter controlling the decay width.
 
-In this example all of the three possible E-surfaces exist, this can be easily
-checked by applying the minimum value existence condition derived in
-Section~\ref{sec:extraneous_solutions}.
+In this example all of the three possible E-surfaces exist, this can be easily checked by applying the minimum value existence condition derived in Section~\ref{sec:extraneous_solutions}.
 
 \begin{samepage}
-
     This example will be used to compare the convergence behavior of different
     hyperparameters, as the width, which regularizes the integral gets smaller and
     thus the threshold subtraction becomes necessary. The following setups will be
@@ -762,8 +799,8 @@ Section~\ref{sec:extraneous_solutions}.
 
 \end{samepage}
 The threshold subtraction for the centered and uncentered cases are shown in
-Figure~\ref{fig:threshold subtraction_centered} and Figure~\ref{fig:threshold
-    subtraction_uncentered} respectively. On the lower half of the plots, where the
+fig.~\ref{fig:threshold subtraction_centered} and fig.~\ref{fig:threshold
+    subtraction_uncentered} respectively, to demonstrate the subtraction of complex poles a finite width with the parameter $\gamma = 0.01$ is used. On the lower half of the plots, where the
 integrand is shown along the $z$-axis it can be seen qualitatively that the
 threshold subtraction successfully removes the poles and flattens the
 integrand. We may also notice, that the sliver threshold subtraction produces
@@ -771,14 +808,14 @@ more discontinuities.
 
 Subtracting a sliver does however have the advantage of being more robust with
 respect to the choice of the hyperparameter $\lambda$, which is the half width
-of the sliver, as the subtraction region will \textit{always} contain the pole.
+of the sliver, as the subtraction region will \emph{always} contain the pole.
 Whereas subtracting a centered region will only contain the pole if the
 hyperparameter is large enough.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/small_width/centered_subtraction.png}
     \caption{Centered threshold subtraction}\label{fig:threshold subtraction_uncentered}
-    Visualization of the threshold subtraction, with complex mass $m = (0.2-0.01 \mathit{i})\si{\GeV}$, using the
+    Visualization of the threshold subtraction, with complex mass $m = \SI{0.4}{\GeV}(1-0.01 i)$, using the
     The unsubtracted integrand, the counterterm and the subtracted integrand are shown in the $xz$-plane. The colormap is such the brightness corresponds to the absolute value of the function and the hue corresponds to the phase, with cyan corresponding to positive values and red corresponding to negative values.
 \end{figure}
 
@@ -786,16 +823,11 @@ hyperparameter is large enough.
     \centering
     \includegraphics[width=0.9\textwidth]{assets/small_width/uncentered_subtraction.png}
     \caption{Sliver threshold subtraction}\label{fig:threshold subtraction_centered}
-    Visualization of the threshold subtraction, with complex mass $m = (0.2-0.01 \mathit{i})\si{\GeV}$.
+    Visualization of the threshold subtraction, with complex mass $m = \SI{0.4}{\GeV}(1-0.01 i)$.
     The unsubtracted integrand, the counterterm and the subtracted integrand are shown in the $xz$-plane. The colormap is such the brightness corresponds to the absolute value of the function and the hue corresponds to the phase, with cyan corresponding to positive values and red corresponding to negative values.
 \end{figure}
 
-The integration is performed using the complex mass regularization for
-$-\Im(m)$ approaching zero. This coefficient is computed separately for the
-real and imaginary parts of the integration. The result of the numerical
-integration is shown in Figure~\ref{fig:small_width_integration}. It can be
-seen, that both the sliver and centered subtraction converge well on the
-correct result, even as the width gets smaller.
+We will now perform the integral for a range of parameters $\gamma$ approaching zero.  The result of the numerical integration is shown in fig.~\ref{fig:small_width_integration}. It can be seen, that both the sliver and centered subtraction converge well on the correct result, even as the width gets smaller.
 
 \begin{figure}[H]
     \centering
@@ -815,13 +847,7 @@ correct result, even as the width gets smaller.
     \caption{Comparison of subtraction regions across a range decay widths}\label{fig:small_width_integration}
 \end{figure}
 
-We can measure the convergence of the Monte Carlo integration using the
-coefficient of variation, defined as the standard deviation divided by the
-mean.
-\begin{equation}
-    \on{CV} = \frac{\sigma}{\mu}
-\end{equation}
-The coefficient of variation is shown in Figure~\ref{fig:small_width_cv}. It can be seen, that both subtraction methods have a great impact on the convergence of the integral. The coefficient of variation of the unsubtracted method increases exponentially as the width gets smaller, while the coefficient of variation of the subtracted method is less sensitive to the width. It is also interesting to note, that the centered subtraction has a lower coefficient of variation than the sliver subtraction. This difference may be caused by fact that the sliver subtraction produces more discontinuities, which may make it harder for the VEGAS sampler to learn the integrand.
+The coefficient of variation is shown in fig.~\ref{fig:small_width_cv}. We can see, that both subtraction methods have a great impact on the convergence of the integral. The coefficient of variation of the unsubtracted method increases exponentially as the width gets smaller, while the coefficient of variation of the subtracted method is less sensitive to the width. It is also interesting to note, that the centered subtraction has a lower coefficient of variation than the sliver subtraction. This difference may be caused by fact that the sliver subtraction produces more discontinuities, which may make it harder for the VEGAS sampler to learn the integrand.
 
 \begin{figure}[H]
     \centering
@@ -860,11 +886,11 @@ are
     m^2 = \SI{0.25}{\GeV^2} \qquad m^2 = \SI{0.75}{\GeV^2} \qquad  m^2 = \SI{2}{\GeV^2}
 \end{equation}
 
-Plotting the integral over a range including all of these threshold masses shown in Figure~\ref{fig:threshold_masses_integral} we see that, at least superficially, both methods of subtracting E-surfaces converge well on the correct result. We can also note that for masses larger than the largest threshold mass, the imaginary part of the integrand is equal to zero. This is expected, because in this case no singularities exist in the real valued integrand, that could introduce any imaginary part.
+Plotting the integral over a range including all of these threshold masses shown in fig.~\ref{fig:threshold_masses_integral} we see that, at least superficially, both methods of subtracting E-surfaces converge well on the correct result. We can also note that for masses larger than the largest threshold mass, the imaginary part of the integrand is equal to zero. This is expected, because in this case no singularities exist in the real valued integrand, that could introduce any imaginary part.
 
 It is important to note however, that for the per-sample method, the imaginary part of the integrand is not equal to zero, even in this region, because complex solutions of the E-surface equation get subtracted. As we can see, the per-sample method still converges well in this case, showing that the imaginary parts of the counterterm and integrated counterterm cancel themselves out exactly.
 
-The result of the numerical integration is shown in Figure~\ref{fig:threshold_masses_integral}. It can be seen, that both methods converge well on the correct result.
+The result of the numerical integration is shown in fig.~\ref{fig:threshold_masses_integral}. It can be seen, that both methods converge well on the correct result.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[t]{0.48\textwidth}
@@ -881,11 +907,11 @@ The result of the numerical integration is shown in Figure~\ref{fig:threshold_ma
     \caption{Integration result with different E-surface existence conditions}\label{fig:threshold_masses_integral}
 \end{figure}
 
-It is more interesting to look at the coefficient of variation for the different methods. This is shown in Figure~\ref{fig:threshold_masses_cv}. As expected the integration for masses smaller than the smallest threshold mass $m^2 < \SI{0.25}{\GeV^2}$ has exactly the same behavior for the per-sample check and minimum value check. More interesting is that we can see that even for larger masses, up to the largest threshold mass $m^2 < \SI{2}{\GeV^2}$, the coefficient of variation of the two methods are very close to each other. As the largest threshold mass $m^2 < \SI{2}{\GeV}^2$ is reached, the coefficient of variation for the per-sample method starts to diverge from the minimum value method. Surprisingly it is the minimum value method that has the lower coefficient of variation.
+It is more interesting to look at the coefficient of variation for the different methods. This is shown in fig.~\ref{fig:threshold_masses_cv}. As expected the integration for masses smaller than the smallest threshold mass $m^2 < \SI{0.25}{\GeV^2}$ has exactly the same behavior for the per-sample check and minimum value check. More interesting is that we can see that even for larger masses, up to the largest threshold mass $m^2 < \SI{2}{\GeV^2}$, the coefficient of variation of the two methods are very close to each other. As the largest threshold mass $m^2 < \SI{2}{\GeV}^2$ is reached, the coefficient of variation for the per-sample method starts to diverge from the minimum value method. Surprisingly it is the minimum value method that has the lower coefficient of variation.
 
-We can qualitatively check if the threshold subtraction successfully regularizes the integrand by plotting the threshold subtraction for a configuration with a mass near t he threshold mass $m = (\sqrt{2} + \delta)\si{\GeV}$. This is shown in Figure~\ref{fig:threshold_masses_sub}. It can be seen, that the threshold subtraction indeed regularizes the integrand, so the reason for the divergence is not due to a failure of the threshold subtraction method.
+We can qualitatively check if the threshold subtraction successfully regularizes the integrand by plotting the threshold subtraction for a configuration with a mass near t he threshold mass $m = (\sqrt{2} + \delta)\si{\GeV}$. This is shown in fig.~\ref{fig:threshold_masses_sub}. It can be seen, that the threshold subtraction indeed regularizes the integrand, so the reason for the divergence is not due to a failure of the threshold subtraction method.
 
-To investigate this further we plot the coefficient of variation for a smaller range of masses near $m^2 < \SI{2}{\GeV^2}$ This is shown in Figure~\ref{fig:threshold_masses_cv_zoomed}. There it can be seen, that the coefficient of variation for the unsubtracted method starts to decrease even for masses smaller than the threshold mass. This indicates that as the size of the E-surface decreases, its effect on the integrand becomes less important. As the E-surface transitions from a 2-dimensional spheroid to a 0-D point, the effect of the E-surface on the integrand vanishes. Threshold subtraction can increase the coefficient of variation slightly by enlarging the integrand over broad regions, where it initially might have been close to zero. This small increase in the coefficient of variation likely is the reason for the slightly worse performance of the per-sample method. This is an interesting and important observation, as it indicates that threshold subtraction is not effective for ``imaginary'' E-surfaces, meaning that the per-sample method is not needed and the more performant and numerically stable minimum value method can be used.
+To investigate this further we plot the coefficient of variation for a smaller range of masses near $m^2 < \SI{2}{\GeV^2}$ This is shown in fig.~\ref{fig:threshold_masses_cv_zoomed}. There it can be seen, that the coefficient of variation for the unsubtracted method starts to decrease even for masses smaller than the threshold mass. This indicates that as the size of the E-surface decreases, its effect on the integrand becomes less important. As the E-surface transitions from a 2-dimensional spheroid to a 0-D point, the effect of the E-surface on the integrand vanishes. Threshold subtraction can increase the coefficient of variation slightly by enlarging the integrand over broad regions, where it initially might have been close to zero. This small increase in the coefficient of variation likely is the reason for the slightly worse performance of the per-sample method. This is an interesting and important observation, as it indicates that threshold subtraction is not effective for ``imaginary'' E-surfaces, meaning that the per-sample method is not needed and the more performant and numerically stable minimum value method can be used.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{assets/threshold_masses/cv.png}
@@ -922,7 +948,7 @@ To investigate this further we plot the coefficient of variation for a smaller r
 %intersect. Visualizing the E-surfaces for different momenta $\vb{p_2}^2$ we can
 %notice that as the momentum increases, the E-surfaces grow larger until they
 %intersect, after that they continue to grow. This is shown in
-%Figure~\ref{fig:anomalous_grow}.
+%fig.~\ref{fig:anomalous_grow}.
 %
 %If the integration center is chosen at exactly the point where the E-surfaces
 %touch, as the momentum increases, both E-surfaces will always be either inside
@@ -938,7 +964,7 @@ To investigate this further we plot the coefficient of variation for a smaller r
 %touch to be $\sqrt{p_2^2} = \on{AT} = (\SI{201.904892335}{\GeV})$. From now on
 %we will choose coordinates such that the center of integration is at
 %$z_{\on{AT}}$. Zoomed in visualizations of the E-surfaces are shown in
-%Figure~\ref{fig:anomalous_zoomed}.
+%fig.~\ref{fig:anomalous_zoomed}.
 %
 %Conjecture that anomalous thresholds appear exactly when E-surfaces touch, this
 %warrants further investigation.
@@ -1024,7 +1050,7 @@ To investigate this further we plot the coefficient of variation for a smaller r
 %    Q = -34
 %\end{align}
 %
-%The results are shown in Figure~\ref{fig:generalization_to_higher_loop_count}
+%The results are shown in fig.~\ref{fig:generalization_to_higher_loop_count}
 %
 %\begin{figure}[H]
 %    \centering
@@ -1044,7 +1070,7 @@ To investigate this further we plot the coefficient of variation for a smaller r
 
 \section{Conclusion}\label{sec:conclusion}
 
-In this thesis we was able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the cross free family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration, as shown in Figure~\ref{fig:threshold_masses_cv_zoomed} in Section~\ref{sec:threshold_masses}. More generally, it can be seen, that the geometrical configuration of the E-surfaces, at least qualitatively, correlates strongly with the presence of anomalous thresholds! This should motivate further study of the geometrical properties of the E-surfaces for higher loop counts. The physical interpretation and significance of E-surfaces in general is something that warrants further research. Mathematically showing how touching E-surfaces correspond to anomalous thresholds, may lead to a deeper understand of anomalous thresholds in general.
+In this thesis we was able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the cross free family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration, as shown in fig.~\ref{fig:threshold_masses_cv_zoomed} in Section~\ref{sec:threshold_masses}. More generally, it can be seen, that the geometrical configuration of the E-surfaces, at least qualitatively, correlates strongly with the presence of anomalous thresholds! This should motivate further study of the geometrical properties of the E-surfaces for higher loop counts. The physical interpretation and significance of E-surfaces in general is something that warrants further research. Mathematically showing how touching E-surfaces correspond to anomalous thresholds, may lead to a deeper understand of anomalous thresholds in general.
 
 As an initial exploratory step in the exploration of the higher loop count cases, we have qualitatively investigated the convergence of Newtons method for higher loop count integrals in Section~\ref{sec:generalization_to_higher_loop_count}. These initial findings suggests that even in the higher loop count case, no more than two solutions can be found.
 
