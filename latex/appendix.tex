@@ -1,10 +1,8 @@
 \appendix
 \section{Rewriting the LTD expression}\label{app:cff}
-We now want to rewrite this expression into a form that is better suited for
-numerical integration. For this we will make heavy use of the following
-identities.
+We now want to rewrite eq.~\ref{eq:ltd} into a form that is better suited for numerical integration, by removing all terms involving H-surfaces. For this we will make heavy use of the following identities.
 \begin{equation}
-    \frac{1}{xy} = \frac{1}{x-y}\qty(\frac{1}{y}-\frac{1}{x})
+    \frac{1}{xy} = \frac{1}{x-y}\qty(\frac{1}{y}-\frac{1}{x}) /label{eq:frac_id}
 \end{equation}
 The following relations also hold for the $\eta$ coefficients.
 \begin{align}
@@ -13,25 +11,20 @@ The following relations also hold for the $\eta$ coefficients.
     \ELIPT{i}{k}-\ELIPT{j}{k}              & = \HYPER{i}{j}   \label{eq:elipt_min_elipt}            \\
     \HYPER{i}{j}+\HYPER{j}{k}+\HYPER{k}{i} & = 0 \label{eq:hyper_cycle}
 \end{align}
-To start we can notice the following useful identity
+To start we can define the following useful identity as a consequence of eq.~\ref{eq:frac_id} and eq.~\ref{eq:elipt_min_hyper}.
 \begin{align}
     \frac{1}{\ELIPT{i}{j}\HYPER{i}{j}} & = \frac{1}{2E_j}\qty(\frac{1}{\HYPER{i}{j}} - \frac{1}{\ELIPT{i}{j}}) \label{eq:rewrite_1}
 \end{align}
-Applying Eq.~\eqref{eq:rewrite_1} to the integrand we get
-%\begin{align}
-%I(q,p,m_\psi) =& \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \\
-%&  \sum_{i=1}^{3} \prod_{i\neq j}\left(\frac{1}{\HYPER{i}{j}}-\frac{i}{\ELIPT{i}{j}}\right)
-%\end{align}
+Applying eq.~\eqref{eq:rewrite_1} to all of the applicable subexpressions the loop tree duality from eq.~\ref{eq:ltd}, we get
 \newcommand{\HMFRAC}[2]{\left(\frac{1}{\HYPER{#1}{#2}}-\frac{1}{\ELIPT{#1}{#2}}\right)}
 \begin{align*}
     I(q,p,m_\psi) = & \int \frac{\dd[3]{k}}{{(2\pi)}^3} \frac{1}{(2E_1)(2E_2)(2E_3)} \Bigg[ \\
-                    & \phantom{{}+{}}
-    \HMFRAC{1}{2}\HMFRAC{1}{3}                                                              \\
-                    & +\HMFRAC{2}{1}\HMFRAC{2}{3}                                           \\
+                    & \phantom{{}+{}} \HMFRAC{1}{2}\HMFRAC{1}{3}    \\
+                    & +\HMFRAC{2}{1}\HMFRAC{2}{3}                   \\
                     & +\HMFRAC{3}{1}\HMFRAC{3}{2}
     \Bigg]
 \end{align*}
-This can be expanded
+This can be expanded by factoring the brackets
 \begin{align*}
     I(q,p,m_\psi)
      & = \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1 E_2 E_3} \Bigg[ \\
@@ -49,7 +42,7 @@ This can be expanded
         + \frac{1}{\ELIPT{3}{1}\ELIPT{3}{2}}
         \Bigg]
 \end{align*}
-and then rearranged
+and then rearranged to group the relevant terms
 \begin{align*}
     I(q,p,m_\psi)
      & =  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[           \\
@@ -67,30 +60,17 @@ and then rearranged
     + \frac{1}{\HYPER{3}{1}\HYPER{3}{2}}
     \Bigg]
 \end{align*}
-%We will now show that the purely hyperbolic terms vanish, for this we need
-%\begin{align}
-%    \frac{1}{\HYPER{i}{j}\HYPER{i}{k}} &= \frac{1}{\HYPER{j}{k}}\qty(\frac{1}{\HYPER{i}{j}} - \frac{1}{\HYPER{i}{k}})\\
-%    &= \frac{\HYPER{i}{k}-\HYPER{i}{j}}{\HYPER{i}{j}\HYPER{i}{j}\HYPER{i}{k}} \label{eq:hyper_comm_denom}
-%\end{align}
-%If we apply Eq.~\eqref{eq:hyper_comm_denom} to each term we get
-%\begin{align}
-%    \frac{-\HYPER{1}{2}-\HYPER{1}{3}-\HYPER{2}{1}-\HYPER{2}{3}-\HYPER{3}{1}-\HYPER{3}{2}}{\HYPER{1}{2}\HYPER{2}{3}\HYPER{3}{1}}
-%    &=
-%    \frac{\HYPER{1}{2}-\HYPER{1}{2}+\HYPER{3}{1}-\HYPER{1}{3}+\HYPER{2}{3}-\HYPER{3}{2}}{\HYPER{1}{2}\HYPER{2}{3}\HYPER{3}{1}} = 0
-%\end{align}
-We will now show that the purely hyperbolic terms vanish, for this we can
-simply put the on a common denominator and apply Eq.~\eqref{eq:hyper_cycle}.
+We will now show that the purely hyperbolic terms vanish, for this we can simply put the on a common denominator and apply eq.~\eqref{eq:hyper_cycle}.
 \begin{equation}
     \frac{\HYPER{1}{2}+\HYPER{2}{3}+\HYPER{3}{1}}{\HYPER{1}{3}\HYPER{2}{3}\HYPER{3}{1}} = 0
 \end{equation}
-We now only need to take care of the mixed terms. For this we can use the identity
+We now only need to take care of the mixed terms. For this we can use the following identity which follows from eq.~\eqref{ew:elipt_min_elipt}.
 \begin{align}
     -\frac{1}{\HYPER{i}{j}} \qty(\frac{1}{\ELIPT{i}{k}}-\frac{1}{\ELIPT{j}{k}})
      & = \frac{1}{\HYPER{i}{j}} \qty(\frac{\ELIPT{i}{k}-\ELIPT{j}{k}}{\ELIPT{i}{k}\ELIPT{j}{k}}) \\
      & = \frac{1}{\ELIPT{i}{k}\ELIPT{j}{k}} \label{eq:rewrite_2}
 \end{align}
-Here we used Eq.~\eqref{eq:elipt_min_elipt} in the last step.
-Applying Eq.~\eqref{eq:rewrite_2} to each mixed term we get our final result.
+Applying eq.~\eqref{eq:rewrite_2} to each of the mixed terms we get our final result, which is consistent with the Cross Free Family representation from eq.~\ref{eq:cff}.
 \begin{align*}
     I(q,p,m_\psi)
      & =  \int \frac{\dd[3]{k}}{{(4\pi)}^3} \frac{1}{E_1E_2E_3} \Bigg[ \\
@@ -107,13 +87,7 @@ Applying Eq.~\eqref{eq:rewrite_2} to each mixed term we get our final result.
 
 \textit{OneLOopBridge} provides a lightweight Rust and Python interface to the \textit{OneLOop} Fortran library, providing access to scalar one-loop integrals with up to four external legs. The package was developed to offer a safe, idiomatic, and reproducible way to evaluate loop integrals.
 
-The underlying \textit{OneLOop} library implements analytic expressions for
-dimensionally regularized scalar one-loop integrals, returning their Laurent
-expansion in the dimensional regulator $\varepsilon = (4-d)/2$.
-\textit{OneLOopBridge} exposes these routines by providing save Rust bindings
-and a Python interface. In addition to the computation of integrals, and
-interface is provided to access the most important internal settings of
-\textit{OneLOop}, namely:
+The underlying \textit{OneLOop} library implements analytic expressions for dimensionally regularized scalar one-loop integrals, returning their Laurent expansion in the dimensional regulator $\varepsilon = (4-d)/2$.\@\textit{OneLOopBridge} exposes these routines by providing safe Rust bindings and a Python interface. In addition to the computation of integrals, an interface is provided to access the most important internal settings of \textit{OneLOop}, namely:
 \begin{itemize}
     \item the renormalization scale,
     \item the on-shell threshold,
