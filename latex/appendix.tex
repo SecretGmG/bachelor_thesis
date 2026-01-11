@@ -2,7 +2,7 @@
 \section{Rewriting the LTD expression}\label{app:cff}
 We now want to rewrite eq.~\ref{eq:ltd} into a form that is better suited for numerical integration, by removing all terms involving H-surfaces. For this we will make heavy use of the following identities.
 \begin{equation}
-    \frac{1}{xy} = \frac{1}{x-y}\qty(\frac{1}{y}-\frac{1}{x}) /label{eq:frac_id}
+    \frac{1}{xy} = \frac{1}{x-y}\qty(\frac{1}{y}-\frac{1}{x}) \label{eq:frac_id}
 \end{equation}
 The following relations also hold for the $\eta$ coefficients.
 \begin{align}
@@ -85,7 +85,7 @@ Applying eq.~\eqref{eq:rewrite_2} to each of the mixed terms we get our final re
 
 \section{OneLOopBridge}\label{app:oneloopbridge}
 
-\textit{OneLOopBridge} provides a lightweight Rust and Python interface to the \textit{OneLOop} Fortran library, providing access to scalar one-loop integrals with up to four external legs. The package was developed to offer a safe, idiomatic, and reproducible way to evaluate loop integrals.
+\textit{OneLOopBridge} provides a lightweight Rust and Python interface to the \textit{OneLOop} Fortran library, providing access to scalar one-loop integrals with up to four external legs. The package was developed to offer a safe, idiomatic, and reproducible way to evaluate one loop integrals.
 
 The underlying \textit{OneLOop} library implements analytic expressions for dimensionally regularized scalar one-loop integrals, returning their Laurent expansion in the dimensional regulator $\varepsilon = (4-d)/2$.\@\textit{OneLOopBridge} exposes these routines by providing safe Rust bindings and a Python interface. In addition to the computation of integrals, an interface is provided to access the most important internal settings of \textit{OneLOop}, namely:
 \begin{itemize}
@@ -99,7 +99,7 @@ coefficients of the Laurent expansion,
 \begin{equation}
     I = \varepsilon^{-2} I_{-2} + \varepsilon^{-1} I_{-1} + I_{0} + \mathcal{O}(\varepsilon)
 \end{equation}
-where finite integrals automatically yield vanishing divergent coefficients. The coefficients are accessible individually. A global conversion factor \texttt{TO\_FEYNMAN} is provided to translate results to the conventional Feynman integral normalization.
+where finite integrals automatically yield vanishing divergent coefficients. The coefficients can be accessed individually. A global conversion factor \texttt{TO\_FEYNMAN} is provided to translate results to the conventional Feynman integral normalization.
 
 \subsection{Rust Interface}
 
@@ -112,22 +112,22 @@ Typical usage involves computing Lorentz invariants externally and passing them
 to the wrapper functions. The returned \texttt{ResultOLO} struct provides
 accessor methods for the Laurent coefficients.
 
-The package can simply be installed using \texttt{cargo}
+The package can simply be installed using \emph{cargo}
 
 \begin{minted}{bash}
 cargo add --git https://github.com/SecretGmG/OneLOopBridge
 \end{minted}
 
 \subsection{Python Interface}
-Python bindings are generated using \texttt{maturin} and \texttt{PyO3},
-exposing the same functionality as the rust interface. The package includes
-python stub files, allowing the users linting and type checking to integrate
+Python bindings are generated using \emph{Maturin} and \emph{PyO3},
+exposing the same functionality as the Rust interface. The package includes
+Python stub files, allowing the users linting and type checking to integrate
 the library.
 
-To install and compile the python bindings it is necessary to download the
-repository and compile it manually. After that maturin can be run to install the bindings
-into an active python environment. This can be done by running the following
-inside an active python environment. Note that this will change the current
+To install and compile the Python bindings it is necessary to download the
+repository and compile it manually. After that \emph{Maturin} can be run to install the bindings
+into an active Python environment. This can be done by running the following
+inside an active Python environment. Note that this will change the current
 working directory.
 \begin{minted}{bash}
 git clone https://github.com/SecretGmG/OneLOopBridge.git
