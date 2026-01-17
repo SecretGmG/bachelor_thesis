@@ -1,0 +1,153 @@
+\section{Anomalous thresholds}\label{app:anomalous_thresholds}
+Anomalous thresholds are peaks that arise for certain kinematics even without resonances. Their behavior is discussed in detail in ref.~\cite{passarino_peaks_2018}. In this section we consider a configuration which showcases these anomalous thresholds. This is done to evaluate the performance of our method for configurations where the masses are not equal and to gain a qualitative understanding of the geometrical properties of the E-surfaces in these configurations, which has not been studied before.
+
+We consider the one-loop integral with fixed masses $m_1 = m_2 = m_\text{Top} = \SI{172.52}{\GeV}, m_3 = m_\text{Bottom} = \SI{4.18}{\GeV}$ and fixed external invariants $\vb{p}_1^2$ and ${(\vb{p}_1+\vb{p}_2)}^2$, varying the external momentum $\vb{p_2}^2$. This configuration is discussed in detail in ref.~\cite{passarino_peaks_2018}, which allows us to compare the results.
+
+To take full advantage of the local cancellations in counterterms, it is important to choose the integration center such that it is inside all of the E-surfaces that intersect. Visualizing the E-surfaces for different momenta $\vb{p_2}^2$ we can notice that as the momentum increases, the E-surfaces grow larger until they intersect, after that they continue to grow. This is shown in fig.~\ref{fig:anomalous_grow}.
+
+If the integration center is chosen at exactly the point where the E-surfaces touch, as the momentum increases, the integration center will be inside of both of the E-surfaces if they intersect, otherwise they will be outside. This is in accordance with the condition for local cancellations to take place.
+
+In the case of the triangle it is always possible to align all the external momenta along the $z$-axis. This implies that the E-surfaces touch at a point on the $z$-axis, which will be chosen as the origin of the integration. By plotting the E-surfaces we can gain a better understanding of when they intersect. From fig.~\ref{fig:anomalous_grow} we can see that the E-surfaces with indices (1,2) and (1,3) touch for an external momentum $\vb{p_2}^2$ somewhere between $\vb{p_2}^2 = {(\SI{199}{\GeV})}^2$ and $\vb{p_2}^2 = {(\SI{205}{\GeV})}^2$. The location of the E-surface along the z-axis can be obtained with eq.~\ref{eq:quad_k_solutions}. The configuration where the E-surfaces touch can now be found numerically with binary search. The resulting momentum and location of the origin along the $z$-axis $o_z$ are:
+\begin{align}
+    \vb{p_2}^2 &= {(\SI{201.904892331}{\GeV})}^2 \\
+    o_z &= \SI{37.43245959}{\GeV} \\
+\end{align}
+
+The validity of these solutions may be qualitatively checked by plotting the intersection point more closely. This is shown in fig.~\ref{fig:anomalous_zoomed}.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, trim={200 0 200 0},clip]{assets/anomalous/below_threshold.png}
+        \caption{E-surfaces below threshold} The E-surfaces for the anomalous configuration with the external momentum $\vb{p_2}^2 = {(\SI{199}{\GeV})}^2$ don't intersect.
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, trim={200 0 200 0},clip]{assets/anomalous/above_threshold.png}
+        \caption{E-surfaces above threshold} E-surfaces for the anomalous configuration with the external momentum $\vb{p_2}^2 = {(\SI{205}{\GeV})}^2$ intersect.
+    \end{subfigure}
+    \caption{E-surfaces near the configuration where they touch}\label{fig:anomalous_grow}
+    The E-surfaces corresponding to $\ELIPT{1}{2}$ in blue and $\ELIPT{1}{3}$ in red, shown for external momenta $\vb{p_2}^2 = {(\SI{199}{\GeV})}^2$ and $\vb{p_2}^2 = {(\SI{205}{\GeV})}^2$.
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, trim={0 100 0 200},clip]{assets/anomalous/below_threshold_zoomed.png}
+        \caption{Zoomed-in E-surfaces below threshold}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, trim={0 100 0 200},clip]{assets/anomalous/above_threshold_zoomed.png}
+        \caption{Zoomed-in E-surfaces above threshold}
+    \end{subfigure}%
+    \vfill
+    \centering
+    \begin{subfigure}[t]{0.8\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, trim={0 100 0 200},clip]{assets/anomalous/on_threshold_zoomed.png}
+        \caption{Zoomed-in E-surfaces on threshold}
+    \end{subfigure}
+    \caption{Zoomed-in E-surfaces near and on threshold}\label{fig:anomalous_zoomed}
+\end{figure}
+
+We will now compute the integral numerically, varying the momentum $\vb{p_2}^2$ to values both below and above the intersection point. It will be interesting to see how the integral behaves near the intersection point, and if the results are in accordance with the example shown in ref.~\cite{passarino_peaks_2018}. The results are shown in fig.~\ref{fig:anomalous_integrated}. We observe the anomalous threshold as a peak in the imaginary part of the integral, and a jump in the real part. This is in agreement with the example shown in ref.~\cite{passarino_peaks_2018}. It is also interesting to note that the location of the anomalous threshold exactly coincides with the configuration where the E-surfaces touch. This behavior warrants further investigation into the geometry and interpretation of the E-surfaces.
+
+We can also stress-test the threshold subtraction by computing the integral for configurations very close to the threshold, where the E-surfaces almost touch. This is shown in fig.~\ref{fig:anomalous_integrated_zoomed}. We can notice, that the integration remains stable throughout the entire range of momenta.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/anomalous/integrated.png}
+    \caption{Integral near threshold}\label{fig:anomalous_integrated}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/anomalous/integrated_zoomed.png}
+    \caption{Zoomed in integral near threshold}\label{fig:anomalous_integrated_zoomed}
+\end{figure}
+
+
+
+
+\section{Generalization to higher loop count}\label{app:generalization_to_higher_loop_count}
+Most of the considerations in this thesis generalize without modification to higher loop count integrals, with the notable exception of finding the intersection point of the E-surfaces along some direction. As the loop count increases, so does the dimension of the integration domain.
+
+\begin{equation}
+    \eta = Q + \sum_{i=1}^N \sqrt{{(\vb{k_i} + \vb{q_i})}^2 + m_i^2}
+\end{equation}
+
+Here, $m_i$ denote the internal masses, $\vb{k}_i$ the loop momenta and $Q$ and $\vb{q}_i$ constants depending on the external kinematics. This may again be parameterized in hyperphysical coordinates.
+\begin{equation}
+    \vb{k}_i = \hat{\vb{k_i}} k \qquad \text{where} \qquad \sum_{i=1}^N \hat{\vb{k}}_i^2 = 1
+\end{equation}
+We may then use Newton's method to find the solutions for $\eta = 0$ in the analytic continuation of the radial variable $k$. For this we need the derivative of $\eta$ with respect to $k$.
+
+\begin{equation}
+    \eta' = \sum_{i=1}^N \frac{\hat{\vb{k}}_i \cdot (\vb{k}_i + \vb{q}_i)}{\sqrt{{(\vb{k}_i + \vb{q}_i)}^2 + m_i^2}}
+\end{equation}
+
+To get a qualitative understanding of the structure of the E-surfaces, we can visualize the attractors and solutions of the Newton's method. While this is not a rigorous analysis, it provides some insight on the feasibility of the method, i.e.~if we find examples where Newton's methods fails, we know that the method is not applicable. If, however, the convergence behavior appears predictable, it may be worthwhile to rigorously prove when and how Newton's method converges. Let us visualize the attractors for the following multi-loop case with the index $j$ ranging from 0 to 9.
+\begin{align}
+    \vb{\hat{k}}_j = \begin{pmatrix}
+        \frac{1}{\sqrt{10}} & 0 & 0
+    \end{pmatrix}\\
+    \vb{q}_j = \begin{pmatrix}
+        j-5 & 0 & 0
+    \end{pmatrix}\\
+    m_j = \frac{j}{2}-0.1 i\\
+\end{align}
+
+To investigate the behavior of Newton's method, we can plot the attractors and the integrand for this configuration with different values of $Q$. This is shown in figs.~\ref{fig:newton} and~\ref{fig:newton_2}.
+
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/newton/000.png}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/newton/010.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/newton/015.png}
+    \end{subfigure}
+        \caption{Attractors and integrand for different values of $Q$}\label{fig:newton}
+\end{figure}    
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/newton/016.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/newton/020.png}
+    \end{subfigure}
+    \caption{Attractors and integrand for different values of $Q$}\label{fig:newton_2}
+\end{figure}
+
+
+In fig.~\ref{fig:newton} we can see that the attractors are stable for small values of $Q$. In this regime it seems like it is possible to define simple heuristics to find seeds for the newton method to find each solution. As $Q$ increases, the solution start to have larger imaginary parts and start to near the branch cuts introduced by the square roots. As this happens the attractors become more chaotic, making it hard to find any heuristics to find the solutions.
+
+In fig.~\ref{fig:newton_2} we can see what happens if we increase $Q$ even more. Both of the solutions vanish one by one behind the branch cuts.
+
+These results suggest that Newton's method may not be suited to generalize the method to higher loop count integrals.
+A more feasible approach may be to redefine the problem as a system of quadratic equations:
+\begin{align}
+    \eta = Q + \sum_{i=1}^N \sqrt{{(\vb{k_i} + \vb{q_i})}^2 + m_i^2} = Q + \sum_{i=1}^N P_i\\
+    P_i^2 = {(\vb{k}_i + \vb{q}_i)}^2 + m_i^2
+\end{align}
+These may then be solved numerically with Homotopy Continuation, as shown in ref.~\cite{breiding_homotopycontinuationjl_2018}.
