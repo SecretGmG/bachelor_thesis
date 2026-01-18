@@ -9,12 +9,11 @@ If the integration center is chosen at exactly the point where the E-surfaces to
 
 In the case of the triangle it is always possible to align all the external momenta along the $z$-axis. This implies that the E-surfaces touch at a point on the $z$-axis, which will be chosen as the origin of the integration. By plotting the E-surfaces we can gain a better understanding of when they intersect. From fig.~\ref{fig:anomalous_grow} we can see that the E-surfaces with indices (1,2) and (1,3) touch for an external momentum $\vb{p_2}^2$ somewhere between $\vb{p_2}^2 = {(\SI{199}{\GeV})}^2$ and $\vb{p_2}^2 = {(\SI{205}{\GeV})}^2$. The location of the E-surface along the z-axis can be obtained with eq.~\ref{eq:quad_k_solutions}. The configuration where the E-surfaces touch can now be found numerically with binary search. The resulting momentum and location of the origin along the $z$-axis $o_z$ are:
 \begin{align}
-    \vb{p_2}^2 &= {(\SI{201.904892331}{\GeV})}^2 \\
-    o_z &= \SI{37.43245959}{\GeV} \\
+    \vb{p_2}^2 & = {(\SI{201.904892331}{\GeV})}^2 \\
+    o_z        & = \SI{37.43245959}{\GeV}         \\
 \end{align}
 
 The validity of these solutions may be qualitatively checked by plotting the intersection point more closely. This is shown in fig.~\ref{fig:anomalous_zoomed}.
-
 
 \begin{figure}[H]
     \centering
@@ -72,8 +71,41 @@ We can also stress-test the threshold subtraction by computing the integral for 
     \caption{Zoomed in integral near threshold}\label{fig:anomalous_integrated_zoomed}
 \end{figure}
 
+We now examine the integral near the intersection of two E-surfaces $A$ and $B$. Assume the surfaces intersect at the origin, and linearize each surface near this point. The integral then reduces locally to
 
+\begin{equation}
+    \int \dd[3]{k} \frac{1}{(\eta_A' \cdot \mathbf{k}) (\eta_B' \cdot \mathbf{k}) + i\epsilon},
+\end{equation}
 
+where $\eta_A'$ and $\eta_B'$ are the gradients of the surfaces at the intersection.
+
+We distinguish two cases:
+\begin{enumerate}
+    \item \textbf{Parallel gradients} surfaces touch
+          If $\eta_A' \parallel \eta_B'$, the singular planes coincide, and the integrand becomes
+
+          \begin{equation}
+              \frac{1}{{(\eta_A' \cdot \mathbf{k})}^2 + i\epsilon}.
+          \end{equation}
+
+          Choosing coordinates with $z$ along $\eta_A'$ and $x,y$ in the plane transverse to it, the integral scales as
+
+          \begin{equation}
+              \int dx,dy,dz \frac{1}{|\eta_A'|^2 z^2 + i\epsilon} \sim \order{\frac{i}{\epsilon}},
+          \end{equation}
+
+          giving a \emph{linear divergence} in $1/\epsilon$.
+
+    \item \textbf{Non-parallel gradients} surfaces intersect along a line/ring
+          If $\eta_A' \not\parallel \eta_B'$, the planes intersect along a line. In coordinates $u,v,\phi$ with $u$ along $\eta_A'$-transverse, $v$ along $\eta_B'$-transverse, and $\phi$ along the intersection line, the integrand locally behaves like
+          \begin{equation}
+              \frac{1}{(|\eta_A'| u)(|\eta_B'| v) + i\epsilon}.
+          \end{equation}
+          Integrating over the transverse directions gives a \emph{finite imaginary contribution}, scaling as
+          \begin{equation}
+              \int du,dv,d\phi \frac{1}{(|\eta_A'| u)(|\eta_B'| v) + i\epsilon} \sim \order{i},
+          \end{equation}
+\end{enumerate}
 
 \section{Generalization to higher loop count}\label{app:generalization_to_higher_loop_count}
 Most of the considerations in this thesis generalize without modification to higher loop count integrals, with the notable exception of finding the intersection point of the E-surfaces along some direction. As the loop count increases, so does the dimension of the integration domain.
@@ -95,17 +127,15 @@ We may then use Newton's method to find the solutions for $\eta = 0$ in the anal
 To get a qualitative understanding of the structure of the E-surfaces, we can visualize the attractors and solutions of the Newton's method. While this is not a rigorous analysis, it provides some insight on the feasibility of the method, i.e.~if we find examples where Newton's methods fails, we know that the method is not applicable. If, however, the convergence behavior appears predictable, it may be worthwhile to rigorously prove when and how Newton's method converges. Let us visualize the attractors for the following multi-loop case with the index $j$ ranging from 0 to 9.
 \begin{align}
     \vb{\hat{k}}_j = \begin{pmatrix}
-        \frac{1}{\sqrt{10}} & 0 & 0
-    \end{pmatrix}\\
+                         \frac{1}{\sqrt{10}} & 0 & 0
+                     \end{pmatrix} \\
     \vb{q}_j = \begin{pmatrix}
-        j-5 & 0 & 0
-    \end{pmatrix}\\
-    m_j = \frac{j}{2}-0.1 i\\
+                   j-5 & 0 & 0
+               \end{pmatrix}                                 \\
+    m_j = \frac{j}{2}-0.1 i                                   \\
 \end{align}
 
 To investigate the behavior of Newton's method, we can plot the attractors and the integrand for this configuration with different values of $Q$. This is shown in figs.~\ref{fig:newton} and~\ref{fig:newton_2}.
-
-
 
 \begin{figure}[H]
     \centering
@@ -123,8 +153,8 @@ To investigate the behavior of Newton's method, we can plot the attractors and t
         \centering
         \includegraphics[width=\textwidth]{assets/newton/015.png}
     \end{subfigure}
-        \caption{Attractors and integrand for different values of $Q$}\label{fig:newton}
-\end{figure}    
+    \caption{Attractors and integrand for different values of $Q$}\label{fig:newton}
+\end{figure}
 \begin{figure}[H]
     \centering
     \begin{subfigure}[t]{0.6\textwidth}
@@ -139,7 +169,6 @@ To investigate the behavior of Newton's method, we can plot the attractors and t
     \caption{Attractors and integrand for different values of $Q$}\label{fig:newton_2}
 \end{figure}
 
-
 In fig.~\ref{fig:newton} we can see that the attractors are stable for small values of $Q$. In this regime it seems like it is possible to define simple heuristics to find seeds for the newton method to find each solution. As $Q$ increases, the solution start to have larger imaginary parts and start to near the branch cuts introduced by the square roots. As this happens the attractors become more chaotic, making it hard to find any heuristics to find the solutions.
 
 In fig.~\ref{fig:newton_2} we can see what happens if we increase $Q$ even more. Both of the solutions vanish one by one behind the branch cuts.
@@ -147,7 +176,7 @@ In fig.~\ref{fig:newton_2} we can see what happens if we increase $Q$ even more.
 These results suggest that Newton's method may not be suited to generalize the method to higher loop count integrals.
 A more feasible approach may be to redefine the problem as a system of quadratic equations:
 \begin{align}
-    \eta = Q + \sum_{i=1}^N \sqrt{{(\vb{k_i} + \vb{q_i})}^2 + m_i^2} = Q + \sum_{i=1}^N P_i\\
+    \eta = Q + \sum_{i=1}^N \sqrt{{(\vb{k_i} + \vb{q_i})}^2 + m_i^2} = Q + \sum_{i=1}^N P_i \\
     P_i^2 = {(\vb{k}_i + \vb{q}_i)}^2 + m_i^2
 \end{align}
 These may then be solved numerically with Homotopy Continuation, as shown in ref.~\cite{breiding_homotopycontinuationjl_2018}. Because the way the square roots are removed does't consider branch cuts, the solutions obtained by this method will need to be checked for validity.

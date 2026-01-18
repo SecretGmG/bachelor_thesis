@@ -717,7 +717,7 @@ The RSD is shown in fig.~\ref{fig:small_width_rsd}. We can see, that both subtra
 
 \subsection{Threshold masses}\label{sec:threshold_masses}
 
-We will now take a closer look at what happens in configurations with real masses, where imaginary solutions to the E-surface eq.~\eqref{eq:e_surface} exist. We will check if subtracting the imaginary solutions in these cases improve numerical stability especially for configurations very close to thresholds where E-surfaces come into existence.
+We will now take a closer look at what happens in configurations with real masses, where imaginary solutions to the E-surface eq.~\eqref{eq:e_surface} exist. We will check if subtracting the imaginary solutions in these cases improves numerical stability especially for configurations very close to thresholds where E-surfaces come into existence.
 
 We will use the same external kinematics as in sect.~\ref{sec:small_width} and equal internal masses $m_i = m$. 
 
@@ -725,8 +725,13 @@ We will use the same external kinematics as in sect.~\ref{sec:small_width} and e
     \vb{p_1}^2 = \SI{1}{\GeV^2} \qquad \vb{p_2}^2 = \SI{3}{\GeV^2} \qquad {(\vb{p_1} + \vb{p_2})}^2 = \SI{8}{\GeV^2} \qquad \Im(m) = 0
 \end{align*}
 
-We will sweep the real-valued mass $m$ across a large range of values to check numerical stability of the integral as E-surfaces go out of existence. In the case of the minimum value subtraction condition, the subtraction for these E-surfaces simply stops, while in the case of the numerical check the threshold subtraction is still applied to complex solutions. It will be interesting to see if the numerical check is more stable than the minimum value subtraction condition, especially near the threshold masses.
-
+We will sweep the real-valued mass $m$ across a large range of values to check numerical stability of the integral as E-surfaces go out of existence. We will also investigate three different subtraction methods and compare the results. 
+\begin{itemize}
+    \item \textbf{No subtraction condition} No subtraction is performed.
+    \item \textbf{Minimum value subtraction condition} The real part of the minimum value of the E-surface is used to determine if the threshold subtraction is needed. As an E-surface goes out of existence, the minimum value of the E-surface becomes positive and simply stops. This method is performed with a subtraction region with a fixed half-width centered around the \emph{real} part of the threshold location.
+    \item \textbf{Numerical check subtraction condition} Only a numerical check is performed to determine if the threshold subtraction is needed. This method is performed with a subtraction region with a fixed half-width centered around the \emph{real} part of the threshold location. This means that complex valued solutions always get subtracted if they exist.
+    \item \textbf{Sliver subtraction with complex distance} For this method the effective region of the subtraction is a sliver with a half width of $\lambda = \SI{1}{\GeV}$ centered around the \emph{complex} valued location of the thresholds, in accordance to eq.~\ref{eq:sliver_mod}. The mask for the integrated counterterm stays as a sliver with a fixed half width centered around the \emph{real} part of the threshold. As the imaginary part of the threshold gets larger, the subtraction region gets smaller, until it vanishes.
+\end{itemize}
 
 Using the E-surface existence condition for the equal mass case derived in sect.~\ref{sec:equal_mass_case} we can compute the values of the masses where the E-surface eq.~\eqref{eq:e_surface} goes from having real to complex solutions. We will call these masses threshold masses. For this example they are
 
@@ -736,7 +741,8 @@ Using the E-surface existence condition for the equal mass case derived in sect.
 
 Plotting the integral over a range including all of these threshold masses shown in fig.~\ref{fig:threshold_masses_integral} we see that both methods of subtracting E-surfaces converge well on the correct result. We can also note that for masses larger than the largest threshold mass, the imaginary part of the integrand is equal to zero. This is expected, because in this case no singularities exist in the real-valued integrand, that could introduce any imaginary part.
 
-The result of the numerical integration is shown in fig.~\ref{fig:threshold_masses_integral}. It can be seen, that both methods converge well on the correct result.
+
+The result of the numerical integration is shown in fig.~\ref{fig:threshold_masses_integral}. It can be seen that all methods converge well on the correct result, except for the method where no subtraction is performed.
 \begin{figure}[H]
     \centering
     \begin{subfigure}[t]{0.48\textwidth}
@@ -750,14 +756,28 @@ The result of the numerical integration is shown in fig.~\ref{fig:threshold_mass
         \includegraphics[width=\textwidth]{assets/threshold_masses/per_sample_check.png}
         \caption{Without minimum value subtraction condition}
     \end{subfigure}
+        \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/threshold_masses/variable.png}
+        \caption{Sliver subtraction with complex distance}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/threshold_masses/unsubtracted.png}
+        \caption{Unsubtracted integrand}
+    \end{subfigure}
     \caption{Integration result with different E-surface subtraction conditions}\label{fig:threshold_masses_integral}
 \end{figure}
 
-We now examine the RSD for the different methods. This is shown in fig.~\ref{fig:threshold_masses_rsd}. As expected the integration for masses smaller than the smallest threshold mass $m^2 < \SI{0.25}{\GeV^2}$ has exactly the same behavior for the numerical and minimum value check. More interesting is that we can see that even for larger masses, up to the largest threshold mass $m^2 < \SI{2}{\GeV^2}$, the RSD of the two methods are very close to each other. As the largest threshold mass $m^2 < \SI{2}{\GeV}^2$ is reached, the RSD for the numerical check starts to diverge from the minimum value method. Surprisingly it is the minimum value method that has the lower RSD\@.
+We now examine the RSD for the different methods. This is shown in fig.~\ref{fig:threshold_masses_rsd}. As expected the integration for masses smaller than the smallest threshold mass $m^2 < \SI{0.25}{\GeV^2}$ has exactly the same behavior for the numerical and minimum value check. More interesting is that we can see that even for larger masses, up to the largest threshold mass $m^2 < \SI{2}{\GeV^2}$, the RSD of the two methods are very close to each other. As the largest threshold mass $m^2 < \SI{2}{\GeV^2}$ is reached, the RSD for the numerical check starts to diverge from the minimum value method. Surprisingly it is the numerical check which subtracts all solutions that has the highest RSD\@, while the other methods outperform the numerical check. 
+
+The fact that the complex distance method still performs well, indicates that the threshold subtraction of non-existing E-surfaces is only needed very close to the threshold masses. For configurations where the E-surface is not close to existing, subtraction actually hurts performance by introducing variance.
 
 We can qualitatively check if the threshold subtraction successfully regularizes the integrand by plotting the threshold subtraction for a configuration with a mass near the threshold mass $m = (\sqrt{2} + \delta)\si{\GeV}$. This is shown in fig.~\ref{fig:threshold_masses_sub}. It can be seen, that the threshold subtraction indeed regularizes the integrand, so the reason for the divergence is not due to a failure of the threshold subtraction method.
 
-To investigate this further we plot the RSD for a smaller range of masses near $m^2 < \SI{2}{\GeV^2}$ This is shown in fig.~\ref{fig:threshold_masses_rsd_zoomed}. There it can be seen, that the RSD for the unsubtracted method starts to decrease even for masses smaller than the threshold mass. This indicates that as the size of the E-surface decreases, its effect on the integrand becomes less important. As the E-surface transitions from a 2-dimensional spheroidal surface to a 0-D point, the effect of the E-surface on the integrand vanishes. Threshold subtraction can increase the RSD slightly by enlarging the integrand over broad regions, where it initially might have been close to zero. This small increase in the RSD likely is the reason for the worse performance of the numerical check. This is an interesting and important observation, as it indicates that threshold subtraction is not effective for ``imaginary'' E-surfaces, meaning that the numerical check is not needed and the more performant and numerically stable minimum value method can be used.
+To investigate this further we plot the RSD for a smaller range of masses near $m^2 < \SI{2}{\GeV^2}$ This is shown in fig.~\ref{fig:threshold_masses_rsd_zoomed}. There it can be seen, that the RSD for the unsubtracted method starts to decrease even for masses smaller than the threshold mass. This indicates that as the size of the E-surface decreases, its effect on the integrand becomes less important. As the E-surface transitions from a 2-dimensional spheroidal surface to a 0-D point, the effect of the E-surface on the integrand gets smaller. Threshold subtraction can increase the RSD slightly by enlarging the integrand over broad regions, where it initially might have been close to zero. We also observe that the complex distance method outperforms all other methods throughout the entire range of masses, indicating that this is the most effective method to regularize the integrand.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{assets/threshold_masses/rsd.png}
@@ -784,7 +804,7 @@ To investigate this further we plot the RSD for a smaller range of masses near $
 
 
 \section{Conclusion}\label{sec:conclusion}
-In this thesis we were able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the Cross-Free Family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration, as shown in fig.~\ref{fig:threshold_masses_rsd_zoomed}, even though the thresholds are subtracted correctly as seen in fig.~\ref{fig:threshold_masses_sub}. The reason for this is that the geometrical size of the E-surfaces is small, in fact point-like. This makes their contribution vanish even without threshold subtraction. Because of the success of the subtraction of complex thresholds, we think that this is a promising method to regularize integrals within the complex mass scheme and warrants further study in the multi-loop context. Also not studied here, but of interest, is the interplay of complex-valued threshold regularization with a local realization of the Complex-Mass Scheme renormalization procedure shown in refs.~\cite{capatti_local_2021,frederix_automation_2018}.
+In this thesis we were able to show that threshold subtraction is a valid and effective method of removing singularities from the triangle integral in the Cross-Free Family representation. Section~\ref{sec:small_width} shows, that subtraction of the poles in the complex plane is important for convergence, as the width, which regularizes the integral, gets small. Surprisingly the subtraction of poles corresponding to nonexisting or barely existing E-surfaces does not significantly improve convergence of the integration. For certain subtraction conditions it can even worsen convergence, as shown in fig.~\ref{fig:threshold_masses_rsd_zoomed}, even though the thresholds are subtracted correctly as seen in fig.~\ref{fig:threshold_masses_sub}. The reason for this is that the geometrical size of the E-surfaces is small, in fact point-like. This makes their contribution vanish even without threshold subtraction. Because of the success of the subtraction of complex thresholds, we think that this is a promising method to regularize integrals within the complex mass scheme and warrants further study in the multi-loop context. Also not studied here, but of interest, is the interplay of complex-valued threshold regularization with a local realization of the Complex-Mass Scheme renormalization procedure shown in refs.~\cite{capatti_local_2021,frederix_automation_2018}.
 
 %More generally, we can see that the geometrical configuration of the E-surfaces, at least qualitatively, correlates strongly with the presence of anomalous thresholds! This should motivate further study of the geometrical properties of the E-surfaces for higher loop counts. The physical interpretation and significance of E-surfaces in general is something that warrants further research. Mathematically showing how touching E-surfaces correspond to anomalous thresholds, may lead to a deeper understand of anomalous thresholds in general.
 
